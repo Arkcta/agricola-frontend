@@ -1,0 +1,26 @@
+
+
+
+<table class="table table-bordered table-striped">
+  <thead>
+    <tr>
+      <th>Run </th>
+      <th>Nombre </th>
+      <th>Telefono </th>
+      <th>Email </th>
+      <th>Pass </th>
+      <th>Estado </th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let encargados of encargadosBPA">
+      <td> {{ encargados.run}}</td>
+      <td> {{ encargados.nombre}}</td>
+      <td> {{ encargados.telefono}}</td>
+      <td> {{ encargados.email}}</td>
+      <td> {{ encargados.pass}}</td>
+      <td> {{ encargados.estado}}</td>
+    </tr>
+  </tbody>
+
+</table>
