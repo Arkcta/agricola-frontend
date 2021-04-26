@@ -1,0 +1,55 @@
+<div class="card bg-dark text-white">
+  <div class="card-header">{{ titulo }} </div>
+  <div class="card-body">
+
+    <form >
+
+      <div class="form-group row">
+        <label for="nombre" class="col-form-label col-sm-2">Nombre</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="encargado.nombre" name="nombre">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="run" class="col-form-label col-sm-2">Run</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="encargado.run" id="run" name="run">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="telefono" class="col-form-label col-sm-2">Teléfono</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="encargado.telefono" name="telefono">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="email" class="col-form-label col-sm-2">Email</label>
+        <div class="col-sm-6">
+          <input type="text" class="form-control" [(ngModel)]="encargado.email" name="email">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <label for="pass" class="col-form-label col-sm-2">Contraseña</label>
+        <div class="col-sm-6">
+          <input type="password" class="form-control" [(ngModel)]="encargado.pass" name="pass">
+        </div>
+      </div>
+
+      <div class="form-group row">
+        <div class="col-sm-6">
+          <button clas="btn btn-primary" role="button" (click)='crear()' *ngIf="!encargado.run else elseBlock">Crear</button>
+
+          <ng-template #elseBlock>
+            <button clas="btn btn-primary" role="button" (click)='update()' >Editar</button>
+          </ng-template>
+        </div>
+      </div>
+
+    </form>
+
+  </div>
+</div>

@@ -4,5 +4,5 @@ export class EncargadoBPA {
   telefono: string;
   email: string;
   pass: string;
-  // estado: boolean;
+  estado: boolean;
 }
