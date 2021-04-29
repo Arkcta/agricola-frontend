@@ -12,12 +12,11 @@ export class EncargadoBPAService {
 
   urlEndPoint: string = 'http://localhost:8080/api/encargadosBPA';
 
-  private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' })
+  private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient) { }
 
   getEncargados(): Observable<EncargadoBPA[]> {
-    //return of(ENCARGADOS);
     return this.http.get(this.urlEndPoint).pipe(
       map((response) => response as EncargadoBPA[])
     );
