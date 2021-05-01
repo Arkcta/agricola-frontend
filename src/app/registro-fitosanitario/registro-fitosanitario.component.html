@@ -1,0 +1,227 @@
+<!-- Content Row -->
+
+<div class="row">
+  <div class="col-lg-12">
+    <div class="container pt-3">
+      <div class="table-responsive">
+        <div class="table-wrapper mar">
+          <div class="table-title">
+            <div class="row ">
+              <div class="col-sm-6">
+                <h2>Registros <b>Fitosanitarios</b></h2>
+              </div>
+              <div class="col-sm-6">
+                <a href="#addEmployeeModal" (click)="vaciarInputs()" class="btn btn-success buttonAgregar" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Registro Fitosanitario</span></a>
+              </div>
+            </div>
+          </div>
+          <div id="global">
+            <div class="table-wrapper-scroll-y my-custom-scrollbar div1">
+              <table width="100%" border="solid" class="table table-striped table-hover">
+                <thead>
+                  <tr>
+                    <!-- <th>
+            <span class="custom-checkbox">
+              <input type="checkbox" id="selectAll">
+              <label for="selectAll"></label>
+            </span>
+          </th> -->
+                    <th>Tipo maquinaria</th>
+                    <th>Estado fenologico</th>
+                    <th>Dosis</th>
+                    <th>Fecha</th>
+                    <th>Hora termino</th>
+                    <th>Condiciones metereologicas</th>
+                    <th>Run Encargado BPA</th>
+                    <th>Id Fitosanitario</th>
+                    <th>Id Cuartel</th>
+                    <th>Acciones</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr *ngFor="let registros of registrosFitosanitarios">
+                    <!-- <td>
+            <span class="custom-checkbox">
+              <input type="checkbox" id="checkbox1" name="options[]" value="1">
+              <label for="checkbox1"></label>
+            </span>
+          </td> -->
+                    <td width="135px"> {{ registros.tipoMaquinaria}}</td>
+                    <td width="200px"> {{ registros.estadoFenologico}}</td>
+                    <td width="100px"> {{ registros.dosis}}</td>
+                    <td width="100px"> {{ registros.fecha}}</td>
+                    <td width="90px"> {{ registros.horaTermino}}</td>
+                    <td width="90px"> {{ registros.condicionesMetereologicas}}</td>
+                    <td width="50px"> {{ registros.idEncargadoBPA}}</td>
+                    <td width="90px"> {{ registros.idFitosanitario}}</td>
+                    <td width="90px"> {{ registros.idCuartel}}</td>
+                    <td>
+                      <a href="#editEmployeeModal" (click)='cargarRegistroFito(registros.idRegistroFitosanitario)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
+                      <a (click)='delete(registros)' href="" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Eliminar">&#xE872;</i></a>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+          <!-- <div class="clearfix">
+      <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
+      <ul class="pagination">
+        <li class="page-item disabled"><a href="#">Previous</a></li>
+        <li class="page-item"><a href="#" class="page-link">1</a></li>
+        <li class="page-item"><a href="#" class="page-link">2</a></li>
+        <li class="page-item active"><a href="#" class="page-link">3</a></li>
+        <li class="page-item"><a href="#" class="page-link">4</a></li>
+        <li class="page-item"><a href="#" class="page-link">5</a></li>
+        <li class="page-item"><a href="#" class="page-link">Next</a></li>
+      </ul>
+    </div> -->
+        </div>
+      </div>
+    </div>
+
+
+    <!-- AGREGAR ENCARGADO BPA Modal HTML -->
+    <div id="addEmployeeModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form>
+            <div class="modal-header">
+              <h4 class="modal-title">Agregar Registro Fitosanitario</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+
+              <div class="form-group">
+                <label for="tipoMaquinaria">Tipo maquinaria</label>
+                <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.tipoMaquinaria" name="tipoMaquinaria">
+              </div>
+
+              <div class="form-group">
+                <label for="estadoFenologico">Estado fenologico</label>
+                <!-- (blur)="formatearRut(encargado.run)" -->
+                <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.estadoFenologico" id="estadoFenologico" name="estadoFenologico">
+
+              </div>
+
+              <div class="form-group">
+                <label for="dosis">Dosis</label>
+                <input type="number" class="form-control" [(ngModel)]="registroFitosanitario.dosis" name="dosis">
+              </div>
+
+              <div class="form-group">
+                <label for="fecha">Fecha</label>
+                <input type="date" class="form-control" [(ngModel)]="registroFitosanitario.fecha" name="fecha">
+              </div>
+
+              <div class="form-group">
+                <label for="horaTermino">Hora termino</label>
+                <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.horaTermino" name="horaTermino">
+              </div>
+
+              <div class="form-group">
+                <label for="condicionesMetereologicas">Condiciones metereologicas</label>
+                <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.condicionesMetereologicas" name="condicionesMetereologicas">
+              </div>
+
+              <div class="form-group">
+                <label for="runEncargadoBpa">Run Encargado BPA</label>
+                <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.idEncargadoBPA" name="runEncargadoBpa">
+              </div>
+
+              <div class="form-group">
+                <label for="idFitosanitario">Id fitosanitario</label>
+                <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.idFitosanitario" name="idFitosanitario">
+              </div>
+
+              <div class="form-group">
+                <label for="idCuartel">Id cuartel</label>
+                <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.idCuartel" name="idCuartel">
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
+              <!-- [disabled]="agregarEn" -->
+              <input type="button" (click)='crear()'  data-dismiss="modal" class="btn btn-success" value="Agregar">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+
+
+
+
+    <!-- EDITAR ENCARGADO BPA Modal HTML -->
+    <div id="editEmployeeModal" class="modal fade">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <form>
+            <div class="modal-header">
+              <h4 class="modal-title">Agregar Registro Fitosanitario</h4>
+              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+            </div>
+            <div class="modal-body">
+
+              <div class="form-group">
+                <label for="tipoMaquinaria">Tipo maquinaria</label>
+                <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.tipoMaquinaria" name="tipoMaquinaria">
+              </div>
+
+              <div class="form-group">
+                <label for="estadoFenologico">Estado fenologico</label>
+                <!-- (blur)="formatearRut(encargado.run)" -->
+                <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.estadoFenologico" id="estadoFenologico" name="estadoFenologico">
+
+              </div>
+
+              <div class="form-group">
+                <label for="dosis">Dosis</label>
+                <input type="number" class="form-control" [(ngModel)]="registroFitosanitario.dosis" name="dosis">
+              </div>
+
+              <div class="form-group">
+                <label for="fecha">Fecha</label>
+                <input type="date" class="form-control" [(ngModel)]="registroFitosanitario.fecha" name="fecha">
+              </div>
+
+              <div class="form-group">
+                <label for="horaTermino">Hora termino</label>
+                <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.horaTermino" name="horaTermino">
+              </div>
+
+              <div class="form-group">
+                <label for="condicionesMetereologicas">Condiciones metereologicas</label>
+                <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.condicionesMetereologicas" name="condicionesMetereologicas">
+              </div>
+
+              <div class="form-group">
+                <label for="runEncargadoBpa">Run Encargado BPA</label>
+                <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.idEncargadoBPA" name="runEncargadoBpa">
+              </div>
+
+              <div class="form-group">
+                <label for="idFitosanitario">Id fitosanitario</label>
+                <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.idFitosanitario" name="idFitosanitario">
+              </div>
+
+              <div class="form-group">
+                <label for="idCuartel">Id cuartel</label>
+                <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.idCuartel" name="idCuartel">
+              </div>
+
+            </div>
+            <div class="modal-footer">
+              <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
+              <!-- [disabled]="agregarEn" -->
+              <input type="button" (click)='crear()'  data-dismiss="modal" class="btn btn-success" value="Guardar">
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

@@ -25,6 +25,7 @@ export class EncargadosBPAComponent implements OnInit {
   nFinal: number;
 
 
+
   constructor(private encargadoBPAService: EncargadoBPAService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -36,6 +37,14 @@ export class EncargadosBPAComponent implements OnInit {
       (encargados) => this.encargadosBPA = encargados  //se agrega {this.encargadosBPA = encargados, otra cosa} al this cuando hay mas de una linea de codigo tambien al encargados cuando son mas de 1 parametro
     );
   }
+
+  // listaEncargadosServiceParaCampo(): EncargadoBPA[]{
+  //
+  //   this.encargadoBPAService.getEncargados().subscribe(
+  //     (encargados) => this.encargadosBPA = encargados  //se agrega {this.encargadosBPA = encargados, otra cosa} al this cuando hay mas de una linea de codigo tambien al encargados cuando son mas de 1 parametro
+  //   );
+  //   return this.encargadosBPA;
+  // }
 
   delete(encargado: EncargadoBPA): void {
 
@@ -79,7 +88,6 @@ export class EncargadosBPAComponent implements OnInit {
     })
   }
 
-  //PRUEBAS!!!
   crear(): void {
 
 

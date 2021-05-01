@@ -6,17 +6,25 @@ import {HeaderComponent} from './header/header.component';
 import {FooterComponent} from './footer/footer.component';
 import { EncargadosBPAComponent } from './encargados-bpa/encargados-bpa.component';
 import { EncargadoBPAService} from './encargados-bpa/encargado-bpa.service';
+import { ProductoFitosanitarioService} from './producto-fitosanitario/producto-fitosanitario.service';
+import { CamposService} from './campos/campos.service';
 import { RouterModule, Routes} from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { HomeComponent } from './home/home.component';
 import { ProductoFitosanitarioComponent } from './producto-fitosanitario/producto-fitosanitario.component';
+import { SidenavbarComponent } from './sidenavbar/sidenavbar.component';
+import { SidenavDefinitivoComponent } from './sidenav-definitivo/sidenav-definitivo.component';
+import { CamposComponent } from './campos/campos.component';
+import { RegistroFitosanitarioComponent } from './registro-fitosanitario/registro-fitosanitario.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'encargadosBPA', component: EncargadosBPAComponent},
   {path: 'fitosanitarios', component: ProductoFitosanitarioComponent},
+  {path: 'campos', component: CamposComponent},
+  {path: 'registrosFitosanitarios', component: RegistroFitosanitarioComponent},
 ];
 
 @NgModule({
@@ -27,7 +35,11 @@ const routes: Routes = [
     EncargadosBPAComponent,
     SidenavComponent,
     HomeComponent,
-    ProductoFitosanitarioComponent
+    ProductoFitosanitarioComponent,
+    SidenavbarComponent,
+    SidenavDefinitivoComponent,
+    CamposComponent,
+    RegistroFitosanitarioComponent
   ],
   imports: [
     BrowserModule,
@@ -36,7 +48,9 @@ const routes: Routes = [
     FormsModule,
   ],
   providers: [
-    EncargadoBPAService
+    EncargadoBPAService,
+    ProductoFitosanitarioService,
+    CamposService
   ],
   bootstrap: [AppComponent]
 })

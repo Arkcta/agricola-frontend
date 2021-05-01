@@ -3,6 +3,19 @@ body {
   background-color: #efefef;
 }
 
+.sidebar hr.sidebar-divider {
+  margin: 0 1rem 1rem;
+}
+
+.my-0 {
+  margin-top: 0 !important;
+}
+
+.my-0 {
+  margin-bottom: 0 !important;
+}
+
+
 p {
   color: #b3b3b3;
   font-weight: 300;
@@ -61,7 +74,7 @@ body.show-sidebar:before {
 }
 
 aside, main {
-  height: 90.4vh !important;
+  height: 100vh !important;
 }
 
 aside {
@@ -72,10 +85,11 @@ aside {
   -webkit-transform: translateX(0px);
   -ms-transform: translateX(0px);
   transform: translateX(0px);
-  background-color: #2980B9;
+  background-color: #92ca20;
   -webkit-transition: 0.7s width cubic-bezier(0.23, 1, 0.32, 1);
   -o-transition: 0.7s width cubic-bezier(0.23, 1, 0.32, 1);
   transition: 0.7s width cubic-bezier(0.23, 1, 0.32, 1);
+  transition: all 1s;
 }
 
 .show-sidebar aside {
@@ -228,7 +242,7 @@ aside .side-inner .nav-menu ul li a {
   padding-right: 30px;
   padding-top: 10px;
   padding-bottom: 10px;
-  color: #b1b1b1;
+  color: #FFFFFF;
   position: relative;
   -webkit-transition: .3s all ease;
   -o-transition: .3s all ease;
