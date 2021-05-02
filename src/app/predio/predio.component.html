@@ -8,10 +8,10 @@
           <div class="table-title">
             <div class="row ">
               <div class="col-sm-6">
-                <h2><b>Campos</b></h2>
+                <h2><b>Predios</b></h2>
               </div>
               <div class="col-sm-6">
-                <a href="#addEmployeeModal" (click)="vaciarInputs()" class="btn btn-success buttonAgregar" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Campo</span></a>
+                <a href="#addEmployeeModal" (click)="vaciarInputs()" class="btn btn-success buttonAgregar" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Predio</span></a>
               </div>
             </div>
           </div>
@@ -27,29 +27,26 @@
             </span>
           </th> -->
                     <th>Nombre</th>
-                    <th>Direccion</th>
                     <th>Hectareas</th>
-                    <th>Run Dueño de campo</th>
-                    <th>Run Admin. de campo</th>
+                    <th>Id Campo</th>
                     <th>Acciones</th>
+
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let campe of campos">
+                  <tr *ngFor="let predio of predios">
                     <!-- <td>
             <span class="custom-checkbox">
               <input type="checkbox" id="checkbox1" name="options[]" value="1">
               <label for="checkbox1"></label>
             </span>
           </td> -->
-                    <td width="100px"> {{ campe.nombre}}</td>
-                    <td width="200px"> {{ campe.direccion}}</td>
-                    <td width="80px"> {{ campe.hectareas}}</td>
-                    <td width="200px"> {{ campe.runDuenoCampo}}</td>
-                    <td width="200px"> {{ campe.runAdministradorCampo}}</td>
-                    <td>
-                      <a href="#editEmployeeModal" (click)='cargarCampo(campe.idCampo)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
-                      <a (click)='delete(campe)' href="" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Eliminar">&#xE872;</i></a>
+                    <td width="200px"> {{ predio.nombre}}</td>
+                    <td width="200px"> {{ predio.hectareas}}</td>
+                    <td width="200px"> {{ predio.idCampo}}</td>
+                    <td >
+                      <a href="#editEmployeeModal" (click)='cargarPredio(predio.idPredio)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
+                      <a (click)='delete(predio)' href="" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Eliminar">&#xE872;</i></a>
                     </td>
                   </tr>
                 </tbody>
@@ -72,54 +69,38 @@
       </div>
     </div>
 
-    <!-- AGREGAR ENCARGADO BPA Modal HTML -->
 
+    <!-- AGREGAR ENCARGADO BPA Modal HTML -->
     <div id="addEmployeeModal" class="modal fade">
       <div class="modal-dialog">
         <div class="modal-content">
           <form>
             <div class="modal-header">
-              <h4 class="modal-title">Agregar Campo</h4>
+              <h4 class="modal-title">Agregar Predio</h4>
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">
 
               <div class="form-group">
                 <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" [(ngModel)]="campo.nombre" name="nombre">
-              </div>
-
-              <div class="form-group">
-                <label for="direccion">Direccion</label>
-                <!-- (blur)="formatearRut(encargado.run)" -->
-                <input type="text" class="form-control" [(ngModel)]="campo.direccion" id="direccion" name="direccion">
-
+                <input type="text" class="form-control" [(ngModel)]="predio.nombre" name="nombre">
               </div>
 
               <div class="form-group">
                 <label for="hectareas">Hectareas</label>
-                <input type="number" class="form-control" [(ngModel)]="campo.hectareas" name="hectareas">
+                <input type="number" class="form-control" [(ngModel)]="predio.hectareas" id="hectareas" name="hectareas">
               </div>
 
               <div class="form-group">
-                <label for="runDuenoCampo">Run Dueño de Campo</label>
-                <input type="text" class="form-control" [(ngModel)]="campo.runDuenoCampo" name="runDuenoCampo">
+                <label for="idCampo">Id Campo</label>
+                <input type="text" class="form-control" [(ngModel)]="predio.idCampo" id="idCampo" name="idCampo">
               </div>
 
-              <div class="form-group">
-                <label for="runAdministradorCampo">Run Admin. de Campo</label>
-                <input type="text" class="form-control" [(ngModel)]="campo.runAdministradorCampo" name="runAdministradorCampo">
-              </div>
-              <!-- <div class="form-group">
-                <select class="form-control" id="exampleFormControlSelect1">
-                  <option *ngFor="let encargados of encargadosBPA">1</option>
-                </select>
-              </div> -->
             </div>
             <div class="modal-footer">
               <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
-              <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success" value="Agregar">
               <!-- [disabled]="agregarEn" -->
+              <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success" value="Agregar">
             </div>
           </form>
         </div>
@@ -136,43 +117,30 @@
         <div class="modal-content">
           <form>
             <div class="modal-header">
-              <h4 class="modal-title">Editar Campo</h4>
+              <h4 class="modal-title">Editar Predio</h4>
               <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
             </div>
             <div class="modal-body">
-
               <div class="form-group">
                 <label for="nombre">Nombre</label>
-                <input type="text" class="form-control" [(ngModel)]="campo.nombre" name="nombre">
-              </div>
-
-              <div class="form-group">
-                <label for="direccion">Direccion</label>
-                <!-- (blur)="formatearRut(encargado.run)" -->
-                <input type="text" class="form-control" [(ngModel)]="campo.direccion" id="direccion" name="direccion">
-
+                <input type="text" class="form-control" [(ngModel)]="predio.nombre" name="nombre">
               </div>
 
               <div class="form-group">
                 <label for="hectareas">Hectareas</label>
-                <input type="number" class="form-control" [(ngModel)]="campo.hectareas" name="hectareas">
+                <input type="number" class="form-control" [(ngModel)]="predio.hectareas" id="hectareas" name="hectareas">
               </div>
 
               <div class="form-group">
-                <label for="runDuenoCampo">Run Dueño de Campo</label>
-                <input type="text" class="form-control" [(ngModel)]="campo.runDuenoCampo" name="runDuenoCampo">
+                <label for="idCampo">Id Campo</label>
+                <input type="text" class="form-control" [(ngModel)]="predio.idCampo" id="idCampo" name="idCampo">
               </div>
 
-              <div class="form-group">
-                <label for="runAdministradorCampo">Run Admin. de Campo</label>
-                <input type="text" class="form-control" [(ngModel)]="campo.runAdministradorCampo" name="runAdministradorCampo">
-              </div>
             </div>
             <div class="modal-footer">
               <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
-              <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success" value="Guardar">
-              <!-- [disabled]="agregarEn" -->
-            </div>3
+              <input type="button" (click)='update()' class="btn btn-info" data-dismiss="modal" value="Guardar">
+            </div>
           </form>
         </div>
       </div>

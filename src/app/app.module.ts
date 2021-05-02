@@ -8,6 +8,8 @@ import { EncargadosBPAComponent } from './encargados-bpa/encargados-bpa.componen
 import { EncargadoBPAService} from './encargados-bpa/encargado-bpa.service';
 import { ProductoFitosanitarioService} from './producto-fitosanitario/producto-fitosanitario.service';
 import { CamposService} from './campos/campos.service';
+import { PredioService} from './predio/predio.service';
+import { RegistroFitosanitarioService} from './registro-fitosanitario/registro-fitosanitario.service';
 import { RouterModule, Routes} from '@angular/router';
 import { FormsModule } from '@angular/forms';
 import { SidenavComponent } from './sidenav/sidenav.component';
@@ -17,6 +19,7 @@ import { SidenavbarComponent } from './sidenavbar/sidenavbar.component';
 import { SidenavDefinitivoComponent } from './sidenav-definitivo/sidenav-definitivo.component';
 import { CamposComponent } from './campos/campos.component';
 import { RegistroFitosanitarioComponent } from './registro-fitosanitario/registro-fitosanitario.component';
+import { PredioComponent } from './predio/predio.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -25,6 +28,7 @@ const routes: Routes = [
   {path: 'fitosanitarios', component: ProductoFitosanitarioComponent},
   {path: 'campos', component: CamposComponent},
   {path: 'registrosFitosanitarios', component: RegistroFitosanitarioComponent},
+  {path: 'predios', component: PredioComponent},
 ];
 
 @NgModule({
@@ -39,7 +43,8 @@ const routes: Routes = [
     SidenavbarComponent,
     SidenavDefinitivoComponent,
     CamposComponent,
-    RegistroFitosanitarioComponent
+    RegistroFitosanitarioComponent,
+    PredioComponent
   ],
   imports: [
     BrowserModule,
@@ -50,7 +55,9 @@ const routes: Routes = [
   providers: [
     EncargadoBPAService,
     ProductoFitosanitarioService,
-    CamposService
+    CamposService,
+    PredioService,
+    RegistroFitosanitarioService
   ],
   bootstrap: [AppComponent]
 })
