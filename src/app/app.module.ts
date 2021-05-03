@@ -28,6 +28,14 @@ import { RegistroFertilizanteService} from './registro-fertilizante/registro-fer
 import { RegistroFertilizanteComponent} from './registro-fertilizante/registro-fertilizante.component';
 import { AdministradorComponent } from './administrador/administrador.component';
 import { AdministradorService } from './administrador/administrador.service';
+import { ListarRegistrosFertilizantesComponent } from './listar-registros-fertilizantes/listar-registros-fertilizantes.component';
+import { ListarRegistrosFertilizantesService } from './listar-registros-fertilizantes/listar-registros-fertilizantes.service';
+import { ListarRegistrosFitosanitariosComponent } from './listar-registros-fitosanitarios/listar-registros-fitosanitarios.component';
+import { ListarRegistrosFitosanitariosService } from './listar-registros-fitosanitarios/listar-registros-fitosanitarios.service';
+import { ListarEncargadosBpaComponent } from './listar-encargados-bpa/listar-encargados-bpa.component';
+import { ListarEncargadosBpaService } from './listar-encargados-bpa/listar-encargados-bpa.service';
+
+
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -41,6 +49,9 @@ const routes: Routes = [
   {path: 'fertilizantes', component: ProductoFertilizanteComponent},
   {path: 'registrosFertilizantes', component: RegistroFertilizanteComponent},
   {path: 'administradores', component: AdministradorComponent},
+  {path: 'listarRegistrosFertilizantes', component: ListarRegistrosFertilizantesComponent},
+  {path: 'listarRegistrosFitosanitarios', component: ListarRegistrosFitosanitariosComponent},
+  {path: 'listarEncargadosBpa', component: ListarEncargadosBpaComponent}
 ];
 
 @NgModule({
@@ -60,7 +71,10 @@ const routes: Routes = [
     CuartelComponent,
     ProductoFertilizanteComponent,
     RegistroFertilizanteComponent,
-    AdministradorComponent
+    AdministradorComponent,
+    ListarRegistrosFertilizantesComponent,
+    ListarRegistrosFitosanitariosComponent,
+    ListarEncargadosBpaComponent
 
   ],
   imports: [
@@ -78,7 +92,10 @@ const routes: Routes = [
     CuartelService,
     ProductoFertilizanteService,
     RegistroFertilizanteService,
-    AdministradorService
+    AdministradorService,
+    ListarRegistrosFertilizantesService,
+    ListarRegistrosFitosanitariosService,
+    ListarEncargadosBpaService
   ],
   bootstrap: [AppComponent]
 })
