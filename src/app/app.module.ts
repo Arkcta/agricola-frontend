@@ -20,6 +20,14 @@ import { SidenavDefinitivoComponent } from './sidenav-definitivo/sidenav-definit
 import { CamposComponent } from './campos/campos.component';
 import { RegistroFitosanitarioComponent } from './registro-fitosanitario/registro-fitosanitario.component';
 import { PredioComponent } from './predio/predio.component';
+import { CuartelComponent } from './cuartel/cuartel.component';
+import { CuartelService} from './cuartel/cuartel.service';
+import { ProductoFertilizanteComponent } from './producto-fertilizante/producto-fertilizante.component';
+import { ProductoFertilizanteService} from './producto-fertilizante/producto-fertilizante.service';
+import { RegistroFertilizanteService} from './registro-fertilizante/registro-fertilizante.service';
+import { RegistroFertilizanteComponent} from './registro-fertilizante/registro-fertilizante.component';
+import { AdministradorComponent } from './administrador/administrador.component';
+import { AdministradorService } from './administrador/administrador.service';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -29,6 +37,10 @@ const routes: Routes = [
   {path: 'campos', component: CamposComponent},
   {path: 'registrosFitosanitarios', component: RegistroFitosanitarioComponent},
   {path: 'predios', component: PredioComponent},
+  {path: 'cuarteles', component: CuartelComponent},
+  {path: 'fertilizantes', component: ProductoFertilizanteComponent},
+  {path: 'registrosFertilizantes', component: RegistroFertilizanteComponent},
+  {path: 'administradores', component: AdministradorComponent},
 ];
 
 @NgModule({
@@ -44,7 +56,12 @@ const routes: Routes = [
     SidenavDefinitivoComponent,
     CamposComponent,
     RegistroFitosanitarioComponent,
-    PredioComponent
+    PredioComponent,
+    CuartelComponent,
+    ProductoFertilizanteComponent,
+    RegistroFertilizanteComponent,
+    AdministradorComponent
+
   ],
   imports: [
     BrowserModule,
@@ -57,7 +74,11 @@ const routes: Routes = [
     ProductoFitosanitarioService,
     CamposService,
     PredioService,
-    RegistroFitosanitarioService
+    RegistroFitosanitarioService,
+    CuartelService,
+    ProductoFertilizanteService,
+    RegistroFertilizanteService,
+    AdministradorService
   ],
   bootstrap: [AppComponent]
 })
