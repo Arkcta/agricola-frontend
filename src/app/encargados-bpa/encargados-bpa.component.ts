@@ -3,6 +3,8 @@ import { EncargadoBPA } from './encargado-bpa';
 import { EncargadoBPAService } from './encargado-bpa.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
+import { FormBuilder, Validators, FormControl, FormGroup } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-encargados-bpa',
@@ -13,24 +15,56 @@ export class EncargadosBPAComponent implements OnInit {
 
   titulo: string = "Crear Encargado BPA";
   encargado: EncargadoBPA = new EncargadoBPA();
+  encargadoBPAEditar: EncargadoBPA = new EncargadoBPA();
   encargadosBPA: EncargadoBPA[];
+  max: number = 8;
+
+  //formsControl
+  // nombreControl = new FormControl('', [Validators.required, Validators.minLength(10)]);
+  // emailControl = new FormControl('', [Validators.required, Validators.minLength(7), Validators.maxLength(35)]);
+  // runControl = new FormControl('', [Validators.required, Validators.minLength(8), Validators.maxLength(9)]);
+  telefonoControl = new FormControl('+569', [Validators.required, Validators.minLength(8), Validators.maxLength(9)]);
+  // passControl = new FormControl('+569', [Validators.required, Validators.minLength(4), Validators.maxLength(8)]);
 
   // variable para bloquear boton de agregar o editar aun no implementado
-  agregarEn = false;
+  // agregarEn = false;
 
   //variables para validar rut que aun no se implementa
   runFormateado: string;
-  valor: string;
-  valorNumber: number;
-  nFinal: number;
+
+  //variable para manejar max de nombre
+  maxNombre: number;
 
 
 
-  constructor(private encargadoBPAService: EncargadoBPAService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private encargadoBPAService: EncargadoBPAService, private router: Router, private activatedRoute: ActivatedRoute) {
+  }
 
   ngOnInit(): void {
     this.listaEncargadosService();
   }
+
+  // getNombre(event: Event) {
+  //   event.preventDefault();
+  //   this.maxNombre = this.nombreControl.value.length;
+  //   console.log(this.nombreControl.value);
+  // }
+  //
+  // getRun(event: Event) {
+  //   event.preventDefault();
+  //   if (this.encargado.run.length >= 8) this.formatearRut(this.encargado.run);
+  //   console.log(this.runControl.value);
+  // }
+  //
+  // getTelefono(event: Event) {
+  //   event.preventDefault();
+  //   console.log(this.telefonoControl.value);
+  // }
+  //
+  // getEmail(event: Event) {
+  //   event.preventDefault();
+  //   console.log(this.emailControl.value);
+  // }
 
   listaEncargadosService() {
     this.encargadoBPAService.getEncargados().subscribe(
@@ -89,186 +123,223 @@ export class EncargadosBPAComponent implements OnInit {
   }
 
   crear(): void {
-
-
     this.encargadoBPAService.crearEncargado(this.encargado).subscribe(
-      encargado => {
+      json => {
         this.router.navigate(['/encargadosBPA'])
-        swal.fire('Nuevo Encargado BPA', `El Encargado BPA ${encargado.nombre}, ha sido creado con éxito`, 'success');
+        swal.fire('Nuevo Encargado BPA', `El Encargado BPA ${json.encargado.nombre}, ha sido creado con éxito`, 'success');
         this.listaEncargadosService();
       }
     )
   }
 
   update(): void {
-    this.encargadoBPAService.updateEncargado(this.encargado).subscribe(
-      encargado => {
+    this.getDatosInputsEditar();
+    this.encargadoBPAService.updateEncargado(this.encargado, this.encargadoBPAEditar).subscribe(
+      json => {
         this.router.navigate(['/encargadosBPA']);
-        swal.fire('Encargado BPA actualizado', `Encargado BPA ${encargado.nombre}, ha sido actualizado con éxito`, 'success');
+        swal.fire('Encargado BPA actualizado', `Encargado BPA ${json.encargado.nombre}, ha sido actualizado con éxito`, 'success');
         this.encargadoBPAService.getEncargados().subscribe(
           (encargados) => this.encargadosBPA = encargados//se agrega {this.encargadosBPA = encargados} al this cuando hay mas de una linea de codigo tambien al encargados cuando son mas de 1 parametro
         );
 
       }
     )
+  }
 
+  getDatosInputsEditar() {
+    let nombre = <HTMLInputElement>document.getElementById("nombreEditar");
+    let telefono = <HTMLInputElement>document.getElementById("telefonoEditar");
+    let email = <HTMLInputElement>document.getElementById("emailEditar");
+    let pass = <HTMLInputElement>document.getElementById("passEditar");
+
+    this.encargadoBPAEditar.nombre = nombre.value;
+    this.encargadoBPAEditar.telefono = telefono.value;
+    this.encargadoBPAEditar.email = email.value;
+    this.encargadoBPAEditar.pass = pass.value;
+    this.encargadoBPAEditar.run = this.encargado.run;
   }
 
   cargarEncargado(run: string): void {
     this.activatedRoute.params.subscribe(params => {
-      //let id = params['run'];
       if (run) {
         this.encargadoBPAService.getEncargado(run).subscribe((encargado) => this.encargado = encargado);
       }
     })
   }
 
-
   //este metodo formatea el rut y tambien lo valida con el check pero aun no esta operativo
-  formatearRut(rut: string) {
-    console.log("ENTREEE AL ONLICKKKK")
+  // formatearRut(rut: string) {
+  //   console.log("ENTREEE AL ONLICKKKK")
+  //
+  //   let div1;
+  //   let div2;
+  //   let div3;
+  //   let div4;
+  //
+  //   if (rut != undefined && rut.length >= 8 && rut.length <= 9) {
+  //     if (rut.length == 9) {
+  //       div1 = rut.slice(0, 2);
+  //       div2 = rut.slice(2, 5);
+  //       div3 = rut.slice(5, 8);
+  //       div4 = rut.slice(8, 9);
+  //       this.runFormateado = (div1 + "." + div2 + "." + div3 + "-" + div4);
+  //     }
+  //     if (rut.length == 8) {
+  //       div1 = rut.slice(0, 1);
+  //       div2 = rut.slice(1, 4);
+  //       div3 = rut.slice(4, 7);
+  //       div4 = rut.slice(7, 8);
+  //       this.runFormateado = (div1 + "." + div2 + "." + div3 + "-" + div4);
+  //     }
+  //
+  //
+  //
+  //
+  //     //   if (!this.checkRut(this.runFormateado)) {
+  //     //     this.agregarEn = true;
+  //     //   } else {
+  //     //     this.agregarEn = false;
+  //     //   };
+  //     // } else {
+  //     //   if (!this.checkRut(rut)) {
+  //     //     this.agregarEn = true;
+  //     //   } else {
+  //     //     this.agregarEn = false;
+  //     //   };
+  //     // }
+  //     this.encargado.run = this.runFormateado;
+  //   } else {
+  //     console.log("entre al else" + rut);
+  //     this.encargado.run = rut;
+  //   }
+  //
+  //
+  // }
 
-    let div1;
-    let div2;
-    let div3;
-    let div4;
-
-    if (rut == "") {
-      this.agregarEn = false;
-    } else {
-      if (rut.length >= 8) {
-        if (rut.length == 9) {
-          div1 = rut.slice(0, 2);
-          div2 = rut.slice(2, 5);
-          div3 = rut.slice(5, 8);
-          div4 = rut.slice(8, 9);
-          this.runFormateado = (div1 + "." + div2 + "." + div3 + "-" + div4);
-        }
-        if (rut.length == 8) {
-          div1 = rut.slice(0, 1);
-          div2 = rut.slice(1, 4);
-          div3 = rut.slice(4, 7);
-          div4 = rut.slice(7, 8);
-          this.runFormateado = (div1 + "." + div2 + "." + div3 + "-" + div4);
-        }
-
-
-        if (!this.checkRut(this.runFormateado)) {
-          this.agregarEn = true;
-        } else {
-          this.agregarEn = false;
-        };
-      } else {
-        if (!this.checkRut(rut)) {
-          this.agregarEn = true;
-        } else {
-          this.agregarEn = false;
-        };
-      }
-    }
-    console.log(this.agregarEn);
+  eliminarEspacios(){
+    console.log(this.encargado.nombre);
+    let valorNombre = <HTMLInputElement>document.getElementById('nombre');
+    this.encargado.nombre = valorNombre.value.trim();
 
   }
 
-  //metodo que valida el ru
+  // quitarPuGui() {
+  //   let valorRun = <HTMLInputElement>document.getElementById('run');
+  //   console.log(valorRun.value.includes('-'));
+  //   if (valorRun.value.includes('-') || valorRun.value.includes('.')) {
+  //     valorRun.value.replace('.', '');
+  //     valorRun.value.replace('-', '');
+  //   }
+  //   console.log(valorRun.value);
+  // }
+
+
+  //metodo que vacia inputs de agregar
   vaciarInputs() {
     this.encargado = new EncargadoBPA();
   }
 
-  //metodo que valida el rut
-  checkRut(rut: string): boolean {
-
-    if (rut.includes('.')) {
-      // Despejar Puntos
-      this.valor = rut.replace('.', '');
-      // Despejar Guión
-      this.valor = this.valor.replace('-', '');
-
-      // Aislar Cuerpo y Dígito Verificador
-      let cuerpo = this.valor.slice(0, -1);
-      let dv = this.valor.slice(-1).toUpperCase();
-
-      // Formatear RUN
-      rut = cuerpo + '-' + dv
-
-      // Si no cumple con el mínimo ej. (n.nnn.nnn)
-      if (cuerpo.length < 7) { return false; }
-
-      // Calcular Dígito Verificador
-      let suma = 0;
-      let multiplo = 2;
-
-      this.valorNumber = parseInt(this.valor)
-
-      // Para cada dígito del Cuerpo
-      for (let i = 1; i <= cuerpo.length; i++) {
-        this.valorNumber = parseInt(this.valor.charAt(cuerpo.length - i))
-        // Obtener su Producto con el Múltiplo Correspondiente
-        let index = multiplo * this.valorNumber;
-
-        // Sumar al Contador General
-        suma = suma + index;
-
-        // Consolidar Múltiplo dentro del rango [2,7]
-        if (multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
-
-      }
-
-      // Calcular Dígito Verificador en base al Módulo 11
-      let dvEsperado = 11 - (suma % 11);
-
-      // Casos Especiales (0 y K)
-      if (dv == 'K') { this.nFinal = 10 }
-      if (dv == '0') { this.nFinal = 11 }
-      // Validar que el Cuerpo coincide con su Dígito Verificador
-      if (dvEsperado != this.nFinal) { return false }
-
-      // Si todo sale bien, eliminar errores (decretar que es válido)
-      return true;
-    } else {
-
-      // Aislar Cuerpo y Dígito Verificador
-      let cuerpo = rut.slice(0, -1);
-      let dv = rut.slice(-1).toUpperCase();
-
-      // Formatear RUN
-      rut = cuerpo + '-' + dv
-
-      // Si no cumple con el mínimo ej. (n.nnn.nnn)
-      if (cuerpo.length < 7) { return false; }
-
-      // Calcular Dígito Verificador
-      let suma = 0;
-      let multiplo = 2;
-
-      this.valorNumber = parseInt(rut)
-
-      // Para cada dígito del Cuerpo
-      for (let i = 1; i <= cuerpo.length; i++) {
-        this.valorNumber = parseInt(rut.charAt(cuerpo.length - i))
-        // Obtener su Producto con el Múltiplo Correspondiente
-        let index = multiplo * this.valorNumber;
-
-        // Sumar al Contador General
-        suma = suma + index;
-
-        // Consolidar Múltiplo dentro del rango [2,7]
-        if (multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
-
-      }
-
-      // Calcular Dígito Verificador en base al Módulo 11
-      let dvEsperado = 11 - (suma % 11);
-
-      // Casos Especiales (0 y K)
-      if (dv == 'K') { this.nFinal = 10 }
-      if (dv == '0') { this.nFinal = 11 }
-      // Validar que el Cuerpo coincide con su Dígito Verificador
-      if (dvEsperado != this.nFinal) { return false }
-
-      // Si todo sale bien, eliminar errores (decretar que es válido)
-      return true;
-
-    }
+  pruebaConsole() {
+    let telefono = <HTMLInputElement>document.getElementById('run');
+    console.log(telefono.value);
   }
+
 }
+
+  //metodo que valida el rut
+//   checkRut(rut: string): boolean {
+//
+//     if (rut.includes('.')) {
+//       // Despejar Puntos
+//       this.valor = rut.replace('.', '');
+//       // Despejar Guión
+//       this.valor = this.valor.replace('-', '');
+//
+//       // Aislar Cuerpo y Dígito Verificador
+//       let cuerpo = this.valor.slice(0, -1);
+//       let dv = this.valor.slice(-1).toUpperCase();
+//
+//       // Formatear RUN
+//       rut = cuerpo + '-' + dv
+//
+//       // Si no cumple con el mínimo ej. (n.nnn.nnn)
+//       if (cuerpo.length < 7) { return false; }
+//
+//       // Calcular Dígito Verificador
+//       let suma = 0;
+//       let multiplo = 2;
+//
+//       this.valorNumber = parseInt(this.valor)
+//
+//       // Para cada dígito del Cuerpo
+//       for (let i = 1; i <= cuerpo.length; i++) {
+//         this.valorNumber = parseInt(this.valor.charAt(cuerpo.length - i))
+//         // Obtener su Producto con el Múltiplo Correspondiente
+//         let index = multiplo * this.valorNumber;
+//
+//         // Sumar al Contador General
+//         suma = suma + index;
+//
+//         // Consolidar Múltiplo dentro del rango [2,7]
+//         if (multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
+//
+//       }
+//
+//       // Calcular Dígito Verificador en base al Módulo 11
+//       let dvEsperado = 11 - (suma % 11);
+//
+//       // Casos Especiales (0 y K)
+//       if (dv == 'K') { this.nFinal = 10 }
+//       if (dv == '0') { this.nFinal = 11 }
+//       // Validar que el Cuerpo coincide con su Dígito Verificador
+//       if (dvEsperado != this.nFinal) { return false }
+//
+//       // Si todo sale bien, eliminar errores (decretar que es válido)
+//       return true;
+//     } else {
+//
+//       // Aislar Cuerpo y Dígito Verificador
+//       let cuerpo = rut.slice(0, -1);
+//       let dv = rut.slice(-1).toUpperCase();
+//
+//       // Formatear RUN
+//       rut = cuerpo + '-' + dv
+//
+//       // Si no cumple con el mínimo ej. (n.nnn.nnn)
+//       if (cuerpo.length < 7) { return false; }
+//
+//       // Calcular Dígito Verificador
+//       let suma = 0;
+//       let multiplo = 2;
+//
+//       this.valorNumber = parseInt(rut)
+//
+//       // Para cada dígito del Cuerpo
+//       for (let i = 1; i <= cuerpo.length; i++) {
+//         this.valorNumber = parseInt(rut.charAt(cuerpo.length - i))
+//         // Obtener su Producto con el Múltiplo Correspondiente
+//         let index = multiplo * this.valorNumber;
+//
+//         // Sumar al Contador General
+//         suma = suma + index;
+//
+//         // Consolidar Múltiplo dentro del rango [2,7]
+//         if (multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
+//
+//       }
+//
+//       // Calcular Dígito Verificador en base al Módulo 11
+//       let dvEsperado = 11 - (suma % 11);
+//
+//       // Casos Especiales (0 y K)
+//       if (dv == 'K') { this.nFinal = 10 }
+//       if (dv == '0') { this.nFinal = 11 }
+//       // Validar que el Cuerpo coincide con su Dígito Verificador
+//       if (dvEsperado != this.nFinal) { return false }
+//
+//       // Si todo sale bien, eliminar errores (decretar que es válido)
+//       return true;
+//
+//     }
+//   }
+// }

@@ -3,6 +3,15 @@
   margin-top: -40px;
 }
 
+::placeholder {
+  color: #5F5252;
+  font-size: 0.8em;
+}
+
+.mayus{
+  text-transform: capitalize;
+}
+
 .left {
   margin-right: 110px;
 }

@@ -1,4 +1,5 @@
 import { NgModule } from '@angular/core';
+import { NgxMaskModule, IConfig } from 'ngx-mask'
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
@@ -12,6 +13,7 @@ import { PredioService} from './predio/predio.service';
 import { RegistroFitosanitarioService} from './registro-fitosanitario/registro-fitosanitario.service';
 import { RouterModule, Routes} from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { ReactiveFormsModule } from '@angular/forms';
 import { SidenavComponent } from './sidenav/sidenav.component';
 import { HomeComponent } from './home/home.component';
 import { ProductoFitosanitarioComponent } from './producto-fitosanitario/producto-fitosanitario.component';
@@ -20,6 +22,7 @@ import { SidenavDefinitivoComponent } from './sidenav-definitivo/sidenav-definit
 import { CamposComponent } from './campos/campos.component';
 import { RegistroFitosanitarioComponent } from './registro-fitosanitario/registro-fitosanitario.component';
 import { PredioComponent } from './predio/predio.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 
 const routes: Routes = [
   {path: '', redirectTo: '/home', pathMatch: 'full'},
@@ -29,7 +32,12 @@ const routes: Routes = [
   {path: 'campos', component: CamposComponent},
   {path: 'registrosFitosanitarios', component: RegistroFitosanitarioComponent},
   {path: 'predios', component: PredioComponent},
+  {path: 'estadisticas', component: EstadisticasComponent},
 ];
+
+const  maskConfig : Partial < IConfig >  =  {
+  validation : false ,
+} ;
 
 @NgModule({
   declarations: [
@@ -44,13 +52,16 @@ const routes: Routes = [
     SidenavDefinitivoComponent,
     CamposComponent,
     RegistroFitosanitarioComponent,
-    PredioComponent
+    PredioComponent,
+    EstadisticasComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     RouterModule.forRoot(routes),
     FormsModule,
+    ReactiveFormsModule,
+    NgxMaskModule.forRoot(maskConfig),
   ],
   providers: [
     EncargadoBPAService,

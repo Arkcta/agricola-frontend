@@ -3,6 +3,11 @@
   margin-top: -40px;
 }
 
+::placeholder {
+  color: #5F5252;
+  font-size: 0.8em;
+}
+
 .left {
   margin-right: 110px;
 }
@@ -287,6 +292,7 @@ table.table .avatar {
   border-radius: 2px;
   box-shadow: none;
   border-color: #dddddd;
+
 }
 
 .modal textarea.form-control {

@@ -13,6 +13,7 @@ export class ProductoFitosanitarioComponent implements OnInit {
 
   fitosanitario: ProductoFitosanitario = new ProductoFitosanitario();
   fitosanitarios: ProductoFitosanitario[];
+  fitosanitarioEditar: ProductoFitosanitario = new ProductoFitosanitario;
 
   constructor(private fitosanitarioService: ProductoFitosanitarioService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
@@ -76,9 +77,9 @@ export class ProductoFitosanitarioComponent implements OnInit {
 //metodo para crearFito junto con sweetAlert
   crear(): void {
     this.fitosanitarioService.crearFitosanitario(this.fitosanitario).subscribe(
-      fito => {
+      json => {
         this.router.navigate(['/fitosanitarios'])
-        swal.fire('Nuevo producto Fitosanitario', `El producto Fitosanitario ${fito.nombreComercial}, ha sido creado con éxito`, 'success');
+        swal.fire('Nuevo producto Fitosanitario', `El producto Fitosanitario ${this.fitosanitario.nombreComercial}, ha sido creado con éxito`, 'success');
         this.listaFitosanitariosService();
       }
     )
@@ -88,7 +89,7 @@ export class ProductoFitosanitarioComponent implements OnInit {
   //si te fijas volvemos a llamar al metodo del servicio de la lista de fitos
   //para que se edita en tiempo real, asi se vuelve a llamar la lista pero ya actualizada
   update(): void {
-    this.fitosanitarioService.updateEncargado(this.fitosanitario).subscribe(
+    this.fitosanitarioService.updateEncargado(this.fitosanitario, this.fitosanitarioEditar).subscribe(
       fito => {
         this.router.navigate(['/fitosanitarios']);
         swal.fire('Producto Fitosanitario actualizado', `Fitosanitario ${fito.nombreComercial}, ha sido actualizado con éxito`, 'success');
@@ -110,6 +111,33 @@ export class ProductoFitosanitarioComponent implements OnInit {
 //metodo que vacia los inputs del modal agregar fito
   vaciarInputs() {
     this.fitosanitario = new ProductoFitosanitario();
+  }
+
+  getDatosInputsEditar() {
+    let nombreComercial = <HTMLInputElement>document.getElementById("nombreComercialEditar");
+    let objetivo = <HTMLInputElement>document.getElementById("objetivoEditar");
+    let ingredienteActivo = <HTMLInputElement>document.getElementById("ingredienteActivoEditar");
+    let mojamiento = <HTMLInputElement>document.getElementById("mojamientoEditar");
+    let carencia = <HTMLInputElement>document.getElementById("carenciaEditar");
+
+    this.fitosanitarioEditar.nombreComercial = nombreComercial.value;
+    this.fitosanitarioEditar.objetivo = objetivo.value;
+    this.fitosanitarioEditar.ingredienteActivo = ingredienteActivo.value;
+    this.fitosanitarioEditar.mojamiento = Number(mojamiento.value);
+    this.fitosanitarioEditar.carencia = Number(carencia.value);
+  }
+
+  eliminarEspacios(){
+    let valorNombre = <HTMLInputElement>document.getElementById('nombreComercialEditar')
+    this.fitosanitario.nombreComercial = valorNombre.value.trim();
+  }
+  eliminarEspaciosObjetivo(){
+    let valorNombre = <HTMLInputElement>document.getElementById('objetivoEditar')
+    this.fitosanitario.objetivo = valorNombre.value.trim();
+  }
+  eliminarEspaciosIngrediente(){
+    let valorNombre = <HTMLInputElement>document.getElementById('ingredienteActivoEditar')
+    this.fitosanitario.ingredienteActivo = valorNombre.value.trim();
   }
 
 }

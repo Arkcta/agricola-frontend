@@ -1,9 +1,11 @@
 import { Injectable } from '@angular/core';
 // import { ENCARGADOS } from './encargadosBPA.json';
 import { EncargadoBPA } from './encargado-bpa';
-import { Observable } from 'rxjs';
+import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { map, catchError } from 'rxjs/operators';
+import swal from 'sweetalert2';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -14,7 +16,7 @@ export class EncargadoBPAService {
 
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router ) { }
 
   getEncargados(): Observable<EncargadoBPA[]> {
     return this.http.get(this.urlEndPoint).pipe(
@@ -22,21 +24,42 @@ export class EncargadoBPAService {
     );
   }
 
-  crearEncargado(encargado: EncargadoBPA): Observable<EncargadoBPA> {
-    return this.http.post<EncargadoBPA>(this.urlEndPoint, encargado, { headers: this.httpHeaders });
+  crearEncargado(encargado: EncargadoBPA): Observable<any> {
+    return this.http.post<any>(this.urlEndPoint, encargado, { headers: this.httpHeaders }).pipe(
+      catchError(e => {
+        //this.router.navigate(['/encargadosBPA'])
+        swal.fire('Error al agregar', e.error.mensaje, 'error');
+        return throwError(e);
+      }));
 
   }
 
   getEncargado(run: any): Observable<EncargadoBPA> {
-    return this.http.get<EncargadoBPA>(`${this.urlEndPoint}/${run}`);
+    return this.http.get<EncargadoBPA>(`${this.urlEndPoint}/${run}`).pipe(
+      catchError(e => {
+        this.router.navigate(['/encargadosBPA'])
+        swal.fire('Error al buscar', e.error.mensaje, 'error');
+        return throwError(e);
+      })
+    );
   }
 
-  updateEncargado(encargado: EncargadoBPA): Observable<EncargadoBPA>{
-    return this.http.put<EncargadoBPA>(`${this.urlEndPoint}/${encargado.run}`, encargado, {headers: this.httpHeaders})
+  updateEncargado(encargadoActual: EncargadoBPA, encargadoEditado: EncargadoBPA): Observable<any>{
+    return this.http.put<any>(`${this.urlEndPoint}/${encargadoActual.run}`, encargadoEditado, {headers: this.httpHeaders}).pipe(
+      catchError(e => {
+        //this.router.navigate(['/encargadosBPA'])
+        swal.fire('Error al editar', e.error.mensaje, 'error');
+        return throwError(e);
+      }));
   }
 
   deleteEncargado(run: any): Observable<EncargadoBPA>{
-    return this.http.delete<EncargadoBPA>(`${this.urlEndPoint}/${run}`, {headers: this.httpHeaders});
+    return this.http.delete<EncargadoBPA>(`${this.urlEndPoint}/${run}`, {headers: this.httpHeaders}).pipe(
+      catchError(e => {
+        //this.router.navigate(['/encargadosBPA'])
+        swal.fire('Error al eliminar', e.error.mensaje, 'error');
+        return throwError(e);
+      }));;
   }
 
 }

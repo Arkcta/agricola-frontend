@@ -16,7 +16,10 @@
             </div>
           </div>
           <div id="global">
-              <table width="100%" border="solid" class="table table-striped table-hover">
+            <div *ngIf="fitosanitarios?.length == 0" class="alert alert-info" style="margin-left:50px; width: 100%; text-align: center;">
+              No hay productos Fitosanitarios registrados en la base de datos
+            </div>
+              <table width="100%" border="solid" class="table table-striped table-hover" *ngIf="fitosanitarios?.length>0">
                 <thead>
                   <tr>
                     <!-- <th>
@@ -70,7 +73,7 @@
       </div>
     </div>
 
-    <!-- AGREGAR ENCARGADO BPA Modal HTML -->
+    <!-- AGREGAR Fitosanitario Modal HTML -->
 
     <div id="addEmployeeModal" class="modal fade">
       <div class="modal-dialog">
@@ -84,29 +87,67 @@
 
               <div class="form-group">
                 <label for="nombreComercial">Nombre comercial</label>
-                <input type="text" class="form-control" [(ngModel)]="fitosanitario.nombreComercial" name="nombreComercail">
+                <input type="text" class="form-control mayus" (blur)="eliminarEspacios()" [(ngModel)]="fitosanitario.nombreComercial" id="nombreComercial" required #nombre="ngModel" name="nombreComercial" minlength="5" maxlength="25" onkeypress='return ((event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 32 ) || (event.charCode == 164))'>
+                <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                  <div *ngIf="nombre.errors.required">
+                    Nombre comercial es requerido
+                  </div>
+                  <div *ngIf="nombre.errors.minlength">
+                    Nombre comercial debe tener 5 caracteres minimo
+                  </div>
+                </div>
               </div>
 
               <div class="form-group">
                 <label for="objetivo">Objetivo</label>
-                <!-- (blur)="formatearRut(encargado.run)" -->
-                <input type="text" class="form-control" [(ngModel)]="fitosanitario.objetivo" id="objetivo" name="objetivo">
-
+                <input type="text" class="form-control mayus" (blur)="eliminarEspaciosObjetivo()" [(ngModel)]="fitosanitario.objetivo" id="objetivo" name="objetivo" required minlength="5" maxlength="25" #objetivo="ngModel" onkeypress='return ((event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 32)'>
+                <div class="alert alert-danger" *ngIf="objetivo.invalid && (objetivo.dirty || objetivo.touched)">
+                  <div *ngIf="objetivo.errors.required">
+                    Objetivo es requerido
+                  </div>
+                  <div *ngIf="objetivo.errors.minlength">
+                    Objetivo debe tener 5 caracteres minimo
+                  </div>
+                </div>
               </div>
 
               <div class="form-group">
                 <label for="ingredienteActivo">Ingrediente activo</label>
-                <input type="text" class="form-control" [(ngModel)]="fitosanitario.ingredienteActivo" name="ingredienteActivo">
+                <input type="text" class="form-control" (blur)="eliminarEspaciosIngrediente()" [(ngModel)]="fitosanitario.ingredienteActivo" required name="ingredienteActivo" id="ingrediente" #ingrediente="ngModel" minlength="5" maxlength="25" style="text-transform:uppercase" onkeypress='return ((event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode >= 48 && event.charCode <= 57) || event.charCode == 32)'>
+                <div class="alert alert-danger" *ngIf="ingrediente.invalid && (ingrediente.dirty || ingrediente.touched)">
+                  <div *ngIf="ingrediente.errors.required">
+                    Ingrediente activo es requerido
+                  </div>
+                  <div *ngIf="ingrediente.errors.minlength">
+                    Ingrediente activo debe tener 5 caracteres minimo
+                  </div>
+                </div>
               </div>
 
               <div class="form-group">
-                <label for="mojamiento">Mojamiento</label>
-                <input type="number" class="form-control" [(ngModel)]="fitosanitario.mojamiento" name="mojamiento">
+                <label for="mojamiento">Mojamiento (Lt/ha)</label>
+                <input type="text" class="form-control" [(ngModel)]="fitosanitario.mojamiento" name="mojamiento" id="mojamiento" required minlength="1" maxlength="5" #mojamiento="ngModel" onkeypress='return ((event.charCode >= 48 && event.charCode <= 57))'>
+                <div class="alert alert-danger" *ngIf="mojamiento.invalid && (mojamiento.dirty || mojamiento.touched)">
+                  <div *ngIf="mojamiento.errors.required">
+                    Mojamiento es requerido
+                  </div>
+                  <div *ngIf="mojamiento.errors.minlength">
+                    Mojamiento debe tener 1 caracter minimo
+                  </div>
+                </div>
               </div>
 
               <div class="form-group">
-                <label for="carencia">Carencia</label>
-                <input type="number" class="form-control" [(ngModel)]="fitosanitario.carencia" name="carencia">
+                <label for="carencia">Carencia (dias)</label>
+                <input type="text" class="form-control" [(ngModel)]="fitosanitario.carencia" name="carencia" id="carencia" required minlength="1" maxlength="2" #carencia="ngModel" style="text-transform:uppercase" onkeypress='return ((event.charCode >= 48 && event.charCode <= 57))'>
+                <div class="alert alert-danger" *ngIf="carencia.invalid && (carencia.dirty || carencia.touched)">
+                  <div *ngIf="carencia.errors.required">
+                    Carencia es requerido
+                  </div>
+                  <div *ngIf="carencia.errors.minlength">
+                    Carencia debe tener 1 caracter minimo
+                  </div>
+                </div>
               </div>
 
             </div>
@@ -137,29 +178,29 @@
 
               <div class="form-group">
                 <label for="nombreComercial">Nombre comercial</label>
-                <input type="text" class="form-control" [(ngModel)]="fitosanitario.nombreComercial" name="nombreComercail">
+                <input type="text" class="form-control" [(ngModel)]="fitosanitario.nombreComercial" name="nombreComercialEditar" id="nombreComercialEditar">
               </div>
 
               <div class="form-group">
                 <label for="objetivo">Objetivo</label>
                 <!-- (blur)="formatearRut(encargado.run)" -->
-                <input type="text" class="form-control" [(ngModel)]="fitosanitario.objetivo" id="objetivo" name="objetivo">
+                <input type="text" class="form-control" [(ngModel)]="fitosanitario.objetivo" id="objetivo" name="objetivoEditar" id="objetivoEditar">
 
               </div>
 
               <div class="form-group">
                 <label for="ingredienteActivo">Ingrediente activo</label>
-                <input type="text" class="form-control" [(ngModel)]="fitosanitario.ingredienteActivo" name="ingredienteActivo">
+                <input type="text" class="form-control" [(ngModel)]="fitosanitario.ingredienteActivo" name="ingredienteActivoEditar" id="ingredienteActivoEditar">
               </div>
 
               <div class="form-group">
                 <label for="mojamiento">Mojamiento</label>
-                <input type="number" class="form-control" [(ngModel)]="fitosanitario.mojamiento" name="mojamiento">
+                <input type="number" class="form-control" [(ngModel)]="fitosanitario.mojamiento" name="mojamientoEditar" id="mojamientoEditar">
               </div>
 
               <div class="form-group">
                 <label for="carencia">Carencia</label>
-                <input type="number" class="form-control" [(ngModel)]="fitosanitario.carencia" name="carencia">
+                <input type="number" class="form-control" [(ngModel)]="fitosanitario.carencia" name="carenciaEditar" id="carenciaEditar">
               </div>
 
             </div>

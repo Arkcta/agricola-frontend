@@ -17,7 +17,10 @@
           </div>
           <div id="global">
             <div class="table-wrapper-scroll-y my-custom-scrollbar div1">
-              <table width="100%" border="solid" class="table table-striped table-hover">
+              <div *ngIf="campos?.length == 0" class="alert alert-info" style="margin-left:50px; width: 100%; text-align: center;">
+                No hay campos registrados en la base de datos
+              </div>
+              <table width="100%" border="solid" class="table table-striped table-hover" *ngIf="campos?.length>0">
                 <thead>
                   <tr>
                     <!-- <th>
