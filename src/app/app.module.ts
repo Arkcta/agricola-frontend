@@ -30,7 +30,7 @@ import { ListarRegistrosFitosanitariosComponent } from './listar-registros-fitos
 import { ListarRegistrosFitosanitariosService } from './listar-registros-fitosanitarios/listar-registros-fitosanitarios.service';
 import { ListarEncargadosBpaComponent } from './listar-encargados-bpa/listar-encargados-bpa.component';
 import { ListarEncargadosBpaService } from './listar-encargados-bpa/listar-encargados-bpa.service';
-import { LoginComponent } from './login/login.component';
+import { LoginComponent } from './usuarios/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 
 
