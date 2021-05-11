@@ -14,13 +14,6 @@ export class SidenavDefinitivoComponent implements OnInit {
   }
 
 
-  mostrar(){
-    let flag = document.getElementById("sidebar").className;
-    if(flag === "active"){
-      document.getElementById("sidebar").className = "";
-    }else{
-      document.getElementById("sidebar").className = "active";
-    }
-  }
+
 
 }

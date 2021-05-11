@@ -2,8 +2,6 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule} from '@angular/common/http';
 import { AppComponent } from './app.component';
-import {HeaderComponent} from './header/header.component';
-import {FooterComponent} from './footer/footer.component';
 import { EncargadosBPAComponent } from './encargados-bpa/encargados-bpa.component';
 import { EncargadoBPAService} from './encargados-bpa/encargado-bpa.service';
 import { ProductoFitosanitarioService} from './producto-fitosanitario/producto-fitosanitario.service';
@@ -12,10 +10,8 @@ import { PredioService} from './predio/predio.service';
 import { RegistroFitosanitarioService} from './registro-fitosanitario/registro-fitosanitario.service';
 import { RouterModule, Routes} from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { SidenavComponent } from './sidenav/sidenav.component';
 import { HomeComponent } from './home/home.component';
 import { ProductoFitosanitarioComponent } from './producto-fitosanitario/producto-fitosanitario.component';
-import { SidenavbarComponent } from './sidenavbar/sidenavbar.component';
 import { SidenavDefinitivoComponent } from './sidenav-definitivo/sidenav-definitivo.component';
 import { CamposComponent } from './campos/campos.component';
 import { RegistroFitosanitarioComponent } from './registro-fitosanitario/registro-fitosanitario.component';
@@ -34,11 +30,13 @@ import { ListarRegistrosFitosanitariosComponent } from './listar-registros-fitos
 import { ListarRegistrosFitosanitariosService } from './listar-registros-fitosanitarios/listar-registros-fitosanitarios.service';
 import { ListarEncargadosBpaComponent } from './listar-encargados-bpa/listar-encargados-bpa.component';
 import { ListarEncargadosBpaService } from './listar-encargados-bpa/listar-encargados-bpa.service';
+import { LoginComponent } from './login/login.component';
+import { NavbarComponent } from './navbar/navbar.component';
 
 
 
 const routes: Routes = [
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
+  {path: '', redirectTo: '/login', pathMatch: 'full'},
   {path: 'home', component: HomeComponent},
   {path: 'encargadosBPA', component: EncargadosBPAComponent},
   {path: 'fitosanitarios', component: ProductoFitosanitarioComponent},
@@ -51,19 +49,16 @@ const routes: Routes = [
   {path: 'administradores', component: AdministradorComponent},
   {path: 'listarRegistrosFertilizantes', component: ListarRegistrosFertilizantesComponent},
   {path: 'listarRegistrosFitosanitarios', component: ListarRegistrosFitosanitariosComponent},
-  {path: 'listarEncargadosBpa', component: ListarEncargadosBpaComponent}
+  {path: 'listarEncargadosBpa', component: ListarEncargadosBpaComponent},
+  {path: 'login', component: LoginComponent},
 ];
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
-    FooterComponent,
     EncargadosBPAComponent,
-    SidenavComponent,
     HomeComponent,
     ProductoFitosanitarioComponent,
-    SidenavbarComponent,
     SidenavDefinitivoComponent,
     CamposComponent,
     RegistroFitosanitarioComponent,
@@ -74,7 +69,9 @@ const routes: Routes = [
     AdministradorComponent,
     ListarRegistrosFertilizantesComponent,
     ListarRegistrosFitosanitariosComponent,
-    ListarEncargadosBpaComponent
+    ListarEncargadosBpaComponent,
+    LoginComponent,
+    NavbarComponent
 
   ],
   imports: [
