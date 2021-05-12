@@ -32,6 +32,7 @@ import { ListarEncargadosBpaComponent } from './listar-encargados-bpa/listar-enc
 import { ListarEncargadosBpaService } from './listar-encargados-bpa/listar-encargados-bpa.service';
 import { LoginComponent } from './login/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 
 
 
@@ -51,6 +52,7 @@ const routes: Routes = [
   {path: 'listarRegistrosFitosanitarios', component: ListarRegistrosFitosanitariosComponent},
   {path: 'listarEncargadosBpa', component: ListarEncargadosBpaComponent},
   {path: 'login', component: LoginComponent},
+  {path: 'estadisticas', component: EstadisticasComponent},
 ];
 
 @NgModule({
@@ -71,7 +73,8 @@ const routes: Routes = [
     ListarRegistrosFitosanitariosComponent,
     ListarEncargadosBpaComponent,
     LoginComponent,
-    NavbarComponent
+    NavbarComponent,
+    EstadisticasComponent
 
   ],
   imports: [

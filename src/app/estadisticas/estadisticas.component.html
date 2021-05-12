@@ -1,0 +1,27 @@
+<div class="wrapper d-flex align-items-stretch">
+
+  <app-sidenav-definitivo></app-sidenav-definitivo>
+
+  <div id="content" class="p-4 p-md-5">
+
+    <app-navbar></app-navbar>
+
+    <div class="divChart">
+      <h6 style="text-align: center;">Registros de productos Fertilizantes</h6>
+      <canvas id="myChart" width="300" height="300"></canvas>
+    </div>
+
+
+    <div class="divChart2">
+      <h6 style="text-align: center;">Registros de productos Fitosanitario</h6>
+      <canvas id="myChart2" width="300" height="300"></canvas>
+    </div>
+
+
+    <div class="filtrarAño">
+      <h6>Filtrar por año</h6>
+      <input type="number" name="" value="" placeholder="ingrese año" [(ngModel)]="anioFiltrar">
+      <button type="button" name="button" (click)="consolePrueba()">Filtrar</button>
+    </div>
+  </div>
+</div>

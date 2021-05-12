@@ -15,7 +15,7 @@ export class ProductoFitosanitarioService {
 
   constructor(private http: HttpClient) { }
 
-  getFitosanitarios(): Observable<ProductoFitosanitario[]> {
+  public getFitosanitarios(): Observable<ProductoFitosanitario[]> {
     return this.http.get(this.urlEndPoint).pipe(
       map((response) => response as ProductoFitosanitario[])
     );
