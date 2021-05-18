@@ -1,22 +1,30 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
+import { AuthService } from '../usuarios/auth.service';
+import { Router } from '@angular/router';
+import swal from 'sweetalert2';
+
 
 @Component({
   selector: 'app-navbar',
   templateUrl: './navbar.component.html',
   styleUrls: ['./navbar.component.css']
 })
-export class NavbarComponent implements OnInit {
+export class NavbarComponent {
 
-  constructor() { }
+  constructor(public authService: AuthService, public router:Router) { }
 
-  ngOnInit(): void {
-  }
+ logout(){
+   let username = this.authService.usuario.username;
+    this.authService.logout();
+    swal.fire('Logout', `Hola ${username}, has cerrado sesión con éxito!`, 'success');
+    this.router.navigate(['/login']);
+ }
 
-  mostrar(){
+  mostrar() {
     let flag = document.getElementById("sidebar").className;
-    if(flag === "active"){
+    if (flag === "active") {
       document.getElementById("sidebar").className = "";
-    }else{
+    } else {
       document.getElementById("sidebar").className = "active";
     }
   }
