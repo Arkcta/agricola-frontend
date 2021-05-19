@@ -6,47 +6,39 @@
       <li routerLinkActive="active">
         <a routerLink="/home">Home</a>
       </li>
-      <li routerLinkActive="active">
-        <a routerLink="/encargadosBPA">Encargados BPA</a>
-      </li>
-      <li routerLinkActive="active">
-        <a routerLink="/fitosanitarios">Fitosanitarios</a>
-      </li>
-      <li routerLinkActive="active">
-        <a routerLink="/campos">Campos</a>
-      </li>
-      <li routerLinkActive="active">
-        <a routerLink="/registrosFitosanitarios">Registros Fitosanitarios</a>
-      </li>
-      <li routerLinkActive="active">
-        <a routerLink="/predios">Predios</a>
-      </li>
-      <li routerLinkActive="active">
+      <li routerLinkActive="active" *ngIf="authService.hasRole('ROLE_ADMIN')|| authService.hasRole('ROLE_DUENO')" >
         <a routerLink="/administradores">Administradores</a>
       </li>
-      <li routerLinkActive="active">
+      <li *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_DUENO') ||  authService.hasRole('ROLE_ADMINCAMPO')" routerLinkActive="active">
+        <a routerLink="/campos">Campos</a>
+      </li>
+      <li routerLinkActive="active"*ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_DUENO') ||  authService.hasRole('ROLE_ADMINCAMPO')"  >
         <a routerLink="/cuarteles">Cuarteles</a>
       </li>
-      <li routerLinkActive="active">
+      <li *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_DUENO')" routerLinkActive="active">
+        <a routerLink="/encargadosBPA">Encargados BPA</a>
+      </li>
+      <li *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA') || authService.hasRole('ROLE_DUENO')"  routerLinkActive="active">
         <a routerLink="/fertilizantes">Fertilizantes</a>
       </li>
-      <li routerLinkActive="active">
+      <li *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA') || authService.hasRole('ROLE_DUENO') "  routerLinkActive="active">
+        <a routerLink="/fitosanitarios">Fitosanitarios</a>
+      </li>
+
+      <li  *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')" routerLinkActive="active">
+        <a routerLink="/registrosFitosanitarios">Registros Fitosanitarios</a>
+      </li>
+      <li *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')"  routerLinkActive="active">
         <a routerLink="/registrosFertilizantes">Registros Fertilizantes</a>
       </li>
-      <li routerLinkActive="active">
-        <a routerLink="/listarRegistrosFertilizantes">Ver Registros Fertilizantes</a>
-      </li>
-      <li routerLinkActive="active">
-        <a routerLink="/listarRegistrosFitosanitarios">Ver Registros Fitosanitarios</a>
-      </li>
-      <li routerLinkActive="active">
-        <a routerLink="/listarEncargadosBpa">Ver Encargados BPA</a>
+      <li routerLinkActive="active" *ngIf="authService.hasRole('ROLE_ADMIN')|| authService.hasRole('ROLE_DUENO') ||  authService.hasRole('ROLE_ADMINCAMPO')" >
+        <a routerLink="/predios">Predios</a>
       </li>
     </ul>
 
     <div class="footer">
       <p>
-        All rights reserved | Hengo
+        All rights reserved | HenGo
       </p>
     </div>
 

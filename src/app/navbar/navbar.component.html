@@ -6,12 +6,6 @@
       <i class="fa fa-bars"></i>
       <span class="sr-only">Toggle Menu</span>
     </button>
-    <button class="btn btn-dark d-inline-block d-lg-none ml-auto" type="button" data-toggle="collapse"
-      data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-      aria-label="Toggle navigation">
-      <i class="fa fa-bars"></i>
-    </button>
-
 
     <div class="nav justify-content-end" id="navbarSupportedContent">
         <ul class="nav-item">
@@ -22,7 +16,7 @@
         </ul>
         <ul class="nav-item" >
           <li *ngIf="authService.isAuthenticated()" >
-            <a  href="#" role="button"  (click)="logout()" aria-expanded="false">
+            <a  href="#" role="button"  (click)="logout()">
               <i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar sesión
             </a>
           </li>

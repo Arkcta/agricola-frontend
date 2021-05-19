@@ -24,12 +24,6 @@ import { RegistroFertilizanteService} from './registro-fertilizante/registro-fer
 import { RegistroFertilizanteComponent} from './registro-fertilizante/registro-fertilizante.component';
 import { AdministradorComponent } from './administrador/administrador.component';
 import { AdministradorService } from './administrador/administrador.service';
-import { ListarRegistrosFertilizantesComponent } from './listar-registros-fertilizantes/listar-registros-fertilizantes.component';
-import { ListarRegistrosFertilizantesService } from './listar-registros-fertilizantes/listar-registros-fertilizantes.service';
-import { ListarRegistrosFitosanitariosComponent } from './listar-registros-fitosanitarios/listar-registros-fitosanitarios.component';
-import { ListarRegistrosFitosanitariosService } from './listar-registros-fitosanitarios/listar-registros-fitosanitarios.service';
-import { ListarEncargadosBpaComponent } from './listar-encargados-bpa/listar-encargados-bpa.component';
-import { ListarEncargadosBpaService } from './listar-encargados-bpa/listar-encargados-bpa.service';
 import { LoginComponent } from './usuarios/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 
@@ -47,9 +41,6 @@ const routes: Routes = [
   {path: 'fertilizantes', component: ProductoFertilizanteComponent},
   {path: 'registrosFertilizantes', component: RegistroFertilizanteComponent},
   {path: 'administradores', component: AdministradorComponent},
-  {path: 'listarRegistrosFertilizantes', component: ListarRegistrosFertilizantesComponent},
-  {path: 'listarRegistrosFitosanitarios', component: ListarRegistrosFitosanitariosComponent},
-  {path: 'listarEncargadosBpa', component: ListarEncargadosBpaComponent},
   {path: 'login', component: LoginComponent},
 ];
 
@@ -67,9 +58,6 @@ const routes: Routes = [
     ProductoFertilizanteComponent,
     RegistroFertilizanteComponent,
     AdministradorComponent,
-    ListarRegistrosFertilizantesComponent,
-    ListarRegistrosFitosanitariosComponent,
-    ListarEncargadosBpaComponent,
     LoginComponent,
     NavbarComponent
 
@@ -89,10 +77,7 @@ const routes: Routes = [
     CuartelService,
     ProductoFertilizanteService,
     RegistroFertilizanteService,
-    AdministradorService,
-    ListarRegistrosFertilizantesService,
-    ListarRegistrosFitosanitariosService,
-    ListarEncargadosBpaService
+    AdministradorService
   ],
   bootstrap: [AppComponent]
 })

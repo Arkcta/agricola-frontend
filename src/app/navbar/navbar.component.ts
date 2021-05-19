@@ -14,10 +14,11 @@ export class NavbarComponent {
   constructor(public authService: AuthService, public router:Router) { }
 
  logout(){
-   let username = this.authService.usuario.username;
+   let username = this.authService.usuario.nombre;
+     swal.fire('Logout', `Hola ${username}, has cerrado sesión con éxito!`, 'success');
     this.authService.logout();
-    swal.fire('Logout', `Hola ${username}, has cerrado sesión con éxito!`, 'success');
     this.router.navigate(['/login']);
+
  }
 
   mostrar() {

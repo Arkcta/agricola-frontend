@@ -3,6 +3,7 @@ import { Administrador } from './administrador';
 import { AdministradorService } from './administrador.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
+import {AuthService} from '../usuarios/auth.service';
 
 @Component({
   selector: 'app-administrador',
@@ -14,7 +15,8 @@ export class AdministradorComponent implements OnInit {
     administrador: Administrador = new Administrador();
     administradores: Administrador[];
 
-    constructor(private administradorService: AdministradorService, private router: Router, private activatedRoute: ActivatedRoute) { }
+    constructor(private administradorService: AdministradorService, private router: Router,
+       private activatedRoute: ActivatedRoute, private authService: AuthService) { }
 
     ngOnInit(): void {
       this.listaAdministradoresService();
