@@ -26,21 +26,21 @@ import { AdministradorComponent } from './administrador/administrador.component'
 import { AdministradorService } from './administrador/administrador.service';
 import { LoginComponent } from './usuarios/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
-
+import {AuthGuard} from './usuarios/guards/auth.guard';
 
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
-  {path: 'home', component: HomeComponent},
-  {path: 'encargadosBPA', component: EncargadosBPAComponent},
-  {path: 'fitosanitarios', component: ProductoFitosanitarioComponent},
-  {path: 'campos', component: CamposComponent},
-  {path: 'registrosFitosanitarios', component: RegistroFitosanitarioComponent},
-  {path: 'predios', component: PredioComponent},
-  {path: 'cuarteles', component: CuartelComponent},
-  {path: 'fertilizantes', component: ProductoFertilizanteComponent},
-  {path: 'registrosFertilizantes', component: RegistroFertilizanteComponent},
-  {path: 'administradores', component: AdministradorComponent},
+  {path: 'home', component: HomeComponent, canActivate:[AuthGuard]},
+  {path: 'encargadosBPA', component: EncargadosBPAComponent, canActivate:[AuthGuard]},
+  {path: 'fitosanitarios', component: ProductoFitosanitarioComponent, canActivate:[AuthGuard]},
+  {path: 'campos', component: CamposComponent, canActivate:[AuthGuard]},
+  {path: 'registrosFitosanitarios', component: RegistroFitosanitarioComponent, canActivate:[AuthGuard]},
+  {path: 'predios', component: PredioComponent, canActivate:[AuthGuard]},
+  {path: 'cuarteles', component: CuartelComponent, canActivate:[AuthGuard]},
+  {path: 'fertilizantes', component: ProductoFertilizanteComponent, canActivate:[AuthGuard]},
+  {path: 'registrosFertilizantes', component: RegistroFertilizanteComponent, canActivate:[AuthGuard]},
+  {path: 'administradores', component: AdministradorComponent, canActivate:[AuthGuard]},
   {path: 'login', component: LoginComponent},
 ];
 

@@ -2,9 +2,10 @@ import { Injectable } from '@angular/core';
 import { Administrador } from './Administrador';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map, catchError,tap } from 'rxjs/operators';
+import { map, catchError} from 'rxjs/operators';
 import {Router} from '@angular/router';
 import {AuthService} from '../usuarios/auth.service';
+import swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -27,8 +28,16 @@ export class AdministradorService {
     }
 
     private isNoAutorizado(e):boolean{
-      if(e.status==401 || e.status==403){
+      if(e.status==401){
+        if(this.authService.isAuthenticated()){
+          this.authService.logout();
+        }
         this.router.navigate(['/login'])
+        return true;
+      }
+      if( e.status==403){
+        swal.fire("Acceso denegado", `Hola ${this.authService.usuario.nombre}  no tienes acceso a este recurso`,'warning');
+        this.router.navigate(['/home'])
         return true;
       }
       return false;
