@@ -10,7 +10,7 @@ import {AuthService} from './auth.service';
   templateUrl: './login.component.html',
   styleUrls: ['./login.component.css']
 })
-export class LoginComponent implements OnInit {
+export class LoginComponent implements OnInit{
 
   usuario:Usuario;
 
@@ -18,11 +18,12 @@ export class LoginComponent implements OnInit {
   this.usuario= new Usuario();}
 
   ngOnInit(): void {
-      if(this.authService.isAuthenticated()){
+        if(this.authService.isAuthenticated()){
         swal.fire('Login',`Hola ${this.authService.usuario.nombre} ya estás auntenticado!`, "info");
         this.router.navigate(['/home']);
       }
-  }
+
+   }
  login(){
 
   console.log(this.usuario);

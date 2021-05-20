@@ -3,6 +3,7 @@ import { EncargadoBPA } from './encargado-bpa';
 import { EncargadoBPAService } from './encargado-bpa.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
+import { AuthService } from '../usuarios/auth.service';
 
 @Component({
   selector: 'app-encargados-bpa',
@@ -26,7 +27,8 @@ export class EncargadosBPAComponent implements OnInit {
 
 
 
-  constructor(private encargadoBPAService: EncargadoBPAService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private encargadoBPAService: EncargadoBPAService,
+     private router: Router, private activatedRoute: ActivatedRoute, public authService: AuthService) { }
 
   ngOnInit(): void {
     this.listaEncargadosService();

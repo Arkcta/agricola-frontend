@@ -3,6 +3,7 @@ import { RegistroFitosanitario } from './registro-fitosanitario';
 import { RegistroFitosanitarioService } from './registro-fitosanitario.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
+import { AuthService } from '../usuarios/auth.service';
 
 @Component({
   selector: 'app-registro-fitosanitario',
@@ -14,7 +15,8 @@ export class RegistroFitosanitarioComponent implements OnInit {
   registrosFitosanitarios: RegistroFitosanitario[];
   registroFitosanitario: RegistroFitosanitario = new RegistroFitosanitario();
 
-  constructor(private regisFitoService: RegistroFitosanitarioService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private regisFitoService: RegistroFitosanitarioService,
+     private router: Router, private activatedRoute: ActivatedRoute, public authService: AuthService) { }
 
   ngOnInit(): void {
     this.listaRegistroFitoService();

@@ -13,11 +13,26 @@ export class NavbarComponent {
 
   constructor(public authService: AuthService, public router:Router) { }
 
- logout(){
+ salir(){
    let username = this.authService.usuario.nombre;
-     swal.fire('Logout', `Hola ${username}, has cerrado sesión con éxito!`, 'success');
-    this.authService.logout();
+     //swal.fire('Logout', `Hola ${username}, has cerrado sesión con éxito!`, 'success');
+
+
+    swal.fire({
+  title: 'Cerrar sesión',
+  text: `${username}  ¿Quieres salir del sistema?`,
+  icon: 'warning',
+  showCancelButton: true,
+  confirmButtonColor: '#3085d6',
+  cancelButtonColor: '#d33',
+  confirmButtonText: 'Salir'
+}).then((result) => {
+  if (result.isConfirmed) {
+
+     this.authService.logout();
     this.router.navigate(['/login']);
+  }
+})
 
  }
 

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule} from '@angular/common/http';
+import { HttpClientModule,HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { EncargadosBPAComponent } from './encargados-bpa/encargados-bpa.component';
 import { EncargadoBPAService} from './encargados-bpa/encargado-bpa.service';
@@ -27,6 +27,8 @@ import { AdministradorService } from './administrador/administrador.service';
 import { LoginComponent } from './usuarios/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import {AuthGuard} from './usuarios/guards/auth.guard';
+import { TokenInterceptor } from './usuarios/interceptors/token.interceptor';
+import { AuthInterceptor } from './usuarios/interceptors/auth.interceptor';
 
 
 const routes: Routes = [
@@ -77,7 +79,9 @@ const routes: Routes = [
     CuartelService,
     ProductoFertilizanteService,
     RegistroFertilizanteService,
-    AdministradorService
+    AdministradorService,
+    { provide: HTTP_INTERCEPTORS, useClass:TokenInterceptor , multi: true },
+      { provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor , multi: true }
   ],
   bootstrap: [AppComponent]
 })

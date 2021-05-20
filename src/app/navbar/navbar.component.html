@@ -10,15 +10,13 @@
     <div class="nav justify-content-end" id="navbarSupportedContent">
         <ul class="nav-item">
           <li >
-            <a  [routerLink]="['/home']"  href="#"><i class="fa fa-home"></i> Home</a>
+            <a  class="cambia" [routerLink]="['/home']"><i class="fa fa-home"></i> Home</a>
           </li>
 
         </ul>
         <ul class="nav-item" >
-          <li *ngIf="authService.isAuthenticated()" >
-            <a  href="#" role="button"  (click)="logout()">
-              <i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar sesión
-            </a>
+          <li  >
+            <a class="cambia" role="button"  (click)="salir()"><i class="fa fa-sign-out" aria-hidden="true"></i> Cerrar sesión </a>
           </li>
         </ul>
       </div>

@@ -3,6 +3,7 @@ import { RegistroFertilizante } from './registro-fertilizante';
 import { RegistroFertilizanteService } from './registro-fertilizante.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
+import { AuthService } from '../usuarios/auth.service';
 
 @Component({
   selector: 'app-registro-fertilizante',
@@ -13,7 +14,8 @@ export class RegistroFertilizanteComponent implements OnInit {
   registro:RegistroFertilizante = new RegistroFertilizante ();
   registros: RegistroFertilizante[];
 
-constructor(private registroService: RegistroFertilizanteService, private router: Router, private activatedRoute: ActivatedRoute) { }
+constructor(private registroService: RegistroFertilizanteService,
+  private router: Router, private activatedRoute: ActivatedRoute , public authService: AuthService) { }
 
  ngOnInit(): void {
    this.listaRegistrosService();
