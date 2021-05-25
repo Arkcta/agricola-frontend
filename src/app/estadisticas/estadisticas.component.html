@@ -2,26 +2,115 @@
 
   <app-sidenav-definitivo></app-sidenav-definitivo>
 
-  <div id="content" class="p-4 p-md-5">
+  <div id="content" class="p-3 p-md-5">
 
     <app-navbar></app-navbar>
 
-    <div class="divChart">
-      <h6 style="text-align: center;">Registros de productos Fertilizantes</h6>
-      <canvas id="myChart" width="300" height="300"></canvas>
+    <div class="card">
+      <div class="card-header">
+        Menú Estadisticas
+      </div>
+      <div class="card-body">
+        <h5 class="card-title">Seleccione el grafico que desea ver</h5>
+        <div class="" style="margin-left: auto; margin-right: auto;">
+          <a class="btn btn-primary font1" (click)="mostrar1()" style="margin-left: 55px; color:white;">Registros Fertilizantes</a>
+          <a class="btn btn-primary font1" (click)="mostrar2()" style="margin-left: 5px; color:white;">Regitros Fitosanitarios</a>
+          <a class="btn btn-primary font1" (click)="mostrar3()" style="margin-left: 5px; color:white;">Tipos Fertilizantes</a>
+          <a class="btn btn-primary font1" (click)="mostrar4()" style="margin-left: 5px; color:white;">Tipos Fitosanitarios</a>
+          <a class="btn btn-primary font1" (click)="mostrar5()" style="margin-left: 5px; color:white;">Comparativa</a>
+        </div>
+      </div>
     </div>
 
 
-    <div class="divChart2">
+    <!-- <div *ngIf="flagSpinner" class="spinner-border spin" role="status">
+      <span class="sr-only">Loading...</span>
+    </div> -->
+    <div *ngIf="chartOne" class="divChart" id="chart1">
+      <div class="jeje">
+        <h6 style="text-align: center;">Registros de productos Fertilizantes</h6>
+        <h6 style="text-align: center;">Temporada {{anioFiltrarFerti1}}-{{anioFiltrarFerti2}}</h6>
+        <canvas id="myChart" width="300" height="300"></canvas>
+      </div>
+      <div class="filtrarAño">
+        <h6 class="title1">Filtrar por temporada</h6>
+        <br>
+        <div class="fil1">
+          <input class="anio1 form-control" type="number" name="" value="" placeholder="ingrese año 1" id="anio1">
+          <input class="anio2 form-control" type="number" name="" value="" placeholder="ingrese año 2" id="anio2">
+          <button type="button" class="btn btn-outline-dark ferti1" type="button" style="margin-left: 15px;" name="button" id="ferti1" [disabled]="flagSpinner" (click)="filtrarFertilizante()">Filtrar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="divChart2" id="chart2" style="display:none;">
       <h6 style="text-align: center;">Registros de productos Fitosanitario</h6>
+      <h6 style="text-align: center;">Temporada {{anioFiltrarFito1}}-{{anioFiltrarFito2}}</h6>
       <canvas id="myChart2" width="300" height="300"></canvas>
+      <div class="filtrarAño2">
+        <h6 class="title2">Filtrar por temporada</h6>
+        <br>
+        <div class="fil2">
+          <input type="number" class="form-control anio3" name="" value="" placeholder="ingrese año 1" id="anio1Fito">
+          <input type="number" class="form-control anio4" name="" value="" placeholder="ingrese año 2" id="anio2Fito">
+          <button type="button" class="btn btn-outline-dark fito1" name="button" id="fito2" (click)="filtrarFitosanitario()">Filtrar</button>
+        </div>
+      </div>
     </div>
 
 
-    <div class="filtrarAño">
-      <h6>Filtrar por año</h6>
-      <input type="number" name="" value="" placeholder="ingrese año" [(ngModel)]="anioFiltrar">
-      <button type="button" name="button" (click)="consolePrueba()">Filtrar</button>
+
+    <div class="divChart3" id="chart3" style="display:none;">
+      <h6 style="text-align: center;">Aplicaciones Fertilizantes</h6>
+      <h6 style="text-align: center;">Temporada {{anioFiltrarFertiTipo1}}-{{anioFiltrarFertiTipo2}}</h6>
+      <canvas id="myChart3" width="300" height="300"></canvas>
+      <div class="filtrarAño3">
+        <h6 class="title3">Filtrar por temporada</h6>
+        <br>
+        <div class="fil3">
+          <input type="number" class="form-control anio5" name="" value="" placeholder="ingrese año 1" id="anio1FertiTipo">
+          <input type="number" class="form-control anio6" name="" value="" placeholder="ingrese año 2" id="anio2FertiTipo">
+          <button type="button" class="btn btn-outline-dark fertiTipo1" name="button" id="ferti3" (click)="filtrarFertilizanteTipo()">Filtrar</button>
+        </div>
+      </div>
+    </div>
+
+
+    <div class="divChart4" id="chart4" style="display:none;">
+      <h6 style="text-align: center;">Aplicaciones Fitosanitarios</h6>
+      <h6 style="text-align: center;">Temporada {{anioFiltrarFitoTipo1}}-{{anioFiltrarFitoTipo2}}</h6>
+      <canvas id="myChart4" width="300" height="300"></canvas>
+      <div class="filtrarAño4">
+        <h6 class="titulo4">Filtrar por temporada</h6>
+        <br>
+        <div class="fit4">
+          <input type="number" class="form-control fitotipo1" name="" value="" placeholder="ingrese año 1" id="anio1FitoTipo">
+          <input type="number" class="form-control fitotipo2" name="" value="" placeholder="ingrese año 2" id="anio2FitoTipo">
+          <button type="button" class="btn btn-outline-dark bot4" name="button" id="fito4" (click)="filtrarFitoTipo()">Filtrar</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="divChart5" id="chart5" style="display:none;">
+      <h6 style="text-align: center;">Comparativa Fitosanitarios - Fertilizantes</h6>
+      <h6 style="text-align: center;">Temporada {{anioComparativa1}}-{{anioComparativa2}}</h6>
+      <canvas id="myChart5" width="300" height="300"></canvas>
+      <div class="filtrarAño5">
+        <div class="">
+          <h6 class="title5">Filtrar por temporada ferti</h6>
+          <input type="number" class="form-control compa1" name="" value="" placeholder="ingrese año" id="anio1comparativa">
+          <input type="number" class="form-control compa2" name="" value="" placeholder="ingrese año" id="anio2comparativa">
+          <hr class="divisora">
+          <h6 class="title6">Filtrar por temporada fito</h6>
+          <div>
+            <input type="number" class="form-control compa3" name="" value="" placeholder="ingrese año" id="anio3comparativa">
+            <input type="number" class="form-control compa4" name="" value="" placeholder="ingrese año" id="anio4comparativa">
+          </div>
+          <div class="centerbut">
+            <button type="button" class="btn btn-outline-dark but5" style="margin-left: 15px;" name="button" id="ocmparativa" (click)="filtrarLineal()">Filtrar</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

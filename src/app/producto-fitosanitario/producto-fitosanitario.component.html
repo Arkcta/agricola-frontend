@@ -33,6 +33,7 @@
           </th> -->
                       <th>Nombre comercial</th>
                       <th>Objetivo</th>
+                      <th>Tipo</th>
                       <th>Ingrediente activo</th>
                       <th>Mojamiento</th>
                       <th>Carencia</th>
@@ -49,6 +50,7 @@
           </td> -->
                       <td width="135px"> {{ fito.nombreComercial}}</td>
                       <td width="200px"> {{ fito.objetivo}}</td>
+                      <td width="200px"> {{ fito.tipo}}</td>
                       <td width="100px"> {{ fito.ingredienteActivo}}</td>
                       <td width="100px"> {{ fito.mojamiento}}</td>
                       <td width="90px"> {{ fito.carencia}}</td>
@@ -95,9 +97,12 @@
 
                   <div class="form-group">
                     <label for="objetivo">Objetivo</label>
-                    <!-- (blur)="formatearRut(encargado.run)" -->
                     <input type="text" class="form-control" [(ngModel)]="fitosanitario.objetivo" id="objetivo" name="objetivo">
+                  </div>
 
+                  <div class="form-group">
+                    <label for="tipo">Tipo</label>
+                    <input type="text" class="form-control" [(ngModel)]="fitosanitario.tipo" id="tipo" name="tipo">
                   </div>
 
                   <div class="form-group">

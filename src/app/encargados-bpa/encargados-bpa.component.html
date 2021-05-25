@@ -23,7 +23,7 @@
               </div>
               <div id="global">
                 <div class="table-wrapper-scroll-y my-custom-scrollbar div1">
-                  <table width="100%" border="solid" class="table table-striped table-hover">
+                  <table width="100%" border="solid" class="table table-striped table-hover" id="encargadosTable">
                     <thead>
                       <tr>
                         <!-- <th>
@@ -78,7 +78,6 @@
           </div>
         </div>
 
-
         <!-- AGREGAR ENCARGADO BPA Modal HTML -->
         <div id="addEmployeeModal" class="modal fade">
           <div class="modal-dialog">
@@ -98,7 +97,7 @@
                   <div class="form-group">
                     <label for="run">Run</label>
                     <!-- (blur)="formatearRut(encargado.run)" -->
-                    <input type="text" class="form-control" [(ngModel)]="encargado.run" id="run" name="run">
+                    <input type="text" class="form-control" [(ngModel)]="encargado.run" id="run1" name="run">
 
                   </div>
 

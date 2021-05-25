@@ -4,8 +4,10 @@ export class ProductoFitosanitario {
   idFitosanitario: number;
   nombreComercial: string;
   objetivo: string;
+  tipo: string;
   ingredienteActivo: string;
   mojamiento: number;
   carencia: number;
   estado: boolean;
+
 }
