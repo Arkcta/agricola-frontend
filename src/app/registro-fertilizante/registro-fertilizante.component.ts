@@ -8,6 +8,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
+import { AuthService } from '../usuarios/auth.service';
 
 @Component({
   selector: 'app-registro-fertilizante',
@@ -33,11 +34,8 @@ export class RegistroFertilizanteComponent implements OnInit {
   dayNowString: string;
   fechaNow: string;
 
-  constructor(
-    private registroService: RegistroFertilizanteService,
-    private router: Router,
-    private activatedRoute: ActivatedRoute
-  ) {}
+constructor(private registroService: RegistroFertilizanteService,
+  private router: Router, private activatedRoute: ActivatedRoute , public authService: AuthService) { }
 
   ngOnInit(): void {
     this.listaRegistrosService();

@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HttpClientModule} from '@angular/common/http';
+import { HttpClientModule,HTTP_INTERCEPTORS} from '@angular/common/http';
 import { AppComponent } from './app.component';
 import { EncargadosBPAComponent } from './encargados-bpa/encargados-bpa.component';
 import { EncargadoBPAService} from './encargados-bpa/encargado-bpa.service';
@@ -24,33 +24,27 @@ import { RegistroFertilizanteService} from './registro-fertilizante/registro-fer
 import { RegistroFertilizanteComponent} from './registro-fertilizante/registro-fertilizante.component';
 import { AdministradorComponent } from './administrador/administrador.component';
 import { AdministradorService } from './administrador/administrador.service';
-import { ListarRegistrosFertilizantesComponent } from './listar-registros-fertilizantes/listar-registros-fertilizantes.component';
-import { ListarRegistrosFertilizantesService } from './listar-registros-fertilizantes/listar-registros-fertilizantes.service';
-import { ListarRegistrosFitosanitariosComponent } from './listar-registros-fitosanitarios/listar-registros-fitosanitarios.component';
-import { ListarRegistrosFitosanitariosService } from './listar-registros-fitosanitarios/listar-registros-fitosanitarios.service';
-import { ListarEncargadosBpaComponent } from './listar-encargados-bpa/listar-encargados-bpa.component';
-import { ListarEncargadosBpaService } from './listar-encargados-bpa/listar-encargados-bpa.service';
 import { LoginComponent } from './usuarios/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 
+import {AuthGuard} from './usuarios/guards/auth.guard';
+import { TokenInterceptor } from './usuarios/interceptors/token.interceptor';
+import { AuthInterceptor } from './usuarios/interceptors/auth.interceptor';
 
 
 const routes: Routes = [
   {path: '', redirectTo: '/login', pathMatch: 'full'},
-  {path: 'home', component: HomeComponent},
-  {path: 'encargadosBPA', component: EncargadosBPAComponent},
-  {path: 'fitosanitarios', component: ProductoFitosanitarioComponent},
-  {path: 'campos', component: CamposComponent},
-  {path: 'registrosFitosanitarios', component: RegistroFitosanitarioComponent},
-  {path: 'predios', component: PredioComponent},
-  {path: 'cuarteles', component: CuartelComponent},
-  {path: 'fertilizantes', component: ProductoFertilizanteComponent},
-  {path: 'registrosFertilizantes', component: RegistroFertilizanteComponent},
-  {path: 'administradores', component: AdministradorComponent},
-  {path: 'listarRegistrosFertilizantes', component: ListarRegistrosFertilizantesComponent},
-  {path: 'listarRegistrosFitosanitarios', component: ListarRegistrosFitosanitariosComponent},
-  {path: 'listarEncargadosBpa', component: ListarEncargadosBpaComponent},
+  {path: 'home', component: HomeComponent, canActivate:[AuthGuard]},
+  {path: 'encargadosBPA', component: EncargadosBPAComponent, canActivate:[AuthGuard]},
+  {path: 'fitosanitarios', component: ProductoFitosanitarioComponent, canActivate:[AuthGuard]},
+  {path: 'campos', component: CamposComponent, canActivate:[AuthGuard]},
+  {path: 'registrosFitosanitarios', component: RegistroFitosanitarioComponent, canActivate:[AuthGuard]},
+  {path: 'predios', component: PredioComponent, canActivate:[AuthGuard]},
+  {path: 'cuarteles', component: CuartelComponent, canActivate:[AuthGuard]},
+  {path: 'fertilizantes', component: ProductoFertilizanteComponent, canActivate:[AuthGuard]},
+  {path: 'registrosFertilizantes', component: RegistroFertilizanteComponent, canActivate:[AuthGuard]},
+  {path: 'administradores', component: AdministradorComponent, canActivate:[AuthGuard]},
   {path: 'login', component: LoginComponent},
   {path: 'estadisticas', component: EstadisticasComponent},
 ];
@@ -69,9 +63,6 @@ const routes: Routes = [
     ProductoFertilizanteComponent,
     RegistroFertilizanteComponent,
     AdministradorComponent,
-    ListarRegistrosFertilizantesComponent,
-    ListarRegistrosFitosanitariosComponent,
-    ListarEncargadosBpaComponent,
     LoginComponent,
     NavbarComponent,
     EstadisticasComponent
@@ -93,9 +84,8 @@ const routes: Routes = [
     ProductoFertilizanteService,
     RegistroFertilizanteService,
     AdministradorService,
-    ListarRegistrosFertilizantesService,
-    ListarRegistrosFitosanitariosService,
-    ListarEncargadosBpaService
+    { provide: HTTP_INTERCEPTORS, useClass:TokenInterceptor , multi: true },
+      { provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor , multi: true }
   ],
   bootstrap: [AppComponent]
 })

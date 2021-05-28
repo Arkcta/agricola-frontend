@@ -1,8 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Administrador } from './Administrador';
-import { Observable } from 'rxjs';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { map } from 'rxjs/operators';
+import { Observable} from 'rxjs';
+import { HttpClient} from '@angular/common/http';
+import { map} from 'rxjs/operators';
+import {Router} from '@angular/router';
+import {AuthService} from '../usuarios/auth.service';
+
+
 @Injectable({
   providedIn: 'root'
 })
@@ -10,9 +14,10 @@ export class AdministradorService {
 
     urlEndPoint: string = 'http://localhost:8080/api/administradores';
 
-    private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
+    constructor(private http: HttpClient, private router:Router,
+    private authService: AuthService) { }
 
-    constructor(private http: HttpClient) { }
+
 
     getAdministradores(): Observable<Administrador[]> {
       return this.http.get(this.urlEndPoint).pipe(
@@ -20,9 +25,9 @@ export class AdministradorService {
       );
     }
 
-    crearAdministrador(administrador: Administrador): Observable<Administrador> {
-      return this.http.post<Administrador>(this.urlEndPoint, administrador, { headers: this.httpHeaders });
 
+    crearAdministrador(administrador: Administrador): Observable<Administrador> {
+      return this.http.post<Administrador>(this.urlEndPoint, administrador)
     }
 
     getAdministrador(run: any): Observable<Administrador> {
@@ -30,10 +35,10 @@ export class AdministradorService {
     }
 
     updateAdministrador(administrador: Administrador): Observable<Administrador>{
-      return this.http.put<Administrador>(`${this.urlEndPoint}/${administrador.run}`, administrador, {headers: this.httpHeaders})
+      return this.http.put<Administrador>(`${this.urlEndPoint}/${administrador.run}`, administrador);
     }
 
     deleteAdministrador(run: any): Observable<Administrador>{
-      return this.http.delete<Administrador>(`${this.urlEndPoint}/${run}`, {headers: this.httpHeaders});
+      return this.http.delete<Administrador>(`${this.urlEndPoint}/${run}`);
     }
 }

@@ -8,6 +8,7 @@ import pdfMake from 'pdfmake/build/pdfmake';
 import * as XLSX from 'xlsx';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
+import { AuthService } from '../usuarios/auth.service';
 
 @Component({
   selector: 'app-registro-fitosanitario',
@@ -66,7 +67,8 @@ export class RegistroFitosanitarioComponent implements OnInit {
 
 
 
-  constructor(private regisFitoService: RegistroFitosanitarioService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private regisFitoService: RegistroFitosanitarioService,
+     private router: Router, private activatedRoute: ActivatedRoute, public authService: AuthService) { }
 
   ngOnInit(): void {
     this.listaRegistroFitoService();

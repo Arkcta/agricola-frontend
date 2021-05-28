@@ -16,7 +16,7 @@
                   <div class="col-sm-6">
                     <h2><b>Encargados BPA</b></h2>
                   </div>
-                  <div class="col-sm-6">
+                  <div *ngIf="authService.hasRole('ROLE_ADMIN')|| authService.hasRole('ROLE_DUENO')" class="col-sm-6">
                     <a href="#addEmployeeModal" (click)="vaciarInputs()" class="btn btn-success buttonAgregar" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Encargado BPA</span></a>
                   </div>
                 </div>
@@ -26,34 +26,22 @@
                   <table width="100%" border="solid" class="table table-striped table-hover" id="encargadosTable">
                     <thead>
                       <tr>
-                        <!-- <th>
-            <span class="custom-checkbox">
-              <input type="checkbox" id="selectAll">
-              <label for="selectAll"></label>
-            </span>
-          </th> -->
                         <th>RUN</th>
                         <th>Nombre</th>
                         <th>Teléfono</th>
                         <th>Email</th>
                         <th>Contraseña</th>
-                        <th>Acciones</th>
+                        <th *ngIf="authService.hasRole('ROLE_ADMIN')|| authService.hasRole('ROLE_DUENO')">Acciones</th>
                       </tr>
                     </thead>
                     <tbody>
                       <tr *ngFor="let encargados of encargadosBPA">
-                        <!-- <td>
-            <span class="custom-checkbox">
-              <input type="checkbox" id="checkbox1" name="options[]" value="1">
-              <label for="checkbox1"></label>
-            </span>
-          </td> -->
                         <td width="135px"> {{ encargados.run}}</td>
                         <td width="200px"> {{ encargados.nombre}}</td>
                         <td width="100px"> {{ encargados.telefono}}</td>
                         <td width="100px"> {{ encargados.email}}</td>
                         <td width="90px"> {{ encargados.pass}}</td>
-                        <td>
+                        <td *ngIf="authService.hasRole('ROLE_ADMIN')|| authService.hasRole('ROLE_DUENO')">
                           <a href="#editEmployeeModal" (click)='cargarEncargado(encargados.run)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
                           <a (click)='delete(encargados)' href="" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Eliminar">&#xE872;</i></a>
                         </td>
