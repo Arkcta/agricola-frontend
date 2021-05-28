@@ -271,4 +271,6 @@ export class EncargadosBPAComponent implements OnInit {
 
     }
   }
+
+  
 }
