@@ -6,6 +6,8 @@ import swal from 'sweetalert2';
 import { formatDate } from '@angular/common';
 import pdfMake from 'pdfmake/build/pdfmake';
 import pdfFonts from 'pdfmake/build/vfs_fonts';
+import { Workbook } from 'exceljs';
+import * as fs from 'file-saver';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 import { AuthService } from '../usuarios/auth.service';
@@ -19,15 +21,20 @@ export class RegistroFertilizanteComponent implements OnInit {
 
   registro: RegistroFertilizante = new RegistroFertilizante();
   registros: RegistroFertilizante[];
-  headerColums: string[] = [ 'Fecha',
-    'Método aplicación',
-    'Estado Fenológico',
-    'Cantidad aplicada (L)',
-    'Tipo maquinaria',
-    'Run Encargado BPA',
-    'Nombre Fertilizante',
-    'Nombre cuartel',
-  ];
+
+  //variables para descarga de excel
+  fecha: any;
+  metodoApli: any;
+  estadoFeno: any;
+  cantodadApli: any;
+  tipoMaqui: any;
+  encargadoBPA: any;
+  fertilizante: any;
+  cuartel: any;
+
+
+
+  //variables para rescatar fecha actual
   now = new Date();
   anioNowString: string;
   mesNowString: string;
@@ -136,39 +143,6 @@ constructor(private registroService: RegistroFertilizanteService,
     this.registro = new RegistroFertilizante();
   }
 
-  // dowloadPDF() {
-  //   console.table(this.registros);
-  //   var docDefinition = {
-  //     content: [
-  //       {
-  //         text: 'Registros Fertilizantes',
-  //         alignment: 'center',
-  //         bold: true,
-  //         fontSize: 15,
-  //       },
-  //       {
-  //         layout: 'lightHorizontalLines', // optional
-  //         table: {
-  //           table(this.registros, this.headerColums)
-
-  //           // headers are automatically repeated if the table spans over multiple pages
-  //           // you can declare how many rows should be treated as headers
-  //           headerRows: 1,
-  //           widths: ['auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto', 'auto'],
-
-  //           body: [
-  //             this.headerColums,
-  //             ['Value 1', 'Value 2', 'Value 3', 'Value 4', 'Value 5', 'Valuew 6', 'Value 7', 'Valuew 8'],
-  //             [{ text: 'Bold value', bold: true }, 'Val 2', 'Val 3', 'Val 4', 'Val 5', 'Valuew 6', 'Value 7', 'Valuew 8'],
-  //           ],
-  //         },
-  //       },
-  //     ],
-  //   };
-
-  //   pdfMake.createPdf(docDefinition).open();
-  // }
-
   dowloadPDF() {
     var docDefinition = {
       pageOrientation: 'landscape',
@@ -233,5 +207,124 @@ constructor(private registroService: RegistroFertilizanteService,
     });
 
     return body;
+  }
+
+  dowloadExcel() {
+    let workbook = new Workbook();
+
+    let worksheet = workbook.addWorksheet('Registros Fertilizantes');
+
+    worksheet.columns =[
+      {}
+    ];
+    worksheet.addRow([]);
+    let titleRow = worksheet.addRow(['REGISTRO DE APLICACIÓN DE PRODUCTOS FERTILIZANTES']);
+    worksheet.addRow([]);
+    worksheet.addRow([]);
+
+    worksheet.mergeCells('A2:I2');
+
+    // Set font, size and style in title row.
+    titleRow.font = { name: 'Calibri', family: 4, size: 16, underline: 'double', bold: true };
+
+    titleRow.eachCell((cell, number) => {
+      cell.alignment = {
+        vertical: 'middle',
+        horizontal: 'center',
+      };
+    });
+
+    let header = [
+      'Fecha',
+      'Metodo aplicación',
+      'Estado fenológico',
+      'Cantidad aplicada',
+      'Tipo maquinaria',
+      'Encargado BPA',
+      'Fertilizante utilizado',
+      'Nombre Cuartel',
+    ];
+
+    let headerRow = worksheet.addRow(header);
+
+    headerRow.eachCell((cell, number) => {
+      cell.alignment = {
+        vertical: 'middle',
+        horizontal: 'center',
+      };
+      
+      cell.fill = {
+        type: 'pattern',
+        pattern: 'solid',
+        fgColor: { argb: 'D68910' },
+        bgColor: { argb: 'D68910' },
+      };
+      cell.border = {
+        top: { style: 'thin' },
+        left: { style: 'thin' },
+        bottom: { style: 'thin' },
+        right: { style: 'thin' },
+      };
+    });
+
+    for (let x1 of this.registros) {
+      let temp = [];
+
+      this.fecha = x1.fecha;
+      this.metodoApli = x1.metodoAplicacion;
+      this.estadoFeno = x1.estadoFenologico;
+      this.cantodadApli = x1.cantidadAplicada;
+      this.tipoMaqui = x1.tipoMaquinaria;
+      this.encargadoBPA = x1.runEncargadoBPA;
+      this.fertilizante = x1.idFertilizante;
+      this.cuartel = x1.idCuartel;
+      temp.push(
+      this.fecha,
+      this.metodoApli,
+      this.estadoFeno,
+      this.cantodadApli,
+      this.tipoMaqui,
+      this.encargadoBPA,
+      this.fertilizante,
+      this.cuartel
+      );
+      
+      let style = worksheet.addRow(temp);
+
+      style.eachCell((cell, number) => {
+        cell.alignment = {
+          vertical: 'middle',
+          horizontal: 'center',
+          
+        };
+        
+        cell.border = {
+          top: { style: 'thin' },
+          left: { style: 'thin' },
+          bottom: { style: 'thin' },
+          right: { style: 'thin' },
+          
+        };
+      });
+      for(let i=0; i< worksheet.columns.length ;i++){
+        if(i == 0) worksheet.columns[i].width = 14;
+        if(i == 1) worksheet.columns[i].width = 30;
+        if(i == 2) worksheet.columns[i].width = 30;
+        if(i == 3) worksheet.columns[i].width = 20;
+        if(i == 4) worksheet.columns[i].width = 18;
+        if(i == 5) worksheet.columns[i].width = 20;
+        if(i == 6) worksheet.columns[i].width = 22;
+        if(i == 7) worksheet.columns[i].width = 20;
+      } 
+    }
+
+    let fname = 'Registros Fertilizantes';
+
+    workbook.xlsx.writeBuffer().then((data) => {
+      let blob = new Blob([data], {
+        type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
+      });
+      fs.saveAs(blob, fname + ' ' + this.fechaNow);
+    });
   }
 }
