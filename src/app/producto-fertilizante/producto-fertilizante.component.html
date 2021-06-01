@@ -28,16 +28,16 @@
                       <th>Nombre comercial</th>
                       <th>Tipo</th>
                       <th>Variedad</th>
-                      <th>Concentración</th>
+                      <th>Concentración (%)</th>
                       <th>Acciones</th>
                     </tr>
                   </thead>
                   <tbody>
                     <tr *ngFor="let fertilizante of fertilizantes">
-                      <td width="135px"> {{ fertilizante.nombreComercial}}</td>
-                      <td width="200px"> {{ fertilizante.tipo}}</td>
-                      <td width="100px"> {{ fertilizante.variedad}}</td>
-                      <td width="100px"> {{ fertilizante.concentracion}}</td>
+                      <td width="200px"> {{ fertilizante.nombreComercial}}</td>
+                      <td width="100px"> {{ fertilizante.tipo}}</td>
+                      <td width="150px"> {{ fertilizante.variedad}}</td>
+                      <td width="30px"> {{ fertilizante.concentracion}} %</td>
                       <td>
                         <a href="#editEmployeeModal" (click)='cargarFertilizante(fertilizante.idFertilizante)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
                         <a (click)='delete(fertilizante)' href="" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Eliminar">&#xE872;</i></a>

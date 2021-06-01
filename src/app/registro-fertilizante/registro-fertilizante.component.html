@@ -53,12 +53,13 @@
               </table>
             </div>
           </div>
+          <div class="descargas">
+            <button (click)="dowloadPDF()" class="colorPDF" title="Exportar a PDF"><img class="pdf" src="assets/imagen-header/pdf.png"></button>
+            <button (click)="dowloadExcel()" class="colorExcel" title="Exportar a Excel"><img class="excel" src="assets/imagen-header/excel.png"></button>
+          </div>
         </div>
 
         
-        <button (click)="dowloadPDF()">Descargar PDF</button>
-        <button (click)="dowloadExcel()">Descargar Excel</button>
-
         <!-- AGREGAR -->
         <div id="addEmployeeModal" class="modal fade">
           <div class="modal-dialog">

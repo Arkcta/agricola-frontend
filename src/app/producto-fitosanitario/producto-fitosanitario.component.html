@@ -36,7 +36,7 @@
                       <th>Tipo</th>
                       <th>Ingrediente activo</th>
                       <th>Mojamiento</th>
-                      <th>Carencia</th>
+                      <th>Carencia (días)</th>
                       <th>Acciones</th>
                     </tr>
                   </thead>
@@ -52,7 +52,7 @@
                       <td width="200px"> {{ fito.objetivo}}</td>
                       <td width="200px"> {{ fito.tipo}}</td>
                       <td width="100px"> {{ fito.ingredienteActivo}}</td>
-                      <td width="100px"> {{ fito.mojamiento}}</td>
+                      <td width="100px"> {{ fito.mojamiento}} lt/ha</td>
                       <td width="90px"> {{ fito.carencia}}</td>
                       <td>
                         <a href="#editEmployeeModal" (click)='cargarFitosanitario(fito.idFitosanitario)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>

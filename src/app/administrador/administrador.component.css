@@ -18,7 +18,6 @@ table {
 }
 
 
-
 /* .my-custom-scrollbar {
 position: relative;
 height: 200px;
@@ -43,7 +42,7 @@ body {
 }
 
 .table-wrapper {
-  background: #fff;
+  background: #fafafa;;
   padding: 20px 25px;
   border-radius: 3px;
   min-width: 100px;
