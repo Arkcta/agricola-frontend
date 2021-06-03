@@ -15,8 +15,11 @@
                   <div class="col-sm-6">
                     <h2><b>Registros Fertilizantes</b></h2>
                   </div>
-                  <div *ngIf="authService.hasRole('ROLE_ADMIN') ||  authService.hasRole('ROLE_ENCARGADOBPA')" class="col-sm-6">
-                    <a href="#addEmployeeModal" (click)="vaciarInputs()" class="btn btn-success buttonAgregar" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Registro Fertilizante</span></a>
+                  <div *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') ||authService.hasRole('ROLE_ADMINCAMPO') " class="col-sm-6">
+                    <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA')"href="#addEmployeeModal" (click)="vaciarInputs()" class="btn btn-success buttonAgregar" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Registro Fertilizante</span></a>
+                    <i class="fa fa-download fa-2x" aria-hidden="true"></i>
+                    <button *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')||  authService.hasRole('ROLE_ADMINCAMPO')"style="margin-left: 10px" (click)="dowloadPDF()" class="colorPDF" title="Exportar a PDF"><img class="pdf" src="assets/imagen-header/pdf.png"></button>
+                    <button style="margin-left: 10px"*ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')" (click)="dowloadExcel()" class="colorExcel" title="Exportar a Excel"><img class="excel" src="assets/imagen-header/excel.png"></button>
                   </div>
                 </div>
               </div>
@@ -53,13 +56,10 @@
               </table>
             </div>
           </div>
-          <div class="descargas">
-            <button (click)="dowloadPDF()" class="colorPDF" title="Exportar a PDF"><img class="pdf" src="assets/imagen-header/pdf.png"></button>
-            <button *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')" (click)="dowloadExcel()" class="colorExcel" title="Exportar a Excel"><img class="excel" src="assets/imagen-header/excel.png"></button>
-          </div>
+
         </div>
 
-        
+
         <!-- AGREGAR -->
         <div id="addEmployeeModal" class="modal fade">
           <div class="modal-dialog">

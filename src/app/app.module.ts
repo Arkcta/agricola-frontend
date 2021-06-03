@@ -46,7 +46,7 @@ const routes: Routes = [
   {path: 'registrosFertilizantes', component: RegistroFertilizanteComponent, canActivate:[AuthGuard]},
   {path: 'administradores', component: AdministradorComponent, canActivate:[AuthGuard]},
   {path: 'login', component: LoginComponent},
-  {path: 'estadisticas', component: EstadisticasComponent},
+  {path: 'estadisticas', component: EstadisticasComponent,canActivate:[AuthGuard]},
 ];
 
 @NgModule({
