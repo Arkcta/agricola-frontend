@@ -74,13 +74,13 @@
             </div>
           </div>
         </div>
-
+        
 
         <!-- AGREGAR ENCARGADO BPA Modal HTML -->
         <div id="addEmployeeModal" class="modal fade">
           <div class="modal-dialog">
             <div class="modal-content">
-              <form>
+              <form #predioForm="ngForm">
                 <div class="modal-header">
                   <h4 class="modal-title">Agregar Predio</h4>
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -89,12 +89,30 @@
 
                   <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" [(ngModel)]="predio.nombre" name="nombre">
+                    <input type="text" class="form-control" [(ngModel)]="predio.nombre" name="nombre" #nombre="ngModel" required minlength="5" maxlength="30"
+                    onkeypress='return ((event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode == 32 ))'>
+                    <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
+                      <div *ngIf="nombre.errors.required">
+                        Nombre es requerido
+                      </div>
+                      <div *ngIf="nombre.errors.minlength">
+                        Nombre debe tener minimo 5 caracteres
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
                     <label for="hectareas">Hectareas</label>
-                    <input type="number" class="form-control" [(ngModel)]="predio.hectareas" id="hectareas" name="hectareas">
+                    <input type="text" class="form-control" [(ngModel)]="predio.hectareas" #hectareas="ngModel" name="hectareas" required minlength="1" maxlength="2"
+                    onkeypress='return ((event.charCode >= 48 && event.charCode <= 57))'>
+                    <div class="alert alert-danger" *ngIf="hectareas.invalid && (hectareas.dirty || hectareas.touched)">
+                      <div *ngIf="hectareas.errors.required">
+                        Hectáreas es requerido
+                      </div>
+                      <div *ngIf="hectareas.errors.minlength">
+                        Hectáreas debe tener minimo 2 digitos
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
@@ -102,11 +120,20 @@
                     <input type="text" class="form-control" [(ngModel)]="predio.idCampo" id="idCampo" name="idCampo">
                   </div>
 
+                  <div class="form-group">
+                    <label for="idCampo">Id Campo</label>
+                    <select #mySelect (change)='enviarId(mySelect.value)'>>
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let array of arraysCampos" value="{{array.idCampo}}">{{array.nombre}}</option>
+                    </select>
+                    <input type="text" class="form-control" [(ngModel)]="predio.idCampo" id="idCampo" name="idCampo">
+                  </div>
+
                 </div>
                 <div class="modal-footer">
                   <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
                   <!-- [disabled]="agregarEn" -->
-                  <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success" value="Agregar">
+                  <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success" [disabled]="!predioForm.form.valid" value="Agregar">
                 </div>
               </form>
             </div>
@@ -121,7 +148,7 @@
         <div id="editEmployeeModal" class="modal fade">
           <div class="modal-dialog">
             <div class="modal-content">
-              <form>
+              <form #predioEditarForm="ngForm">
                 <div class="modal-header">
                   <h4 class="modal-title">Editar Predio</h4>
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -129,12 +156,30 @@
                 <div class="modal-body">
                   <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" [(ngModel)]="predio.nombre" name="nombre">
+                    <input type="text" class="form-control" [(ngModel)]="predio.nombre" name="nombre" #nombreEditar="ngModel" required minlength="5" maxlength="30"
+                    onkeypress='return ((event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode == 32 ))'>
+                    <div class="alert alert-danger" *ngIf="nombreEditar.invalid && (nombreEditar.dirty || nombreEditar.touched)">
+                      <div *ngIf="nombreEditar.errors.required">
+                        Nombre es requerido
+                      </div>
+                      <div *ngIf="nombreEditar.errors.minlength">
+                        Nombre debe tener minimo 5 caracteres
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
                     <label for="hectareas">Hectareas</label>
-                    <input type="number" class="form-control" [(ngModel)]="predio.hectareas" id="hectareas" name="hectareas">
+                    <input type="number" class="form-control" [(ngModel)]="predio.hectareas" #hectareasEditar="ngModel" name="hectareas" required minlength="1" maxlength="2"
+                    onkeypress='return ((event.charCode >= 48 && event.charCode <= 57))'>
+                    <div class="alert alert-danger" *ngIf="hectareasEditar.invalid && (hectareasEditar.dirty || hectareasEditar.touched)">
+                      <div *ngIf="hectareasEditar.errors.required">
+                        Hectáreas es requerido
+                      </div>
+                      <div *ngIf="hectareasEditar.errors.minlength">
+                        Hectáreas debe tener minimo 2 digitos
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
@@ -145,7 +190,7 @@
                 </div>
                 <div class="modal-footer">
                   <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
-                  <input type="button" (click)='update()' class="btn btn-info" data-dismiss="modal" value="Guardar">
+                  <input type="button" (click)='update()' class="btn btn-info" data-dismiss="modal" [disabled]="!predioEditarForm.form.valid" value="Guardar">
                 </div>
               </form>
             </div>

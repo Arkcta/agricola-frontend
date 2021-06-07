@@ -91,12 +91,10 @@ export class EncargadosBPAComponent implements OnInit {
   }
 
   crear(): void {
-
-
     this.encargadoBPAService.crearEncargado(this.encargado).subscribe(
-      encargado => {
+      json => {
         this.router.navigate(['/encargadosBPA'])
-        swal.fire('Nuevo Encargado BPA', `El Encargado BPA ${encargado.nombre}, ha sido creado con éxito`, 'success');
+        swal.fire('Nuevo Encargado BPA', `El Encargado BPA ${json.encargado.nombre} ha sido creado con éxito`, 'success');
         this.listaEncargadosService();
       }
     )
@@ -104,12 +102,10 @@ export class EncargadosBPAComponent implements OnInit {
 
   update(): void {
     this.encargadoBPAService.updateEncargado(this.encargado).subscribe(
-      encargado => {
+      json => {
         this.router.navigate(['/encargadosBPA']);
-        swal.fire('Encargado BPA actualizado', `Encargado BPA ${encargado.nombre}, ha sido actualizado con éxito`, 'success');
-        this.encargadoBPAService.getEncargados().subscribe(
-          (encargados) => this.encargadosBPA = encargados//se agrega {this.encargadosBPA = encargados} al this cuando hay mas de una linea de codigo tambien al encargados cuando son mas de 1 parametro
-        );
+        swal.fire('Encargado BPA actualizado', `El Encargado BPA ${json.encargado.nombre} ha sido actualizado con éxito`, 'success');
+        this.listaEncargadosService();
 
       }
     )

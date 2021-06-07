@@ -18,6 +18,7 @@ export class CamposComponent implements OnInit {
   campo: Campos = new Campos();
   campos: Campos[];
   encargadosBPA: EncargadoBPA[];
+  campoEditar: Campos =  new Campos();
   encargados2: EncargadosBPAComponent;
   nomEncar: string[];
 
@@ -69,8 +70,8 @@ export class CamposComponent implements OnInit {
           }
         )
         swalWithBootstrapButtons.fire(
-          'Campo eliminado!',
-          'El Campo ha sido eliminado.',
+          '¡Campo eliminado!',
+          `El campo ${campo.nombre} ha sido eliminado.`,
           'success'
         )
       } else if (
@@ -88,22 +89,19 @@ export class CamposComponent implements OnInit {
 //metodo para crearFito junto con sweetAlert
   crear(): void {
     this.campoService.crearCampo(this.campo).subscribe(
-      campo => {
+      json => {
         this.router.navigate(['/campos'])
-        swal.fire('Nuevo Campo', `El campo ${campo.nombre}, ha sido creado con éxito`, 'success');
+        swal.fire('Nuevo Campo', `El campo ${json.campo.nombre}, ha sido creado con éxito`, 'success');
         this.listaCamposService();
       }
     )
   }
 
-  //metodo para editar un fito junto con sweetAlert
-  //si te fijas volvemos a llamar al metodo del servicio de la lista de fitos
-  //para que se edita en tiempo real, asi se vuelve a llamar la lista pero ya actualizada
   update(): void {
     this.campoService.updateCampo(this.campo).subscribe(
-      campo => {
-        this.router.navigate(['/fitosanitarios']);
-        swal.fire('Campo actualizado', `EL Campo ${campo.nombre}, ha sido actualizado con éxito`, 'success');
+      json => {
+        this.router.navigate(['/campos']);
+        swal.fire('¡Campo actualizado!', `El campo ${this.campo.nombre} ha sido actualizado con éxito`, 'success');
         this.listaCamposService();
       }
     )

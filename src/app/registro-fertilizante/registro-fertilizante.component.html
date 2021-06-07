@@ -17,9 +17,6 @@
                   </div>
                   <div *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') ||authService.hasRole('ROLE_ADMINCAMPO') " class="col-sm-6">
                     <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA')"href="#addEmployeeModal" (click)="vaciarInputs()" class="btn btn-success buttonAgregar" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Registro Fertilizante</span></a>
-                    <i class="fa fa-download fa-2x" aria-hidden="true"></i>
-                    <button *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')||  authService.hasRole('ROLE_ADMINCAMPO')"style="margin-left: 10px" (click)="dowloadPDF()" class="colorPDF" title="Exportar a PDF"><img class="pdf" src="assets/imagen-header/pdf.png"></button>
-                    <button style="margin-left: 10px"*ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')" (click)="dowloadExcel()" class="colorExcel" title="Exportar a Excel"><img class="excel" src="assets/imagen-header/excel.png"></button>
                   </div>
                 </div>
               </div>
@@ -27,11 +24,11 @@
                 <thead>
                   <tr>
                     <th>Fecha</th>
-                    <th>Método aplicación</th>
+                    <!-- <th>Método aplicación</th> -->
                     <th>Estado fenológico</th>
                     <th>Cantidad Aplicada</th>
-                    <th>Tipo Maquinaria</th>
-                    <th>RUN Encargado BPA</th>
+                    <!-- <th>Tipo Maquinaria</th> -->
+                    <!-- <th>RUN Encargado BPA</th> -->
                     <th>ID Fertilizante</th>
                     <th>ID Cuartel</th>
                     <th *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA')">Acciones</th>
@@ -40,23 +37,25 @@
                 <tbody>
                   <tr *ngFor="let registro of registros">
                     <td width="135px"> {{ registro.fecha}}</td>
-                    <td width="200px"> {{ registro.metodoAplicacion}}</td>
+                    <!-- <td width="200px"> {{ registro.metodoAplicacion}}</td> -->
                     <td width="100px"> {{ registro.estadoFenologico}}</td>
                     <td width="100px"> {{ registro.cantidadAplicada}}</td>
-                    <td width="90px"> {{ registro.tipoMaquinaria}}</td>
-                    <td width="60px"> {{ registro.runEncargadoBPA}}</td>
+                    <!-- <td width="90px"> {{ registro.tipoMaquinaria}}</td> -->
+                    <!-- <td width="60px"> {{ registro.runEncargadoBPA}}</td> -->
                     <td width="90px"> {{ registro.idFertilizante}}</td>
                     <td width="90px"> {{ registro.idCuartel}}</td>
                     <td *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA')">
                       <a href="#editEmployeeModal" (click)='cargarRegistroFertilizante(registro.idRegistro)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
                       <a (click)='delete(registro)' href="" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Eliminar">&#xE872;</i></a>
+                      <a href="#detailEmployeeModal" (click)='cargarRegistroFertilizante(registro.idRegistro)' data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Detalles">&#xe8f4;</i></a>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </div>
           </div>
-
+          <button *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')||  authService.hasRole('ROLE_ADMINCAMPO')"style="margin-left: 75px" (click)="dowloadPDF()" class="colorPDF" title="Exportar a PDF"><img class="pdf" src="assets/imagen-header/pdf.png"></button>
+          <button style="margin-left: 10px"*ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')" (click)="dowloadExcel()" class="colorExcel" title="Exportar a Excel"><img class="excel" src="assets/imagen-header/excel.png"></button>
         </div>
 
 
@@ -143,7 +142,7 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="estadoFenologico">Estado fenologico</label>
+                    <label for="estadoFenologico">Estado fenológico</label>
                     <input type="text" class="form-control" [(ngModel)]="registro.estadoFenologico" id="estadoFenologico" name="estadoFenologico">
                   </div>
 
@@ -181,6 +180,53 @@
             </div>
           </div>
         </div>
+
+        <div id="detailEmployeeModal" class="modal fade">
+          <div class="modal-dialog">
+            <div class="modal-content detail">
+                <div class="modal-header">
+                  <h4 class="modal-title">Detalle Registro Fertilizante</h4>
+                  <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                </div>
+                <div class="modal-body">
+
+                  <div>
+                    <div>
+                      <label style="margin-left: 10px;">Fecha</label>
+                      <label style="margin-left: 200px;">Metodo Aplicación</label>
+                      <label style="margin-left: 115px;">Estado fenológico</label>
+                      <br>
+                      <input disabled style="margin-left: 10px;" [(ngModel)]="registro.fecha" >
+                      <input disabled style="margin-left: 60px;" type="text" [(ngModel)]="registro.metodoAplicacion" >
+                      <input disabled style="margin-left: 60px;" [(ngModel)]="registro.estadoFenologico" >
+                    </div>
+                    <div>
+                      <label style="margin-left: 10px; margin-top: 10px;">Cantidad aplicada</label>
+                      <label style="margin-left: 115px;">Tipo maquinaria</label>
+                      <label style="margin-left: 125px;">Run Encargado BPA</label>
+                      <br>
+                      <input disabled style="margin-left: 10px;" [(ngModel)]="registro.cantidadAplicada" >
+                      <input disabled style="margin-left: 60px;" [(ngModel)]="registro.tipoMaquinaria" >
+                      <input disabled style="margin-left: 60px;" [(ngModel)]="registro.runEncargadoBPA" >
+                    </div>
+
+                    <div>
+                      <label style="margin-left: 10px; margin-top: 10px;">Id Fertilizante</label>
+                      <label style="margin-left: 155px;">Id cuartel</label>
+                      <br>
+                      <input disabled style="margin-left: 10px;" [(ngModel)]="registro.idFertilizante">
+                      <input disabled style="margin-left: 60px;" [(ngModel)]="registro.idCuartel">
+                    </div>
+                  </div>
+
+                </div>
+                <div class="modal-footer">
+                  <input style="margin-left: auto; margin-right: auto;" type="button" class="btn btn-default left" data-dismiss="modal" value="Cerrar">
+                </div>
+            </div>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>

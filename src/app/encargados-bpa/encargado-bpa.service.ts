@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError,tap } from 'rxjs/operators';
 import {Router} from '@angular/router';
+import swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -34,11 +35,14 @@ export class EncargadoBPAService {
     );
   }
 
-  crearEncargado(encargado: EncargadoBPA): Observable<EncargadoBPA> {
-    return this.http.post<EncargadoBPA>(this.urlEndPoint, encargado, { headers: this.httpHeaders }).pipe(
+  crearEncargado(encargado: EncargadoBPA): Observable<any> {
+    return this.http.post<any>(this.urlEndPoint, encargado, { headers: this.httpHeaders }).pipe(
         catchError(e =>{
+          console.log(e.error.mensaje);
           this.isNoAutorizado(e);
+          swal.fire('Error al agregar', e.error.mensaje, 'error');
           return throwError(e);
+          
         })
        );
 
@@ -47,16 +51,21 @@ export class EncargadoBPAService {
   getEncargado(run: any): Observable<EncargadoBPA> {
     return this.http.get<EncargadoBPA>(`${this.urlEndPoint}/${run}`).pipe(
         catchError(e =>{
+          console.error(e.error.mensaje);
+          this.router.navigate(['/encargadosBPA']);
           this.isNoAutorizado(e);
+          swal.fire('Error al editar', e.error.mensaje, 'error');
           return throwError(e);
         })
        );
   }
 
-  updateEncargado(encargado: EncargadoBPA): Observable<EncargadoBPA>{
-    return this.http.put<EncargadoBPA>(`${this.urlEndPoint}/${encargado.run}`, encargado, {headers: this.httpHeaders}).pipe(
+  updateEncargado(encargado: EncargadoBPA): Observable<any>{
+    return this.http.put<any>(`${this.urlEndPoint}/${encargado.run}`, encargado, {headers: this.httpHeaders}).pipe(
         catchError(e =>{
+          console.log(e.error.mensaje);
           this.isNoAutorizado(e);
+          swal.fire('Error al editar', e.error.mensaje, 'error');
           return throwError(e);
         })
        )
@@ -65,7 +74,9 @@ export class EncargadoBPAService {
   deleteEncargado(run: any): Observable<EncargadoBPA>{
     return this.http.delete<EncargadoBPA>(`${this.urlEndPoint}/${run}`, {headers: this.httpHeaders}).pipe(
         catchError(e =>{
+          console.log(e.error.mensaje);
           this.isNoAutorizado(e);
+          swal.fire('Error al eliminar el campo', e.error.mensaje, 'error')
           return throwError(e);
         })
        );
