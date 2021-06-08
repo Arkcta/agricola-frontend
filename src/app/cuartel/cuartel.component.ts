@@ -71,7 +71,7 @@ constructor(private cuartelService: CuartelService, private router: Router, priv
      this.cuartelService.crearCuartel(this.cuartel).subscribe(
        cuartel => {
          this.router.navigate(['/cuarteles'])
-         swal.fire('Nuevo Cuartel', `El Cuartel ${cuartel.nombre}, ha sido creado con éxito`, 'success');
+         swal.fire('Nuevo Cuartel', `El Cuartel ${this.cuartel.nombre}, ha sido creado con éxito`, 'success');
          this.listaCuartelesService();
        }
      )
@@ -81,7 +81,7 @@ constructor(private cuartelService: CuartelService, private router: Router, priv
      this.cuartelService.updateCuartel(this.cuartel).subscribe(
       cuartel => {
          this.router.navigate(['/cuarteles']);
-         swal.fire('Cuartel actualizado', `El Cuartel ${cuartel.nombre}, ha sido actualizado con éxito`, 'success');
+         swal.fire('Cuartel actualizado', `El Cuartel ${this.cuartel.nombre}, ha sido actualizado con éxito`, 'success');
          this.cuartelService.getCuarteles().subscribe(
            (cuarteles) => this.cuarteles = cuarteles
            );

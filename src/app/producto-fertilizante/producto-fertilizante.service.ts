@@ -38,7 +38,7 @@ export class ProductoFertilizanteService {
          catchError(e => {
            this.router.navigate["/fertilizantes"];
            console.error(e.error.mensaje);
-           swal.fire('Error al editar', e.error.mensaje,'error');
+           swal.fire('Error al buscar', e.error.mensaje,'error');
            return throwError(e);
          })
       );

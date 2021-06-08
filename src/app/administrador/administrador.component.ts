@@ -71,9 +71,9 @@ export class AdministradorComponent implements OnInit {
 
     crear(): void {
       this.administradorService.crearAdministrador(this.administrador).subscribe(
-        administrador => {
+        (json) => {
           this.router.navigate(['/administradores'])
-          swal.fire('Nuevo Administrador', `El Administrador ${administrador.nombre}, ha sido creado con éxito`, 'success');
+          swal.fire('Nuevo Administrador', `El Administrador ${this.administrador.nombre}, ha sido creado con éxito`, 'success');
           this.listaAdministradoresService();
         }
       )
@@ -81,9 +81,9 @@ export class AdministradorComponent implements OnInit {
 
     update(): void {
       this.administradorService.updateAdministrador(this.administrador).subscribe(
-        administrador => {
+        (json) => {
           this.router.navigate(['/administradores']);
-          swal.fire('Administrador actualizado', `El Administrador ${administrador.nombre}, ha sido actualizado con éxito`, 'success');
+          swal.fire('Administrador actualizado', `El Administrador ${this.administrador.nombre}, ha sido actualizado con éxito`, 'success');
           this.administradorService.getAdministradores().subscribe(
             (administradores) => this.administradores = administradores
           );

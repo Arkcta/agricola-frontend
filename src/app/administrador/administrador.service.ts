@@ -25,8 +25,8 @@ export class AdministradorService {
     }
 
 
-    crearAdministrador(administrador: Administrador): Observable<Administrador> {
-      return this.http.post<Administrador>(this.urlEndPoint, administrador).pipe(
+    crearAdministrador(administrador: Administrador): Observable<any> {
+      return this.http.post<any>(this.urlEndPoint, administrador).pipe(
          catchError(e => {
            this.router.navigate["/administradores"];
            console.error(e.error.mensaje);
