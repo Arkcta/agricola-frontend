@@ -4,6 +4,7 @@ import { Observable, throwError} from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError,tap } from 'rxjs/operators';
 import {Router} from '@angular/router';
+import swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -33,10 +34,12 @@ export class ProductoFitosanitarioService {
     );
   }
 
-  crearFitosanitario(fitosanitario: ProductoFitosanitario): Observable<ProductoFitosanitario> {
-    return this.http.post<ProductoFitosanitario>(this.urlEndPoint, fitosanitario, { headers: this.httpHeaders }).pipe(
+  crearFitosanitario(fitosanitario: ProductoFitosanitario): Observable<any> {
+    return this.http.post<any>(this.urlEndPoint, fitosanitario, { headers: this.httpHeaders }).pipe(
         catchError(e =>{
+          console.log(e.error.mensaje);
           this.isNoAutorizado(e);
+          swal.fire('Error al agregar', e.error.mensaje, 'error');
           return throwError(e);
         })
        );
@@ -46,7 +49,10 @@ export class ProductoFitosanitarioService {
   getFitosanitario(id: any): Observable<ProductoFitosanitario> {
     return this.http.get<ProductoFitosanitario>(`${this.urlEndPoint}/${id}`).pipe(
         catchError(e =>{
+          console.error(e.error.mensaje);
+          this.router.navigate(['/fitosanitarios']);
           this.isNoAutorizado(e);
+          swal.fire('Error al editar', e.error.mensaje, 'error');
           return throwError(e);
         })
        );
@@ -54,10 +60,12 @@ export class ProductoFitosanitarioService {
 
   //recordar en estos metodos que tanto el urlpoint como el valor por parametro
   //se pasa con las comillas especiales `
-  updateEncargado(fitosanitario: ProductoFitosanitario): Observable<ProductoFitosanitario> {
-    return this.http.put<ProductoFitosanitario>(`${this.urlEndPoint}/${fitosanitario.idFitosanitario}`, fitosanitario, { headers: this.httpHeaders }).pipe(
+  updateEncargado(fitosanitario: ProductoFitosanitario): Observable<any> {
+    return this.http.put<any>(`${this.urlEndPoint}/${fitosanitario.idFitosanitario}`, fitosanitario, { headers: this.httpHeaders }).pipe(
         catchError(e =>{
+          console.log(e.error.mensaje);
           this.isNoAutorizado(e);
+          swal.fire('Error al editar', e.error.mensaje, 'error');
           return throwError(e);
         })
        )
@@ -68,7 +76,9 @@ export class ProductoFitosanitarioService {
   deleteFitosanitario(id: any): Observable<ProductoFitosanitario> {
     return this.http.delete<ProductoFitosanitario>(`${this.urlEndPoint}/${id}`, { headers: this.httpHeaders }).pipe(
         catchError(e =>{
+          console.log(e.error.mensaje);
           this.isNoAutorizado(e);
+          swal.fire('Error al eliminar el producto fitosanitario', e.error.mensaje, 'error')
           return throwError(e);
         })
        );

@@ -4,6 +4,7 @@ import { Observable, throwError  } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError,tap } from 'rxjs/operators';
 import {Router} from '@angular/router';
+import swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -22,10 +23,17 @@ export class PredioService {
          return true;
        }
        return false;
-     }
+  }
+
   getPredios(): Observable<Predio[]> {
     return this.http.get(this.urlEndPoint).pipe(
-      map((response) => response as Predio[]),
+      map(response => {
+        let predios = response as Predio[];
+        return predios.map(predio => {
+          predio.nombre = predio.nombre.toUpperCase();
+          return predio;
+        })     
+      }),
         catchError(e =>{
           this.isNoAutorizado(e);
           return throwError(e);
@@ -33,10 +41,12 @@ export class PredioService {
     );
   }
 
-  crearPredio(predio: Predio): Observable<Predio> {
-    return this.http.post<Predio>(this.urlEndPoint, predio, { headers: this.httpHeaders }).pipe(
+  crearPredio(predio: Predio): Observable<any> {
+    return this.http.post<any>(this.urlEndPoint, predio, { headers: this.httpHeaders }).pipe(
         catchError(e =>{
+          console.log(e.error.mensaje);
           this.isNoAutorizado(e);
+          swal.fire('Error al agregar', e.error.mensaje, 'error');
           return throwError(e);
         })
        );
@@ -46,7 +56,10 @@ export class PredioService {
   getPredio(id: any): Observable<Predio> {
     return this.http.get<Predio>(`${this.urlEndPoint}/${id}`).pipe(
         catchError(e =>{
+          console.error(e.error.mensaje);
+          this.router.navigate(['/predios']);
           this.isNoAutorizado(e);
+          swal.fire('Error al editar', e.error.mensaje, 'error');
           return throwError(e);
         })
        );
@@ -55,7 +68,9 @@ export class PredioService {
   updatePredio(predio: Predio): Observable<Predio>{
     return this.http.put<Predio>(`${this.urlEndPoint}/${predio.idPredio}`, predio, {headers: this.httpHeaders}).pipe(
         catchError(e =>{
+          console.log(e.error.mensaje);
           this.isNoAutorizado(e);
+          swal.fire('Error al editar', e.error.mensaje, 'error');
           return throwError(e);
         })
        )
@@ -64,7 +79,9 @@ export class PredioService {
   deletePredio(id: any): Observable<Predio>{
     return this.http.delete<Predio>(`${this.urlEndPoint}/${id}`, {headers: this.httpHeaders}).pipe(
         catchError(e =>{
+          console.log(e.error.mensaje);
           this.isNoAutorizado(e);
+          swal.fire('Error al eliminar el predio', e.error.mensaje, 'error')
           return throwError(e);
         })
        );

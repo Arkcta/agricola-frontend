@@ -57,8 +57,8 @@ export class ProductoFitosanitarioComponent implements OnInit {
           }
         )
         swalWithBootstrapButtons.fire(
-          'Fitosanitario eliminado!',
-          'El producto Fitosanitario ha sido eliminado.',
+          '¡Fitosanitario eliminado!',
+          'El producto Fitosanitario ha sido eliminado éxitosamente.',
           'success'
         )
       } else if (
@@ -76,9 +76,9 @@ export class ProductoFitosanitarioComponent implements OnInit {
 //metodo para crearFito junto con sweetAlert
   crear(): void {
     this.fitosanitarioService.crearFitosanitario(this.fitosanitario).subscribe(
-      fito => {
+      json => {
         this.router.navigate(['/fitosanitarios'])
-        swal.fire('Nuevo producto Fitosanitario', `El producto Fitosanitario ${fito.nombreComercial}, ha sido creado con éxito`, 'success');
+        swal.fire('Nuevo producto Fitosanitario', `El producto Fitosanitario ${json.fito.nombreComercial} ha sido creado con éxito`, 'success');
         this.listaFitosanitariosService();
       }
     )
@@ -89,9 +89,9 @@ export class ProductoFitosanitarioComponent implements OnInit {
   //para que se edita en tiempo real, asi se vuelve a llamar la lista pero ya actualizada
   update(): void {
     this.fitosanitarioService.updateEncargado(this.fitosanitario).subscribe(
-      fito => {
+      json => {
         this.router.navigate(['/fitosanitarios']);
-        swal.fire('Producto Fitosanitario actualizado', `Fitosanitario ${fito.nombreComercial}, ha sido actualizado con éxito`, 'success');
+        swal.fire('Producto Fitosanitario actualizado', `Fitosanitario ${json.fitosanitario.nombreComercial}, ha sido actualizado con éxito`, 'success');
         this.listaFitosanitariosService();
       }
     )

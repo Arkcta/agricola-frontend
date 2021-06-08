@@ -17,10 +17,7 @@
                     <h2><b>Registros Fitosanitarios</b></h2>
                   </div>
                   <div *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') ||authService.hasRole('ROLE_ADMINCAMPO') "class="col-sm-6">
-                    <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA')" href="#addEmployeeModal" (click)="vaciarInputs()" class="btn btn-success buttonAgregar" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Registro Fitosanitario</span></a>
-                     <i class="fa fa-download fa-2x" aria-hidden="true"></i>
-                      <button style="margin-left: 10px"*ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')||  authService.hasRole('ROLE_ADMINCAMPO')" (click)="dowloadPDF()" class="colorPDF" title="Exportar a PDF"><img class="pdf" src="assets/imagen-header/pdf.png"></button>
-                      <button style="margin-left: 10px"*ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')"(click)="dowloadExcel()" class="colorExcel" title="Exportar a Excel"><img class="excel" src="assets/imagen-header/excel.png"></button>
+                    <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA')" href="#addEmployeeModal" (click)="vaciarInputs()" class="btn btn-success buttonAgregar" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Registro Fitosanitario</span></a>                     
                   </div>
                 </div>
               </div>
@@ -36,7 +33,7 @@
                     <th>RUN Encargado BPA</th>
                     <th>ID Fitosanitario</th>
                     <th>ID Cuartel</th>
-                    <th *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA')">Acciones</th>
+                    <th *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') ||authService.hasRole('ROLE_ADMINCAMPO')">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -50,10 +47,10 @@
                     <td width="50px"> {{ registros.idEncargadoBPA}}</td>
                     <td width="90px"> {{ registros.idFitosanitario}}</td>
                     <td width="90px"> {{ registros.idCuartel}}</td>
-                    <td *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA')">
-                      <a href="#editEmployeeModal" (click)='cargarRegistroFito(registros.idRegistroFitosanitario)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
-                      <a (click)='delete(registros)' href="" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Eliminar">&#xE872;</i></a>
-                      <a href="#detailEmployeeModal" (click)='cargarRegistroFito(registros.idRegistroFitosanitario)' data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Detalles">&#xe8f4;</i></a>
+                    <td *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') ||authService.hasRole('ROLE_ADMINCAMPO')">
+                      <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA')" href="#editEmployeeModal" (click)='cargarRegistroFito(registros.idRegistroFitosanitario)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
+                      <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA')" (click)='delete(registros)' href="" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Eliminar">&#xE872;</i></a>
+                      <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') ||authService.hasRole('ROLE_ADMINCAMPO')"href="#detailEmployeeModal" (click)='cargarRegistroFito(registros.idRegistroFitosanitario)' data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Detalles">&#xe8f4;</i></a>
                     </td>
                   </tr>
                 </tbody>
@@ -72,7 +69,8 @@
     </div> -->
             </div>
           </div>
-
+          <button style="margin-left: 75px"*ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')||  authService.hasRole('ROLE_ADMINCAMPO')" (click)="dowloadPDF()" class="colorPDF" title="Exportar a PDF"><img class="pdf" src="assets/imagen-header/pdf.png"></button>
+          <button style="margin-left: 10px"*ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')"(click)="dowloadExcel()" class="colorExcel" title="Exportar a Excel"><img class="excel" src="assets/imagen-header/excel.png"></button>
         </div>
 
 
@@ -212,7 +210,7 @@
                 <div class="modal-footer">
                   <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
                   <!-- [disabled]="agregarEn" -->
-                  <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success" value="Guardar">
+                  <input type="button" (click)='update()' data-dismiss="modal" class="btn btn-success" value="Guardar">
                 </div>
               </form>
             </div>

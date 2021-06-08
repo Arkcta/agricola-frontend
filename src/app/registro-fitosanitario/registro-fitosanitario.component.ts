@@ -96,8 +96,8 @@ export class RegistroFitosanitarioComponent implements OnInit {
                 );
             });
           swalWithBootstrapButtons.fire(
-            'Registro Fitosanitario eliminado!',
-            'El Registro Fitosanitario ha sido eliminado.',
+            '¡Registro Fitosanitario eliminado!',
+            'El Registro Fitosanitario ha sido eliminado con éxito.',
             'success'
           );
         } else if (result.dismiss === swal.DismissReason.cancel) {
@@ -113,11 +113,11 @@ export class RegistroFitosanitarioComponent implements OnInit {
   crear(): void {
     this.regisFitoService
       .crearRegistroFito(this.registroFitosanitario)
-      .subscribe((encargado) => {
+      .subscribe((json) => {
         this.router.navigate(['/registrosFitosanitarios']);
         swal.fire(
           'Nuevo Registro Fitosanitario',
-          'El Registro Fitosanitario, ha sido creado con éxito',
+          `El registro fitosanitario ha sido creado con éxito`,
           'success'
         );
         this.listaRegistroFitoService();
@@ -127,11 +127,11 @@ export class RegistroFitosanitarioComponent implements OnInit {
   update(): void {
     this.regisFitoService
       .updateRegistroFito(this.registroFitosanitario)
-      .subscribe((encargado) => {
+      .subscribe((json) => {
         this.router.navigate(['/registrosFitosanitarios']);
         swal.fire(
           'Registro Fitosanitario actualizado',
-          'El registro ha sido actualizado con éxito',
+          'El registro fitosanitario ha sido actualizado con éxito',
           'success'
         );
         this.listaRegistroFitoService();
