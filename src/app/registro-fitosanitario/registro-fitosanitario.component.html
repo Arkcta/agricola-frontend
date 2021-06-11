@@ -37,7 +37,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let registros of registrosFitosanitarios">
+                  <tr *ngFor="let registros of registrosFitosanitarios | paginate: {itemsPerPage: 5, currentPage: pageActual}">
                     <td width="100px"> {{ registros.fecha}}</td>
                     <td width="135px"> {{ registros.tipoMaquinaria}}</td>
                     <!-- <td width="200px"> {{ registros.estadoFenologico}}</td> -->
@@ -55,22 +55,16 @@
                   </tr>
                 </tbody>
               </table>
-              <!-- <div class="clearfix">
-      <div class="hint-text">Showing <b>5</b> out of <b>25</b> entries</div>
-      <ul class="pagination">
-        <li class="page-item disabled"><a href="#">Previous</a></li>
-        <li class="page-item"><a href="#" class="page-link">1</a></li>
-        <li class="page-item"><a href="#" class="page-link">2</a></li>
-        <li class="page-item active"><a href="#" class="page-link">3</a></li>
-        <li class="page-item"><a href="#" class="page-link">4</a></li>
-        <li class="page-item"><a href="#" class="page-link">5</a></li>
-        <li class="page-item"><a href="#" class="page-link">Next</a></li>
-      </ul>
-    </div> -->
+              <br>
+              <div>
+              <button style="margin-left: 50px;" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')||  authService.hasRole('ROLE_ADMINCAMPO')" (click)="dowloadPDF()" class="colorPDF" title="Exportar a PDF"><img class="pdf" src="assets/imagen-header/pdf.png"></button>
+              <button style="margin-left: 10px"*ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')"(click)="dowloadExcel()" class="colorExcel" title="Exportar a Excel"><img class="excel" src="assets/imagen-header/excel.png"></button>
+              </div>              
+              <div style="margin-left: 567px; width: 300px; background-color: lightslategrey; margin-top: -50px;">
+                <pagination-controls  (pageChange)="pageActual = $event"></pagination-controls>
+              </div>
             </div>
-          </div>
-          <button style="margin-left: 75px"*ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')||  authService.hasRole('ROLE_ADMINCAMPO')" (click)="dowloadPDF()" class="colorPDF" title="Exportar a PDF"><img class="pdf" src="assets/imagen-header/pdf.png"></button>
-          <button style="margin-left: 10px"*ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')"(click)="dowloadExcel()" class="colorExcel" title="Exportar a Excel"><img class="excel" src="assets/imagen-header/excel.png"></button>
+          </div>          
         </div>
 
 
@@ -79,7 +73,7 @@
         <div id="addEmployeeModal" class="modal fade">
           <div class="modal-dialog">
             <div class="modal-content">
-              <form>
+              <form #regFito="ngForm">
                 <div class="modal-header">
                   <h4 class="modal-title">Agregar Registro Fitosanitario</h4>
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -88,56 +82,123 @@
 
                   <div class="form-group">
                     <label for="tipoMaquinaria">Tipo maquinaria</label>
-                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.tipoMaquinaria" name="tipoMaquinaria">
+                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.tipoMaquinaria" name="tipoMaquinaria" #tipoMaqui="ngModel" required minlength="5" maxlength="30"
+                    onkeypress='return ((event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode == 32 ))'>
+                    <div class="alert alert-danger" *ngIf="tipoMaqui.invalid && (tipoMaqui.dirty || tipoMaqui.touched)">
+                      <div *ngIf="tipoMaqui.errors.required">
+                        La maquinaria es requerida
+                      </div>
+                      <div *ngIf="tipoMaqui.errors.minlength">
+                        LA maquinaria debe tener minimo 5 caracteres
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
                     <label for="estadoFenologico">Estado fenologico</label>
-                    <!-- (blur)="formatearRut(encargado.run)" -->
-                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.estadoFenologico" name="estadoFenologico">
-
+                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.estadoFenologico" name="estadoFenologico" #estado="ngModel" required minlength="5" maxlength="30"
+                    onkeypress='return ((event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode == 32 ))'>
+                    <div class="alert alert-danger" *ngIf="estado.invalid && (estado.dirty || estado.touched)">
+                      <div *ngIf="estado.errors.required">
+                        El estado es requerido
+                      </div>
+                      <div *ngIf="estado.errors.minlength">
+                        El estado debe tener minimo 5 caracteres
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="dosis">Dosis</label>
-                    <input type="number" class="form-control" [(ngModel)]="registroFitosanitario.dosis" name="dosis">
+                    <label for="dosis">Dosis (lt/ha)</label>
+                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.dosis" name="dosis" #dosis="ngModel" required minlength="1" maxlength="6"
+                    onkeypress='return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 46 ))'>
+                    <div class="alert alert-danger" *ngIf="dosis.invalid && (dosis.dirty || dosis.touched)">
+                      <div *ngIf="dosis.errors.required">
+                        La dosis es requerida
+                      </div>
+                      <div *ngIf="dosis.errors.minlength">
+                        La dosis debe tener minimo 1 digito
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
                     <label for="fecha">Fecha</label>
-                    <input type="date" class="form-control" [(ngModel)]="registroFitosanitario.fecha" name="fecha">
+                    <input type="date" class="form-control" [(ngModel)]="registroFitosanitario.fecha" name="fecha" #fecha="ngModel" required>
+                    <div class="alert alert-danger" *ngIf="fecha.invalid && (fecha.dirty || fecha.touched)">
+                      <div *ngIf="fecha.errors.required">
+                        La fecha es requerida
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
                     <label for="horaTermino">Hora termino</label>
-                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.horaTermino" name="horaTermino">
+                    <input type="time" class="form-control" [(ngModel)]="registroFitosanitario.horaTermino" name="horaTermino" #hora="ngModel" required >
+                    <div class="alert alert-danger" *ngIf="hora.invalid && (hora.dirty || hora.touched)">
+                      <div *ngIf="hora.errors.required">
+                        La hora es requerida
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="condicionesMetereologicas">Condiciones metereologicas</label>
-                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.condicionesMetereologicas" name="condicionesMetereologicas">
+                    <label for="condicionesMetereologicas">Condiciones metereológicas</label>
+                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.condicionesMetereologicas" name="condicionesMetereologicas" #condiciones="ngModel" required minlength="5" maxlength="30" placeholder="Ingrese condición meteorológica"
+                    onkeypress='return ((event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode == 32 ))'>
+                    <div class="alert alert-danger" *ngIf="condiciones.invalid && (condiciones.dirty || condiciones.touched)">
+                      <div *ngIf="condiciones.errors.required">
+                        La condición metereológica es requerida
+                      </div>
+                      <div *ngIf="condiciones.errors.minlength">
+                        La condición metereológica debe tener minimo 5 caracteres
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="runEncargadoBpa">Run Encargado BPA</label>
-                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.idEncargadoBPA" name="runEncargadoBpa">
+                    <label for="encargado1">Encargado BPA</label>
+                    <select #mySelect (change)='enviarId(mySelect.value)' class="form-control" id="select" required>
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let array of arraysEncargados" value="{{array.run}}">{{array.nombre}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="mySelect.invalid && (mySelect.dirty || mySelect.touched)">
+                      <div *ngIf="mySelect.errors.required">
+                        El encargado BPA es requerido
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="idFitosanitario">Id fitosanitario</label>
-                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.idFitosanitario" name="idFitosanitario">
+                    <label for="fito">Producto Fitosanitario</label>
+                    <select #mySelect2 (change)='enviarId2(mySelect2.value)' class="form-control" id="select2" required>
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let array of arraysFitos" value="{{array.idFitosanitario}}">{{array.nombreComercial}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="mySelect2.invalid && (mySelect2.dirty || mySelect2.touched)">
+                      <div *ngIf="mySelect.errors.required">
+                        El producto fitosanitario es requerido
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="idCuartel">Id cuartel</label>
-                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.idCuartel" name="idCuartel">
+                    <label for="cuartel">Cuartel</label>
+                    <select #mySelect3 (change)='enviarId3(mySelect3.value)' class="form-control" id="select3" required>
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let array of arraysCuarteles" value="{{array.idCuartel}}">{{array.nombre}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="mySelect3.invalid && (mySelect3.dirty || mySelect3.touched)">
+                      <div *ngIf="mySelect3.errors.required">
+                        El producto fitosanitario es requerido
+                      </div>
+                    </div>
                   </div>
 
                 </div>
                 <div class="modal-footer">
                   <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
-                  <!-- [disabled]="agregarEn" -->
-                  <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success" value="Agregar">
+                  <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success" [disabled]="!regFito.form.valid || flag || flag2 || flag3" value="Agregar">
                 </div>
               </form>
             </div>
@@ -152,7 +213,7 @@
         <div id="editEmployeeModal" class="modal fade">
           <div class="modal-dialog">
             <div class="modal-content">
-              <form>
+              <form #regiFitoForm="ngForm">
                 <div class="modal-header">
                   <h4 class="modal-title">Editar Registro Fitosanitario</h4>
                   <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
@@ -161,56 +222,123 @@
 
                   <div class="form-group">
                     <label for="tipoMaquinaria">Tipo maquinaria</label>
-                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.tipoMaquinaria" name="tipoMaquinaria">
+                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.tipoMaquinaria" name="tipoMaquinaria" #tipoMaquiEdi="ngModel" required minlength="5" maxlength="30"
+                    onkeypress='return ((event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode == 32 ))'>
+                    <div class="alert alert-danger" *ngIf="tipoMaquiEdi.invalid && (tipoMaquiEdi.dirty || tipoMaquiEdi.touched)">
+                      <div *ngIf="tipoMaquiEdi.errors.required">
+                        La maquinaria es requerida
+                      </div>
+                      <div *ngIf="tipoMaquiEdi.errors.minlength">
+                        LA maquinaria debe tener minimo 5 caracteres
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="estadoFenologico">Estado fenologico</label>
-                    <!-- (blur)="formatearRut(encargado.run)" -->
-                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.estadoFenologico" name="estadoFenologico">
-
+                    <label for="estadoFenologico">Estado fenológico</label>
+                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.estadoFenologico" name="estadoFenologico" #estadoEdi="ngModel" required minlength="5" maxlength="30"
+                    onkeypress='return ((event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode == 32 ))'>
+                    <div class="alert alert-danger" *ngIf="estadoEdi.invalid && (estadoEdi.dirty || estadoEdi.touched)">
+                      <div *ngIf="estadoEdi.errors.required">
+                        El estado fenológico es requerido
+                      </div>
+                      <div *ngIf="estadoEdi.errors.minlength">
+                        El estado fenológico debe tener minimo 5 caracteres
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="dosis">Dosis</label>
-                    <input type="number" class="form-control" [(ngModel)]="registroFitosanitario.dosis" name="dosis">
+                    <label for="dosis">Dosis (lt/ha)</label>
+                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.dosis" name="dosis" #dosisEdi="ngModel" required minlength="1" maxlength="6"
+                    onkeypress='return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 46 ))'>
+                    <div class="alert alert-danger" *ngIf="dosisEdi.invalid && (dosisEdi.dirty || dosisEdi.touched)">
+                      <div *ngIf="dosisEdi.errors.required">
+                        La dosis es requerida
+                      </div>
+                      <div *ngIf="dosisEdi.errors.minlength">
+                        La dosis debe tener minimo 1 digito
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
                     <label for="fecha">Fecha</label>
-                    <input type="date" class="form-control" [(ngModel)]="registroFitosanitario.fecha" name="fecha">
+                    <input type="date" class="form-control" [(ngModel)]="registroFitosanitario.fecha" name="fecha" #fechaEdi="ngModel" required>
+                    <div class="alert alert-danger" *ngIf="fechaEdi.invalid && (fechaEdi.dirty || fechaEdi.touched)">
+                      <div *ngIf="fechaEdi.errors.required">
+                        La fecha es requerida
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
                     <label for="horaTermino">Hora termino</label>
-                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.horaTermino" name="horaTermino">
+                    <input type="time" class="form-control" [(ngModel)]="registroFitosanitario.horaTermino" name="horaTermino" #horaEdi="ngModel" required >
+                    <div class="alert alert-danger" *ngIf="horaEdi.invalid && (horaEdi.dirty || horaEdi.touched)">
+                      <div *ngIf="horaEdi.errors.required">
+                        La hora es requerida
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="condicionesMetereologicas">Condiciones metereologicas</label>
-                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.condicionesMetereologicas" name="condicionesMetereologicas">
+                    <label for="condicionesMetereologicas">Condiciones metereológicas</label>
+                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.condicionesMetereologicas" name="condicionesMetereologicas" #condicionesEdi="ngModel" required minlength="5" maxlength="30" placeholder="Ingrese condición meteorológica"
+                    onkeypress='return ((event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode == 32 ))'>
+                    <div class="alert alert-danger" *ngIf="condicionesEdi.invalid && (condicionesEdi.dirty || condicionesEdi.touched)">
+                      <div *ngIf="condicionesEdi.errors.required">
+                        La condición metereológica es requerida
+                      </div>
+                      <div *ngIf="condicionesEdi.errors.minlength">
+                        La condición metereológica debe tener minimo 5 caracteres
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="runEncargadoBpa">Run Encargado BPA</label>
-                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.idEncargadoBPA" name="runEncargadoBpa">
+                    <label for="encargado2">Encargado BPA</label>
+                    <select #mySelect4 (change)='enviarId(mySelect4.value)' class="form-control" id="select4" required>
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let array of arraysEncargados" value="{{array.run}}">{{array.nombre}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="mySelect4.invalid && (mySelect4.dirty || mySelect4.touched)">
+                      <div *ngIf="mySelect4.errors.required">
+                        El encargado BPA es requerido
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="idFitosanitario">Id fitosanitario</label>
-                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.idFitosanitario" name="idFitosanitario">
+                    <label for="fito2">Producto Fitosanitario</label>
+                    <select #mySelect5 (change)='enviarId2(mySelect5.value)' class="form-control" id="select5" required>
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let array of arraysFitos" value="{{array.idFitosanitario}}">{{array.nombreComercial}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="mySelect5.invalid && (mySelect5.dirty || mySelect5.touched)">
+                      <div *ngIf="mySelect5.errors.required">
+                        El producto fitosanitario es requerido
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="idCuartel">Id cuartel</label>
-                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.idCuartel" name="idCuartel">
+                    <label for="cuartel2">Cuartel</label>
+                    <select #mySelect6 (change)='enviarId3(mySelect6.value)' class="form-control" id="select6" required>
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let array of arraysCuarteles" value="{{array.idCuartel}}">{{array.nombre}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="mySelect6.invalid && (mySelect6.dirty || mySelect6.touched)">
+                      <div *ngIf="mySelect6.errors.required">
+                        El producto fitosanitario es requerido
+                      </div>
+                    </div>
                   </div>
 
                 </div>
                 <div class="modal-footer">
                   <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
-                  <!-- [disabled]="agregarEn" -->
-                  <input type="button" (click)='update()' data-dismiss="modal" class="btn btn-success" value="Guardar">
+                  <input type="button" (click)='update()' data-dismiss="modal" class="btn btn-success" [disabled]="!regiFitoForm.form.valid || flag || flag2 || flag3" value="Guardar">
                 </div>
               </form>
             </div>
@@ -232,16 +360,16 @@
                   <div>
                     <div>
                       <label style="margin-left: 10px;">Fecha</label>
-                      <label style="margin-left: 200px;">Tipo maquinaria lt/ht</label>
-                      <label style="margin-left: 100px;">Estado fenológico</label>
+                      <label style="margin-left: 200px;">Tipo maquinaria (lt/ht)</label>
+                      <label style="margin-left: 85px;">Estado fenológico</label>
                       <br>
                       <input disabled style="margin-left: 10px;" [(ngModel)]="registroFitosanitario.fecha" >
                       <input disabled style="margin-left: 60px;" type="text" [(ngModel)]="registroFitosanitario.tipoMaquinaria" >
                       <input disabled style="margin-left: 60px;" [(ngModel)]="registroFitosanitario.estadoFenologico" >
                     </div>
                     <div>
-                      <label style="margin-left: 10px; margin-top: 10px;">Dosis</label>
-                      <label style="margin-left: 210px;">Hora término</label>
+                      <label style="margin-left: 10px; margin-top: 10px;">Dosis (lt/ha)</label>
+                      <label style="margin-left: 160px;">Hora término</label>
                       <label style="margin-left: 150px;"> Condiciones meteorológicas</label>
                       <br>
                       <input disabled style="margin-left: 10px;" [(ngModel)]="registroFitosanitario.dosis" >

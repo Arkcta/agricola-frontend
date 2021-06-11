@@ -65,8 +65,8 @@ export class PredioService {
        );
   }
 
-  updatePredio(predio: Predio): Observable<Predio>{
-    return this.http.put<Predio>(`${this.urlEndPoint}/${predio.idPredio}`, predio, {headers: this.httpHeaders}).pipe(
+  updatePredio(predio: Predio): Observable<any>{
+    return this.http.put<any>(`${this.urlEndPoint}/${predio.idPredio}`, predio, {headers: this.httpHeaders}).pipe(
         catchError(e =>{
           console.log(e.error.mensaje);
           this.isNoAutorizado(e);

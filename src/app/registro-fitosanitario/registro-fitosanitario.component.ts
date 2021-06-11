@@ -10,6 +10,13 @@ pdfMake.vfs = pdfFonts.pdfMake.vfs;
 import { Workbook } from 'exceljs';
 import * as fs from 'file-saver';
 import { AuthService } from '../usuarios/auth.service';
+import { EncargadoBPAService } from '../encargados-bpa/encargado-bpa.service';
+import { EncargadoBPA } from '../encargados-bpa/encargado-bpa';
+import { ProductoFitosanitarioService } from '../producto-fitosanitario/producto-fitosanitario.service';
+import { ProductoFitosanitario } from '../producto-fitosanitario/producto-fitosanitario';
+import { CuartelService } from '../cuartel/cuartel.service';
+import { Cuartel } from '../cuartel/cuartel';
+import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
   selector: 'app-registro-fitosanitario',
@@ -19,6 +26,17 @@ import { AuthService } from '../usuarios/auth.service';
 export class RegistroFitosanitarioComponent implements OnInit {
   registrosFitosanitarios: RegistroFitosanitario[];
   registroFitosanitario: RegistroFitosanitario = new RegistroFitosanitario();
+  pageActual: number = 1;
+  encargadosSelect: Observable<EncargadoBPA[]> = this.encargadoService.getEncargados();
+  arraysEncargados: Array<EncargadoBPA> = [];
+  fitoSelect: Observable<ProductoFitosanitario[]> = this.fitoService.getFitosanitarios();
+  arraysFitos: Array<ProductoFitosanitario> = [];
+  cuartelSelect: Observable<Cuartel[]> = this.cuartelService.getCuarteles();
+  arraysCuarteles: Array<Cuartel> = [];
+
+  flag: boolean = true;
+  flag2: boolean = true;
+  flag3: boolean = true;
 
   //variables para exportar excel
   tipoMaqui: any;
@@ -38,11 +56,15 @@ export class RegistroFitosanitarioComponent implements OnInit {
   dayNowString: string;
   fechaNow: string;
 
+
   constructor(
     private regisFitoService: RegistroFitosanitarioService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    public authService: AuthService
+    public authService: AuthService,
+    private encargadoService: EncargadoBPAService,
+    private fitoService: ProductoFitosanitarioService,
+    private cuartelService: CuartelService
   ) {}
 
   ngOnInit(): void {
@@ -50,12 +72,30 @@ export class RegistroFitosanitarioComponent implements OnInit {
     this.anioNowString = formatDate(this.now, 'yyyy', 'en-US', '+0530');
     this.mesNowString = formatDate(this.now, 'MM', 'en-US', '+0530');
     this.dayNowString = formatDate(this.now, 'dd', 'en-US', '+0530');
-    this.fechaNow =
-      Number(this.dayNowString) +
-      '/' +
-      this.mesNowString +
-      '/' +
-      this.anioNowString;
+    this.fechaNow = Number(this.dayNowString) + '/' + this.mesNowString + '/' + this.anioNowString;
+    this.encargadosSelect.subscribe(encargados => {
+      encargados.forEach(encar =>{
+        this.arraysEncargados.push(encar);
+      })
+    });
+    this.cargarFitos();
+    this.cargarCuarteles();
+  }
+
+  cargarFitos(){
+    this.fitoSelect.subscribe(fitos => {
+      fitos.forEach(fit =>{
+        this.arraysFitos.push(fit);
+      })
+    });
+  }
+
+  cargarCuarteles(){
+    this.cuartelSelect.subscribe(cuarteles => {
+      cuarteles.forEach(cuartel =>{
+        this.arraysCuarteles.push(cuartel);
+      })
+    });
   }
 
   listaRegistroFitoService() {
@@ -151,6 +191,13 @@ export class RegistroFitosanitarioComponent implements OnInit {
 
   vaciarInputs() {
     this.registroFitosanitario = new RegistroFitosanitario();
+
+    let select = <HTMLInputElement>document.getElementById("select");
+    let select2 = <HTMLInputElement>document.getElementById("select2");
+    let select3 = <HTMLInputElement>document.getElementById("select3");
+    select.value="";
+    select2.value="";
+    select3.value="";
   }
 
   dowloadPDF() {
@@ -355,5 +402,35 @@ export class RegistroFitosanitarioComponent implements OnInit {
       });
       fs.saveAs(blob, fname + ' ' + this.fechaNow);
     });
+  }
+
+  enviarId(value:string){
+
+    if(value != ""){
+      this.registroFitosanitario.idEncargadoBPA = value;
+      this.flag = false;
+    }else{
+      this.flag =true;
+    }
+  }
+
+  enviarId2(value:string){
+
+    if(value != ""){
+      this.registroFitosanitario.idFitosanitario = Number(value);
+      this.flag2 = false;
+    }else{
+      this.flag2 =true;
+    }
+  }
+
+  enviarId3(value:string){
+
+    if(value != ""){
+      this.registroFitosanitario.idCuartel = Number(value);
+      this.flag3 = false;
+    }else{
+      this.flag3 =true;
+    }
   }
 }

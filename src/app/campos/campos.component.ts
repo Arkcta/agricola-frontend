@@ -4,7 +4,10 @@ import { EncargadoBPA } from '../encargados-bpa/encargado-bpa';
 import { CamposService } from './campos.service';
 import { EncargadosBPAComponent } from '../encargados-bpa/encargados-bpa.component';
 import { Router, ActivatedRoute } from '@angular/router';
+import { AdministradorService } from '../administrador/administrador.service';
 import swal from 'sweetalert2';
+import { Observable } from 'rxjs/internal/Observable';
+import { Administrador } from '../administrador/administrador';
 
 @Component({
   selector: 'app-campos',
@@ -13,30 +16,36 @@ import swal from 'sweetalert2';
 })
 export class CamposComponent implements OnInit {
 
-
   titulo: string = "Crear Campo";
   campo: Campos = new Campos();
   campos: Campos[];
+  pageActual: number = 1;
   encargadosBPA: EncargadoBPA[];
   campoEditar: Campos =  new Campos();
   encargados2: EncargadosBPAComponent;
-  nomEncar: string[];
+  adminSelect: Observable<Administrador[]> = this.adminService.getAdministradores();
+  arraysAdmin: Array<Administrador> = [];
+  flag:boolean = true;
 
 
-  constructor(private campoService: CamposService,  private router: Router, private activatedRoute: ActivatedRoute) { }
+  constructor(private campoService: CamposService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute,
+    private adminService: AdministradorService) { }
 
   ngOnInit(): void {
     this.listaCamposService();
-    // this.nombresEncargados();
-    // console.log(this.nomEncar);
+    this.cargarAdmins();
   }
 
-  // nombresEncargados(): string[]{
-  //   this.encargados2.listaEncargadosServiceParaCampo().forEach(element => {
-  //     this.nomEncar.push(element.nombre);
-  //   });
-  //   return this.nomEncar;
-  // }
+  cargarAdmins(){
+    this.adminSelect.subscribe(admins => {
+      admins.forEach(ad =>{
+        this.arraysAdmin.push(ad);
+      })
+    });
+  }
+
 
   listaCamposService() {
     this.campoService.getCampos().subscribe(
@@ -91,7 +100,7 @@ export class CamposComponent implements OnInit {
     this.campoService.crearCampo(this.campo).subscribe(
       json => {
         this.router.navigate(['/campos'])
-        swal.fire('Nuevo Campo', `El campo ${json.campo.nombre}, ha sido creado con éxito`, 'success');
+        swal.fire('Nuevo Campo', `El campo ${json.campo.nombre} ha sido creado con éxito`, 'success');
         this.listaCamposService();
       }
     )
@@ -118,9 +127,20 @@ export class CamposComponent implements OnInit {
     })
   }
 
-
   vaciarInputs() {
     this.campo = new Campos();
+    let select = <HTMLInputElement>document.getElementById("select");
+    select.value="";
+  }
+
+  enviarId(value:string){
+
+    if(value != ""){
+      this.campo.runAdministradorCampo =  value;
+      this.flag = false;
+    }else{
+      this.flag =true;
+    }
   }
 
 }

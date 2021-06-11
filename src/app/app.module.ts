@@ -27,6 +27,7 @@ import { AdministradorService } from './administrador/administrador.service';
 import { LoginComponent } from './usuarios/login.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { EstadisticasComponent } from './estadisticas/estadisticas.component';
+import { NgxPaginationModule } from 'ngx-pagination';
 
 import {AuthGuard} from './usuarios/guards/auth.guard';
 import { TokenInterceptor } from './usuarios/interceptors/token.interceptor';
@@ -73,6 +74,7 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes),
     FormsModule,
+    NgxPaginationModule
   ],
   providers: [
     EncargadoBPAService,

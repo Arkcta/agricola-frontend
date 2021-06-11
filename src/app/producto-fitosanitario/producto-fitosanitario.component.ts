@@ -13,11 +13,11 @@ export class ProductoFitosanitarioComponent implements OnInit {
 
   fitosanitario: ProductoFitosanitario = new ProductoFitosanitario();
   fitosanitarios: ProductoFitosanitario[];
+  flag:boolean = true;
+  pageActual: number = 1;
 
   constructor(private fitosanitarioService: ProductoFitosanitarioService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
-  //recordemos que todo lo que esta en el ngOnInit aparece apenas carga la vista
-  //por ende se hace el llamado al metodo que trae la lista de fitos para mostrarla en la tabla
   ngOnInit(): void {
     this.listaFitosanitariosService();
   }
@@ -110,6 +110,17 @@ export class ProductoFitosanitarioComponent implements OnInit {
 //metodo que vacia los inputs del modal agregar fito
   vaciarInputs() {
     this.fitosanitario = new ProductoFitosanitario();
+    let select = <HTMLInputElement>document.getElementById("select");
+    select.value="";
   }
 
+  enviarId(value:string){
+
+    if(value != ""){
+      this.fitosanitario.tipo = value;
+      this.flag = false;
+    }else{
+      this.flag =true;
+    }
+  }
 }

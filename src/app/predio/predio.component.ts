@@ -4,7 +4,6 @@ import { PredioService } from './predio.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { CamposService } from '../campos/campos.service';
 import swal from 'sweetalert2';
-import { map } from 'rxjs/operators';
 import { Campos } from '../campos/campos';
 import { Observable } from 'rxjs/internal/Observable';
 
@@ -16,44 +15,39 @@ import { Observable } from 'rxjs/internal/Observable';
 export class PredioComponent implements OnInit {
   predio: Predio = new Predio();
   predios: Predio[];
+  pageActual: number = 1;
   camposSelect: Observable<Campos[]> = this.campoService.getCampos();
   arraysCampos: Array<Campos> = [];
+  flag:boolean = true; //true significa disabled
 
   constructor(
     private predioService: PredioService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private campoService: CamposService
+
   ) {
     // this.listaCamposService();
   }
 
   ngOnInit(): void {
     this.listaEncargadosService();
+    this.cargarCampos();
+  }
+
+  cargarCampos(){
     this.camposSelect.subscribe(campos => {
       campos.forEach(campo =>{
         this.arraysCampos.push(campo);
       })
     });
-    this.mostrar();
-  }
-
-  // listaCamposService() {
-  //   this.campoService.getCampos().subscribe(
-  //     campos => {
-  //       this.camposSelect = campos;
-  //     }   
-  //   );   
-  // }
-
-  mostrar(){
-    console.log(this.arraysCampos);
   }
 
   listaEncargadosService() {
     this.predioService.getPredios().subscribe(
-      (predios) => (this.predios = predios) //se agrega {this.encargadosBPA = encargados, otra cosa} al this cuando hay mas de una linea de codigo tambien al encargados cuando son mas de 1 parametro
-    );
+      (predios) => {
+        this.predios = predios;
+      });
   }
 
   delete(predio: Predio): void {
@@ -110,11 +104,11 @@ export class PredioComponent implements OnInit {
   }
 
   update(): void {
-    this.predioService.updatePredio(this.predio).subscribe((predio) => {
+    this.predioService.updatePredio(this.predio).subscribe((json) => {
       this.router.navigate(['/predios']);
       swal.fire(
         'Predio actualizado',
-        `El Predio ${predio.nombre} ha sido actualizado con éxito`,
+        `El Predio ${json.predio.nombre} ha sido actualizado con éxito`,
         'success'
       );
       this.predioService.getPredios().subscribe(
@@ -124,6 +118,8 @@ export class PredioComponent implements OnInit {
   }
 
   cargarPredio(id: number): void {
+    let select = <HTMLInputElement>document.getElementById("select");
+    select.setAttribute("select", id.toString());
     this.activatedRoute.params.subscribe((params) => {
       //let id = params['id'];
       if (id) {
@@ -137,9 +133,18 @@ export class PredioComponent implements OnInit {
   //metodo que vacia el form para crear
   vaciarInputs() {
     this.predio = new Predio();
+    let select = <HTMLInputElement>document.getElementById("select");
+    select.value="";
+
   }
 
   enviarId(value:string){
-    console.log("valoorr:" + value);
+
+    if(value != ""){
+      this.predio.idCampo =  Number(value);
+      this.flag = false;
+    }else{
+      this.flag =true;
+    }
   }
 }
