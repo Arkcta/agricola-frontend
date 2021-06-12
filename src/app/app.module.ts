@@ -32,6 +32,8 @@ import { NgxPaginationModule } from 'ngx-pagination';
 import {AuthGuard} from './usuarios/guards/auth.guard';
 import { TokenInterceptor } from './usuarios/interceptors/token.interceptor';
 import { AuthInterceptor } from './usuarios/interceptors/auth.interceptor';
+import { DuenoCampoComponent } from './dueno-campo/dueno-campo.component';
+import { DuenoService } from './dueno-campo/dueno.service';
 
 
 const routes: Routes = [
@@ -66,7 +68,8 @@ const routes: Routes = [
     AdministradorComponent,
     LoginComponent,
     NavbarComponent,
-    EstadisticasComponent
+    EstadisticasComponent,
+    DuenoCampoComponent
 
   ],
   imports: [
@@ -86,6 +89,7 @@ const routes: Routes = [
     ProductoFertilizanteService,
     RegistroFertilizanteService,
     AdministradorService,
+    DuenoService,
     { provide: HTTP_INTERCEPTORS, useClass:TokenInterceptor , multi: true },
       { provide: HTTP_INTERCEPTORS, useClass:AuthInterceptor , multi: true }
   ],

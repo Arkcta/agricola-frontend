@@ -13,8 +13,11 @@ export class ProductoFitosanitarioComponent implements OnInit {
 
   fitosanitario: ProductoFitosanitario = new ProductoFitosanitario();
   fitosanitarios: ProductoFitosanitario[];
-  flag:boolean = true;
+  flag: boolean = true;
+  flag2: boolean = false;
   pageActual: number = 1;
+  tipo: string;
+  tipos = [{nombre: 'Fungicida'},{nombre: 'Insecticida'},{nombre: 'Herbicida'},{nombre: 'Acaricida'},{nombre: 'Bactericida'}];
 
   constructor(private fitosanitarioService: ProductoFitosanitarioService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
@@ -91,18 +94,19 @@ export class ProductoFitosanitarioComponent implements OnInit {
     this.fitosanitarioService.updateEncargado(this.fitosanitario).subscribe(
       json => {
         this.router.navigate(['/fitosanitarios']);
-        swal.fire('Producto Fitosanitario actualizado', `Fitosanitario ${json.fitosanitario.nombreComercial}, ha sido actualizado con éxito`, 'success');
+        swal.fire('Producto Fitosanitario actualizado', `Fitosanitario ${this.fitosanitario.nombreComercial}, ha sido actualizado con éxito`, 'success');
         this.listaFitosanitariosService();
       }
     )
   }
 
 //metodo para cargar con datos los inputs del modal de editar fito
-  cargarFitosanitario(id: number): void {
+  cargarFitosanitario(fito: ProductoFitosanitario): void {
+    this.tipo = fito.tipo;
     this.activatedRoute.params.subscribe(params => {
       //let id = params['run'];
-      if (id) {
-        this.fitosanitarioService.getFitosanitario(id).subscribe((fito) => this.fitosanitario = fito);
+      if (fito.idFitosanitario) {
+        this.fitosanitarioService.getFitosanitario(fito.idFitosanitario).subscribe((fito) => this.fitosanitario = fito);
       }
     })
   }
@@ -121,6 +125,15 @@ export class ProductoFitosanitarioComponent implements OnInit {
       this.flag = false;
     }else{
       this.flag =true;
+    }
+  }
+
+  enviarId2(value:string){
+    if(value != ""){
+      this.fitosanitario.tipo =  value;
+      this.flag2 = false;
+    }else{
+      this.flag2 =true;
     }
   }
 }

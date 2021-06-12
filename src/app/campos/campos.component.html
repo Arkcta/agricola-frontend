@@ -30,7 +30,7 @@
                         <th>Dirección</th>
                         <th>Hectáreas</th>
                         <th>RUN Dueño</th>
-                        <th>RUN Administrador</th>
+                        <th>Nombre administrador</th>
                         <th>Acciones</th>
                       </tr>
                     </thead>
@@ -40,9 +40,9 @@
                         <td width="200px"> {{ campe.direccion}}</td>
                         <td width="80px"> {{ campe.hectareas}}</td>
                         <td width="200px"> {{ campe.runDuenoCampo}}</td>
-                        <td width="200px"> {{ campe.runAdministradorCampo}}</td>
+                        <td width="200px"> {{ campe.nombreAdministrador}}</td>
                         <td>
-                          <a href="#editEmployeeModal" (click)='cargarCampo(campe.idCampo)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
+                          <a href="#editEmployeeModal" (click)='cargarCampo(campe)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
                           <a (click)='delete(campe)' href="" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Eliminar">&#xE872;</i></a>
                         </td>
                       </tr>
@@ -112,8 +112,16 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="runDuenoCampo">Run Dueño de Campo</label>
-                    <input type="text" class="form-control" [(ngModel)]="campo.runDuenoCampo" name="runDuenoCampo">
+                    <label for="idCampo">Dueño de campo</label>
+                    <select #mySelect3 (change)='enviarId3(mySelect3.value)' class="form-control" id="select3" required>
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let array of arrayDueno" value="{{array.run}}">{{array.nombre}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="mySelect3.invalid && (mySelect3.dirty || mySelect3.touched)">
+                      <div *ngIf="mySelect3.errors.required">
+                        El administrador de campo es requerido
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
@@ -132,7 +140,7 @@
                 </div>
                 <div class="modal-footer">
                   <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
-                  <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success" [disabled]="!campoForm.form.valid || flag" value="Agregar">
+                  <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success" [disabled]="!campoForm.form.valid || flag || flag3" value="Agregar">
                 </div>
               </form>
             </div>
@@ -197,18 +205,26 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="runDuenoCampo">Run Dueño de Campo</label>
-                    <input type="text" class="form-control" [(ngModel)]="campo.runDuenoCampo" id="rundueno" name="runDuenoCampo">
+                    <label for="idCampo">Dueño de campo</label>
+                    <select #mySelect4 (change)='enviarId4(mySelect4.value)' class="form-control" id="select4" disabled required>
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let array of arrayDueno" [selected]="array.run == runDueno" value="{{array.run}}">{{array.nombre}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="mySelect4.invalid && (mySelect4.dirty || mySelect4.touched)">
+                      <div *ngIf="mySelect4.errors.required">
+                        El administrador de campo es requerido
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
                     <label for="idCampo">Administrador de campo</label>
-                    <select #mySelect (change)='enviarId(mySelect.value)' class="form-control" id="selectEdi" required>
+                    <select #mySelect2 (change)='enviarId2(mySelect2.value)' class="form-control" id="selectEdi" disabled required>
                       <option value="">Seleccione</option>
-                      <option *ngFor="let array of arraysAdmin" value="{{array.run}}">{{array.nombre}}</option>
+                      <option *ngFor="let array of arraysAdmin" [selected]="array.run == run" value="{{array.run}}">{{array.nombre}}</option>
                     </select>
-                    <div class="alert alert-danger" *ngIf="mySelect.invalid && (mySelect.dirty || mySelect.touched)">
-                      <div *ngIf="mySelect.errors.required">
+                    <div class="alert alert-danger" *ngIf="mySelect2.invalid && (mySelect2.dirty || mySelect2.touched)">
+                      <div *ngIf="mySelect2.errors.required">
                         El administrador de campo es requerido
                       </div>
                     </div>
@@ -217,7 +233,7 @@
                 </div>
                 <div class="modal-footer">
                   <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
-                  <input type="button" (click)='update()' data-dismiss="modal" class="btn btn-success" [disabled]="!campoEditForm.form.valid || flag" value="Guardar">
+                  <input type="button" (click)='update()' data-dismiss="modal" class="btn btn-success" [disabled]="!campoEditForm.form.valid || flag2 || flag4" value="Guardar">
                 </div>
               </form>
             </div>

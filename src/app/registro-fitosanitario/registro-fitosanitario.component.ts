@@ -33,10 +33,17 @@ export class RegistroFitosanitarioComponent implements OnInit {
   arraysFitos: Array<ProductoFitosanitario> = [];
   cuartelSelect: Observable<Cuartel[]> = this.cuartelService.getCuarteles();
   arraysCuarteles: Array<Cuartel> = [];
+  runEn: string;
+  fito: number;
+  cuar: number;
 
   flag: boolean = true;
   flag2: boolean = true;
   flag3: boolean = true;
+
+  flagEdi1: boolean = false;
+  flagEdi2: boolean = false;
+  flagEdi3: boolean = false;
 
   //variables para exportar excel
   tipoMaqui: any;
@@ -72,14 +79,18 @@ export class RegistroFitosanitarioComponent implements OnInit {
     this.anioNowString = formatDate(this.now, 'yyyy', 'en-US', '+0530');
     this.mesNowString = formatDate(this.now, 'MM', 'en-US', '+0530');
     this.dayNowString = formatDate(this.now, 'dd', 'en-US', '+0530');
-    this.fechaNow = Number(this.dayNowString) + '/' + this.mesNowString + '/' + this.anioNowString;
+    this.fechaNow = Number(this.dayNowString)-1 + '/' + this.mesNowString + '/' + this.anioNowString;
+    this.cargarEncargados();
+    this.cargarFitos();
+    this.cargarCuarteles();
+  }
+
+  cargarEncargados(){
     this.encargadosSelect.subscribe(encargados => {
       encargados.forEach(encar =>{
         this.arraysEncargados.push(encar);
       })
     });
-    this.cargarFitos();
-    this.cargarCuarteles();
   }
 
   cargarFitos(){
@@ -178,12 +189,15 @@ export class RegistroFitosanitarioComponent implements OnInit {
       });
   }
 
-  cargarRegistroFito(id: number): void {
+  cargarRegistroFito(fito: RegistroFitosanitario): void {
+    this.runEn = fito.idEncargadoBPA;
+    this.fito = fito.idFitosanitario;
+    this.cuar = fito.idCuartel;
     this.activatedRoute.params.subscribe((params) => {
       //let id = params['run'];
-      if (id) {
+      if (fito.idRegistroFitosanitario) {
         this.regisFitoService
-          .getRegistroFito(id)
+          .getRegistroFito(fito.idRegistroFitosanitario)
           .subscribe((reg) => (this.registroFitosanitario = reg));
       }
     });
@@ -274,9 +288,9 @@ export class RegistroFitosanitarioComponent implements OnInit {
         { text: row.fecha, alignment: 'center' },
         { text: row.horaTermino, alignment: 'center' },
         { text: row.condicionesMetereologicas, alignment: 'center' },
-        { text: row.idEncargadoBPA, alignment: 'center' },
-        { text: row.idFitosanitario, alignment: 'center' },
-        { text: row.idCuartel, alignment: 'center' }
+        { text: row.nombreEncargadoBPA, alignment: 'center' },
+        { text: row.nombreFitosanitario, alignment: 'center' },
+        { text: row.nombreCuartel, alignment: 'center' }
       );
 
       body.push(dataRow);
@@ -349,9 +363,9 @@ export class RegistroFitosanitarioComponent implements OnInit {
       this.fecha = x1.fecha;
       this.horaTermino = x1.horaTermino;
       this.condiciones = x1.condicionesMetereologicas;
-      this.encargadoBPA = x1.idEncargadoBPA;
-      this.fitosanitario = x1.idFitosanitario;
-      this.cuartel = x1.idCuartel;
+      this.encargadoBPA = x1.nombreEncargadoBPA;
+      this.fitosanitario = x1.nombreFitosanitario;
+      this.cuartel = x1.nombreCuartel;
       temp.push(
         this.tipoMaqui,
         this.estadoFeno,
@@ -388,7 +402,7 @@ export class RegistroFitosanitarioComponent implements OnInit {
         if(i == 3) worksheet.columns[i].width = 14;//fecha
         if(i == 4) worksheet.columns[i].width = 14;//horatermino
         if(i == 5) worksheet.columns[i].width = 28;//condiciones
-        if(i == 6) worksheet.columns[i].width = 20;//encargadoBPA
+        if(i == 6) worksheet.columns[i].width = 30;//encargadoBPA
         if(i == 7) worksheet.columns[i].width = 20;//Fitosanitario
         if(i == 8) worksheet.columns[i].width = 15;//cuartel
       } 
@@ -431,6 +445,36 @@ export class RegistroFitosanitarioComponent implements OnInit {
       this.flag3 = false;
     }else{
       this.flag3 =true;
+    }
+  }
+
+  enviarIdEdi1(value:string){
+
+    if(value != ""){
+      this.registroFitosanitario.idEncargadoBPA = value;
+      this.flagEdi1 = false;
+    }else{
+      this.flagEdi1 =true;
+    }
+  }
+
+  enviarIdEdi2(value:string){
+
+    if(value != ""){
+      this.registroFitosanitario.idFitosanitario = Number(value);
+      this.flagEdi2 = false;
+    }else{
+      this.flagEdi2 =true;
+    }
+  }
+
+  enviarIdEdi3(value:string){
+
+    if(value != ""){
+      this.registroFitosanitario.idCuartel = Number(value);
+      this.flagEdi3 = false;
+    }else{
+      this.flagEdi3 =true;
     }
   }
 }

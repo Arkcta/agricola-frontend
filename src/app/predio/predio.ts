@@ -3,4 +3,5 @@ export class Predio {
   nombre: string;
   hectareas: string;
   idCampo: number;
+  nombreCampo: string;
 }

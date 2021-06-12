@@ -28,7 +28,7 @@
                       <tr>
                         <th>Nombre</th>
                         <th>Hectáreas</th>
-                        <th>ID Campo</th>
+                        <th>Campo</th>
                         <th>Acciones</th>
 
                       </tr>
@@ -37,9 +37,9 @@
                       <tr *ngFor="let predio of predios | paginate: {itemsPerPage: 5, currentPage: pageActual}">
                         <td width="200px"> {{ predio.nombre}}</td>
                         <td width="200px"> {{ predio.hectareas}}</td>
-                        <td width="200px"> {{ predio.idCampo}}</td>
+                        <td width="200px"> {{ predio.nombreCampo}}</td>
                         <td>
-                          <a href="#editEmployeeModal" (click)='cargarPredio(predio.idPredio)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
+                          <a href="#editEmployeeModal" (click)='cargarPredio(predio)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
                           <a (click)='delete(predio)' href="" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Eliminar">&#xE872;</i></a>
                         </td>
                       </tr>
@@ -168,12 +168,12 @@
 
                   <div class="form-group">
                     <label for="idCampo">Campo</label>
-                    <select #mySelect (change)='enviarId(mySelect.value)' ([ngModel])="predio.idCampo" name="idCampo" class="form-control" id="selectEdi" required>
+                    <select #mySelect2 (change)='enviarId2(mySelect2.value)' ([ngModel])="id" name="idCampo" class="form-control" id="selectEdi" required>
                       <option value="">Seleccione</option>
-                      <option *ngFor="let array of arraysCampos" value="{{predio.idCampo}}">{{array.nombre}}</option>
+                      <option *ngFor="let array of arraysCampos" [selected]="array.idCampo == id" value="{{array.idCampo}}">{{array.nombre}}</option>
                     </select>
-                    <div class="alert alert-danger" *ngIf="mySelect.invalid && (mySelect.dirty || mySelect.touched)">
-                      <div *ngIf="mySelect.errors.required">
+                    <div class="alert alert-danger" *ngIf="mySelect2.invalid && (mySelect2.dirty || mySelect2.touched)">
+                      <div *ngIf="mySelect2.errors.required">
                         El campo es requerido
                       </div>
                     </div>
@@ -182,7 +182,7 @@
                 </div>
                 <div class="modal-footer">
                   <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
-                  <input type="button" (click)='update()' class="btn btn-info" data-dismiss="modal" [disabled]="!predioEditarForm.form.valid || flag" value="Guardar">
+                  <input type="button" (click)='update()' class="btn btn-info" data-dismiss="modal" [disabled]="!predioEditarForm.form.valid || flag2" value="Guardar">
                 </div>
               </form>
             </div>

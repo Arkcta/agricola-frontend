@@ -18,7 +18,9 @@ export class PredioComponent implements OnInit {
   pageActual: number = 1;
   camposSelect: Observable<Campos[]> = this.campoService.getCampos();
   arraysCampos: Array<Campos> = [];
+  id: number;
   flag:boolean = true; //true significa disabled
+  flag2:boolean = false;
 
   constructor(
     private predioService: PredioService,
@@ -111,21 +113,20 @@ export class PredioComponent implements OnInit {
         `El Predio ${json.predio.nombre} ha sido actualizado con éxito`,
         'success'
       );
-      this.predioService.getPredios().subscribe(
-        (predios) => (this.predios = predios) //se agrega {this.encargadosBPA = encargados} al this cuando hay mas de una linea de codigo tambien al encargados cuando son mas de 1 parametro
-      );
+      this.listaEncargadosService()
     });
   }
 
-  cargarPredio(id: number): void {
-    let select = <HTMLInputElement>document.getElementById("select");
-    select.setAttribute("select", id.toString());
+  cargarPredio(predio: Predio): void {
+    this.id = predio.idCampo;
     this.activatedRoute.params.subscribe((params) => {
       //let id = params['id'];
-      if (id) {
+      if (predio.idPredio) {
         this.predioService
-          .getPredio(id)
-          .subscribe((predio) => (this.predio = predio));
+          .getPredio(predio.idPredio)
+          .subscribe((predio) => {
+            this.predio = predio
+          });
       }
     });
   }
@@ -145,6 +146,15 @@ export class PredioComponent implements OnInit {
       this.flag = false;
     }else{
       this.flag =true;
+    }
+  }
+
+  enviarId2(value:string){
+    if(value != ""){
+      this.predio.idCampo =  Number(value);
+      this.flag2 = false;
+    }else{
+      this.flag2 =true;
     }
   }
 }

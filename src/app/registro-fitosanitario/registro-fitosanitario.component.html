@@ -30,9 +30,9 @@
                     <!-- <th>Dosis</th>                     -->
                     <!-- <th>Hora término</th> -->
                     <!-- <th>Condiciones meteorológicas</th> -->
-                    <th>RUN Encargado BPA</th>
-                    <th>ID Fitosanitario</th>
-                    <th>ID Cuartel</th>
+                    <th>Encargado BPA</th>
+                    <th>Producto Fitosanitario</th>
+                    <th>Cuartel</th>
                     <th *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') ||authService.hasRole('ROLE_ADMINCAMPO')">Acciones</th>
                   </tr>
                 </thead>
@@ -44,13 +44,13 @@
                     <!-- <td width="100px"> {{ registros.dosis}} lt/ha</td>                     -->
                     <!-- <td width="90px"> {{ registros.horaTermino}}</td> -->
                     <!-- <td width="60px"> {{ registros.condicionesMetereologicas}}</td> -->
-                    <td width="50px"> {{ registros.idEncargadoBPA}}</td>
-                    <td width="90px"> {{ registros.idFitosanitario}}</td>
-                    <td width="90px"> {{ registros.idCuartel}}</td>
+                    <td width="50px"> {{ registros.nombreEncargadoBPA}}</td>
+                    <td width="90px"> {{ registros.nombreFitosanitario}}</td>
+                    <td width="90px"> {{ registros.nombreCuartel}}</td>
                     <td *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') ||authService.hasRole('ROLE_ADMINCAMPO')">
-                      <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA')" href="#editEmployeeModal" (click)='cargarRegistroFito(registros.idRegistroFitosanitario)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
+                      <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA')" href="#editEmployeeModal" (click)='cargarRegistroFito(registros)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
                       <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA')" (click)='delete(registros)' href="" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Eliminar">&#xE872;</i></a>
-                      <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') ||authService.hasRole('ROLE_ADMINCAMPO')"href="#detailEmployeeModal" (click)='cargarRegistroFito(registros.idRegistroFitosanitario)' data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Detalles">&#xe8f4;</i></a>
+                      <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') ||authService.hasRole('ROLE_ADMINCAMPO')"href="#detailEmployeeModal" (click)='cargarRegistroFito(registros)' data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Detalles">&#xe8f4;</i></a>
                     </td>
                   </tr>
                 </tbody>
@@ -82,7 +82,7 @@
 
                   <div class="form-group">
                     <label for="tipoMaquinaria">Tipo maquinaria</label>
-                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.tipoMaquinaria" name="tipoMaquinaria" #tipoMaqui="ngModel" required minlength="5" maxlength="30"
+                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.tipoMaquinaria" name="tipoMaquinaria" #tipoMaqui="ngModel" required minlength="5" maxlength="30" placeholder="Ingrese tipo de maquinaria"
                     onkeypress='return ((event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode == 32 ))'>
                     <div class="alert alert-danger" *ngIf="tipoMaqui.invalid && (tipoMaqui.dirty || tipoMaqui.touched)">
                       <div *ngIf="tipoMaqui.errors.required">
@@ -96,7 +96,7 @@
 
                   <div class="form-group">
                     <label for="estadoFenologico">Estado fenologico</label>
-                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.estadoFenologico" name="estadoFenologico" #estado="ngModel" required minlength="5" maxlength="30"
+                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.estadoFenologico" name="estadoFenologico" #estado="ngModel" required minlength="5" maxlength="30" placeholder="Ingrese estado fenologico"
                     onkeypress='return ((event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode == 32 ))'>
                     <div class="alert alert-danger" *ngIf="estado.invalid && (estado.dirty || estado.touched)">
                       <div *ngIf="estado.errors.required">
@@ -110,7 +110,7 @@
 
                   <div class="form-group">
                     <label for="dosis">Dosis (lt/ha)</label>
-                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.dosis" name="dosis" #dosis="ngModel" required minlength="1" maxlength="6"
+                    <input type="text" class="form-control" [(ngModel)]="registroFitosanitario.dosis" name="dosis" #dosis="ngModel" required minlength="1" maxlength="6" placeholder="Ingreses dosis"
                     onkeypress='return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 46 ))'>
                     <div class="alert alert-danger" *ngIf="dosis.invalid && (dosis.dirty || dosis.touched)">
                       <div *ngIf="dosis.errors.required">
@@ -298,9 +298,9 @@
 
                   <div class="form-group">
                     <label for="encargado2">Encargado BPA</label>
-                    <select #mySelect4 (change)='enviarId(mySelect4.value)' class="form-control" id="select4" required>
+                    <select #mySelect4 (change)='enviarIdEdi1(mySelect4.value)' class="form-control" id="select4" disabled required>
                       <option value="">Seleccione</option>
-                      <option *ngFor="let array of arraysEncargados" value="{{array.run}}">{{array.nombre}}</option>
+                      <option *ngFor="let array of arraysEncargados" [selected]="array.run == runEn" value="{{array.run}}">{{array.nombre}}</option>
                     </select>
                     <div class="alert alert-danger" *ngIf="mySelect4.invalid && (mySelect4.dirty || mySelect4.touched)">
                       <div *ngIf="mySelect4.errors.required">
@@ -311,9 +311,9 @@
 
                   <div class="form-group">
                     <label for="fito2">Producto Fitosanitario</label>
-                    <select #mySelect5 (change)='enviarId2(mySelect5.value)' class="form-control" id="select5" required>
+                    <select #mySelect5 (change)='enviarIdEdi2(mySelect5.value)' class="form-control" id="select5" disabled required>
                       <option value="">Seleccione</option>
-                      <option *ngFor="let array of arraysFitos" value="{{array.idFitosanitario}}">{{array.nombreComercial}}</option>
+                      <option *ngFor="let array of arraysFitos" [selected]="array.idFitosanitario == fito" value="{{array.idFitosanitario}}">{{array.nombreComercial}}</option>
                     </select>
                     <div class="alert alert-danger" *ngIf="mySelect5.invalid && (mySelect5.dirty || mySelect5.touched)">
                       <div *ngIf="mySelect5.errors.required">
@@ -324,9 +324,9 @@
 
                   <div class="form-group">
                     <label for="cuartel2">Cuartel</label>
-                    <select #mySelect6 (change)='enviarId3(mySelect6.value)' class="form-control" id="select6" required>
+                    <select #mySelect6 (change)='enviarIdEdi3(mySelect6.value)' class="form-control" id="select6" disabled required>
                       <option value="">Seleccione</option>
-                      <option *ngFor="let array of arraysCuarteles" value="{{array.idCuartel}}">{{array.nombre}}</option>
+                      <option *ngFor="let array of arraysCuarteles" [selected]="array.idCuartel == cuar" value="{{array.idCuartel}}">{{array.nombre}}</option>
                     </select>
                     <div class="alert alert-danger" *ngIf="mySelect6.invalid && (mySelect6.dirty || mySelect6.touched)">
                       <div *ngIf="mySelect6.errors.required">
@@ -338,7 +338,7 @@
                 </div>
                 <div class="modal-footer">
                   <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
-                  <input type="button" (click)='update()' data-dismiss="modal" class="btn btn-success" [disabled]="!regiFitoForm.form.valid || flag || flag2 || flag3" value="Guardar">
+                  <input type="button" (click)='update()' data-dismiss="modal" class="btn btn-success" [disabled]="!regiFitoForm.form.valid || flagEdi1 || flagEdi2 || flagEdi3" value="Guardar">
                 </div>
               </form>
             </div>
@@ -378,13 +378,25 @@
                     </div>
 
                     <div>
-                      <label style="margin-left: 10px; margin-top: 10px;">RUN Encargado BPA</label>
-                      <label style="margin-left: 110px;">ID Fitosanitario</label>
-                      <label style="margin-left: 140px;"> ID Cuartel</label>
+                      <label style="margin-left: 10px; margin-top: 10px;">Encargado BPA</label>
+                      <label style="margin-left: 140px;">Producto Fitosanitario</label>
+                      <label style="margin-left: 90px;">Cuartel</label>
                       <br>
-                      <input disabled style="margin-left: 10px;" [(ngModel)]="registroFitosanitario.idEncargadoBPA">
-                      <input disabled style="margin-left: 60px;" [(ngModel)]="registroFitosanitario.idFitosanitario">
-                      <input disabled style="margin-left: 60px;" [(ngModel)]="registroFitosanitario.idCuartel">
+
+                      <select style="margin-left: 10px; height: 35px; width: 185px;" id="select4" disabled>
+                        <option value="">Seleccione</option>
+                        <option *ngFor="let array of arraysEncargados" [selected]="array.run == runEn" value="{{array.run}}">{{array.nombre}}</option>
+                      </select>
+
+                      <select style="margin-left: 60px; height: 35px; width: 185px;" id="select5" disabled>
+                        <option value="">Seleccione</option>
+                        <option *ngFor="let array of arraysFitos" [selected]="array.idFitosanitario == fito" value="{{array.idFitosanitario}}">{{array.nombreComercial}}</option>
+                      </select>
+
+                      <select style="margin-left: 60px; height: 35px; width: 185px;" id="select6" disabled required>
+                        <option value="">Seleccione</option>
+                        <option *ngFor="let array of arraysCuarteles" [selected]="array.idCuartel == cuar" value="{{array.idCuartel}}">{{array.nombre}}</option>
+                      </select>
                     </div>
                   </div>
 

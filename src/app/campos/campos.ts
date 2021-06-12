@@ -5,4 +5,5 @@ export class Campos {
   hectareas: string;
   runDuenoCampo: string;
   runAdministradorCampo: string;
+  nombreAdministrador: string;
 }

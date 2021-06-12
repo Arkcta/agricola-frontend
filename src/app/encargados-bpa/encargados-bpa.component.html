@@ -140,7 +140,7 @@
                   <div class="form-group">
                     <label for="pass">Contraseña</label>
                     <input type="password" class="form-control" [(ngModel)]="encargado.pass" name="pass"
-                    pattern="^(?=(?:.\d){1})(?=(?:.[A-Z]){1})(?=(?:.*[a-z]){1})\S{6,8}$" required #pass="ngModel" minlength="6" maxlength="8" placeholder="Ingrese su contraseña">
+                    pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{6,8}$" required #pass="ngModel" minlength="6" maxlength="8" placeholder="Ingrese su contraseña">
                     <div class="alert alert-danger" *ngIf="pass.invalid && (pass.dirty || pass.touched)">
                       <div *ngIf="pass.errors.required">
                         Contraseña es requerida
@@ -180,15 +180,20 @@
                 <div class="modal-body">
 
                   <div class="form-group">
-                    <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" [(ngModel)]="encargado.nombre" name="nombre" #nombreEdi="ngModel" required minlength="5" maxlength="50"
-                    onkeypress='return ((event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode == 32 ))'>
+                    <label for="nombreEdi">Nombre</label>
+                    <input type="text" class="form-control" [(ngModel)]="encargado.nombre" name="nombreEdi" #nombreEdi="ngModel" required minlength="5" maxlength="30" onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
+                                        || (event.charCode >= 65 && event.charCode <= 90)
+                                        || (event.charCode == 32 )
+                                        || (event.charCode ==241) || (event.charCode ==209)
+                                        || (event.charCode ==193) || (event.charCode ==201) || (event.charCode ==205) || (event.charCode ==211)
+                                        ||  (event.charCode ==218) || (event.charCode ==225) || (event.charCode ==233) || (event.charCode ==237)
+                                        || (event.charCode ==243) || (event.charCode ==250)) '>
                     <div class="alert alert-danger" *ngIf="nombreEdi.invalid && (nombreEdi.dirty || nombreEdi.touched)">
                       <div *ngIf="nombreEdi.errors.required">
                         Nombre es requerido
                       </div>
                       <div *ngIf="nombreEdi.errors.minlength">
-                        Nombre debe tener minimo 5 caracteres
+                        Nombre debe tener mínimo 5 caracteres
                       </div>
                     </div>
                   </div>
@@ -199,45 +204,55 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="telefono">Teléfono</label>
-                    <input type="text" class="form-control" [(ngModel)]="encargado.telefono" name="telefono" required #telefonoEdi="ngModel" minlength="8">
+                    <label for="telefonoEdi">Teléfono</label>
+                    <input type="tel" class="form-control" [(ngModel)]="encargado.telefono" name="telefonoEdi"
+                    required #telefonoEdi="ngModel" pattern="^(\+?56)?(\s?)(0?9)(\s?)[9876543]\d{7}$" maxlength="12" minlength="12"
+                      placeholder="+569XXXXXXXX"  onkeypress='return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode == 43))'>
                     <div class="alert alert-danger" *ngIf="telefonoEdi.invalid && (telefonoEdi.dirty || telefonoEdi.touched)">
                       <div *ngIf="telefonoEdi.errors.required">
-                        El telefono es requerido
+                         Teléfono es requerido
+                      </div>
+                      <div *ngIf="telefonoEdi.errors.pattern">
+                        Teléfono debe tener un formato válido "+569XXXXXXXX"
                       </div>
                       <div *ngIf="telefonoEdi.errors.minlength">
-                        El telefono ingresado debe ser tener 8 digitos
+                       Faltan Números
+                      </div>
+                      <div *ngIf="telefonoEdi.errors.maxlength">
+                        Excede el máximo de numeros
                       </div>
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="email">Email</label>
-                    <input type="text" class="form-control" [(ngModel)]="encargado.email" name="email" required #emailEdi="ngModel"
-                    pattern="[a-zA-Z0-9*]+([.][a-zA-Z0-9_]+)*@[a-zA-Z0-9_]+([.][a-zA-Z0-9_]+)*[.][a-zA-Z]{1,5}" maxlength="42" placeholder="Ingrese su email">
+                    <label for="emailEdi">Email</label>
+                    <input type="email" class="form-control" [(ngModel)]="encargado.email" name="emailEdi"
+                    required #emailEdi="ngModel" pattern=".+@[aA][gG][rR][iI][cC][oO][lL][aA][.][cC][lL]" minlength="15"
+                    maxlength="40"
+                      placeholder="Ingrese su email">
                     <div class="alert alert-danger" *ngIf="emailEdi.invalid && (emailEdi.dirty || emailEdi.touched)">
                       <div *ngIf="emailEdi.errors.required">
                         Email es requerido
                       </div>
                       <div *ngIf="emailEdi.errors.pattern">
-                        Email debe tener un formato valido
+                        Email debe tener un formato válido "xxxxxx@agricola.cl"
                       </div>
                     </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="pass">Contraseña</label>
-                    <input type="password" class="form-control" [(ngModel)]="encargado.pass" name="pass"
-                    pattern="^(?=(?:.*\d){2})(?=(?:.*[A-Z]){2})(?=(?:.*[a-z]){2})\S{6,10}$" required #passEdi="ngModel" minlength="6" maxlength="10" placeholder="Ingrese su contraseña">
+                    <label for="passEdi">Contraseña</label>
+                    <input type="password" class="form-control" [(ngModel)]="encargado.pass" name="passEdi"
+                    pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{6,8}$" required #passEdi="ngModel" minlength="6" maxlength="8" placeholder="Ingrese su contraseña">
                     <div class="alert alert-danger" *ngIf="passEdi.invalid && (passEdi.dirty || passEdi.touched)">
                       <div *ngIf="passEdi.errors.required">
                         Contraseña es requerida
                       </div>
                       <div *ngIf="passEdi.errors.minlength">
-                        Contraseña debe tener un largo minimo de 4 caracteres
+                        Contraseña debe tener un largo mínimo de 6 caracteres
                       </div>
                       <div *ngIf="passEdi.errors.pattern">
-                        Contraseña debe tener: 2 mayusculas, 2 minusculas y 2 digitos
+                        Contraseña debe tener mínimo una mayúscula y un número
                       </div>
                     </div>
                   </div>

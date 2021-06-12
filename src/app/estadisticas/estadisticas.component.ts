@@ -1111,7 +1111,7 @@ export class EstadisticasComponent implements OnInit {
           if (this.anioFitoTipo == this.anioFiltrarFitoTipo1) {
             if (this.mesFitoTipo == 8) {
               switch (tipo) {
-                case "Funjicida": {
+                case "Fungicida": {
                   this.funjicida[0] += this.dosis;
                   break;
                 }
@@ -1138,7 +1138,7 @@ export class EstadisticasComponent implements OnInit {
             } else {
               if (this.mesFitoTipo == 9) {
                 switch (tipo) {
-                  case "Funjicida": {
+                  case "Fungicida": {
                     this.funjicida[1] += this.dosis;
                     break;
                   }
@@ -1165,7 +1165,7 @@ export class EstadisticasComponent implements OnInit {
               } else {
                 if (this.mesFitoTipo == 10) {
                   switch (tipo) {
-                    case "Funjicida": {
+                    case "Fungicida": {
                       this.funjicida[2] += this.dosis;
                       break;
                     }
@@ -1192,7 +1192,7 @@ export class EstadisticasComponent implements OnInit {
                 } else {
                   if (this.mesFitoTipo == 11) {
                     switch (tipo) {
-                      case "Funjicida": {
+                      case "Fungicida": {
                         this.funjicida[3] += this.dosis;
                         break;
                       }
@@ -1219,7 +1219,7 @@ export class EstadisticasComponent implements OnInit {
                   } else {
                     if (this.mesFitoTipo == 12) {
                       switch (tipo) {
-                        case "Funjicida": {
+                        case "Fungicida": {
                           this.funjicida[4] += this.cantidadAplicada;
                           break;
                         }
@@ -1253,7 +1253,7 @@ export class EstadisticasComponent implements OnInit {
 
             if (this.mesFitoTipo == 1) {
               switch (tipo) {
-                case "Funjicida": {
+                case "Fungicida": {
                   this.funjicida[5] += this.dosis;
                   break;
                 }
@@ -1280,7 +1280,7 @@ export class EstadisticasComponent implements OnInit {
             } else {
               if (this.mesFitoTipo == 2) {
                 switch (tipo) {
-                  case "Funjicida": {
+                  case "Fungicida": {
                     this.funjicida[6] += this.dosis;
                     break;
                   }
@@ -1307,7 +1307,7 @@ export class EstadisticasComponent implements OnInit {
               } else {
                 if (this.mesFitoTipo == 3) {
                   switch (tipo) {
-                    case "Funjicida": {
+                    case "Fungicida": {
                       this.funjicida[7] += this.dosis;
                       break;
                     }
@@ -1334,7 +1334,7 @@ export class EstadisticasComponent implements OnInit {
                 } else {
                   if (this.mesFitoTipo == 4) {
                     switch (tipo) {
-                      case "Funjicida": {
+                      case "Fungicida": {
                         this.funjicida[8] += this.dosis;
                         break;
                       }
@@ -1361,7 +1361,7 @@ export class EstadisticasComponent implements OnInit {
                   } else {
                     if (this.mesFitoTipo == 5) {
                       switch (tipo) {
-                        case "Funjicida": {
+                        case "Fungicida": {
                           this.funjicida[9] += this.dosis;
                           break;
                         }
@@ -1413,7 +1413,7 @@ export class EstadisticasComponent implements OnInit {
       data: {
         labels: ['Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
         datasets: [{
-          label: 'Funjicida',
+          label: 'Fungicida',
           data: this.funjicida,
           backgroundColor: [
             'rgba(18, 115, 35, 0.7)',

@@ -8,6 +8,8 @@ import { AdministradorService } from '../administrador/administrador.service';
 import swal from 'sweetalert2';
 import { Observable } from 'rxjs/internal/Observable';
 import { Administrador } from '../administrador/administrador';
+import { DuenoCampo } from '../dueno-campo/dueno';
+import { DuenoService } from '../dueno-campo/dueno.service';
 
 @Component({
   selector: 'app-campos',
@@ -25,17 +27,36 @@ export class CamposComponent implements OnInit {
   encargados2: EncargadosBPAComponent;
   adminSelect: Observable<Administrador[]> = this.adminService.getAdministradores();
   arraysAdmin: Array<Administrador> = [];
+  duenoSelect: Observable<DuenoCampo[]> = this.duenoService.getDuenos();
+  arrayDueno: Array<DuenoCampo> = [];
+
   flag:boolean = true;
+  flag2: boolean = false;
+  flag3: boolean = true;
+  flag4: boolean = false;
+  run: string;
+  runDueno: string;
 
 
   constructor(private campoService: CamposService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private adminService: AdministradorService) { }
+    private adminService: AdministradorService,
+    private duenoService: DuenoService) { }
 
   ngOnInit(): void {
     this.listaCamposService();
     this.cargarAdmins();
+    this.cargarDuenos();
+  }
+
+  cargarDuenos(){
+    this.duenoSelect.subscribe(duenos => {
+      duenos.forEach(dueno =>{
+        this.arrayDueno.push(dueno);
+        console.log(this.arrayDueno);
+      })
+    });
   }
 
   cargarAdmins(){
@@ -117,11 +138,13 @@ export class CamposComponent implements OnInit {
   }
 
 //metodo para cargar con datos los inputs del modal de editar fito
-  cargarCampo(id: number): void {
+  cargarCampo(camp: Campos): void {
+    this.run = camp.runAdministradorCampo;
+    this.runDueno = camp.runDuenoCampo;
     this.activatedRoute.params.subscribe(params => {
       //let id = params['run'];
-      if (id) {
-        this.campoService.getCampo(id).subscribe((campo) => {this.campo = campo});
+      if (camp.idCampo) {
+        this.campoService.getCampo(camp.idCampo).subscribe((campo) => {this.campo = campo});
 
       }
     })
@@ -131,6 +154,9 @@ export class CamposComponent implements OnInit {
     this.campo = new Campos();
     let select = <HTMLInputElement>document.getElementById("select");
     select.value="";
+    let select2 = <HTMLInputElement>document.getElementById("select3");
+    select2.value="";
+    
   }
 
   enviarId(value:string){
@@ -140,6 +166,36 @@ export class CamposComponent implements OnInit {
       this.flag = false;
     }else{
       this.flag =true;
+    }
+  }
+
+  enviarId2(value:string){
+
+    if(value != ""){
+      this.campo.runAdministradorCampo =  value;
+      this.flag2 = false;
+    }else{
+      this.flag2 =true;
+    }
+  }
+
+  enviarId3(value:string){
+
+    if(value != ""){
+      this.campo.runDuenoCampo =  value;
+      this.flag3 = false;
+    }else{
+      this.flag3 =true;
+    }
+  }
+
+  enviarId4(value:string){
+
+    if(value != ""){
+      this.campo.runDuenoCampo =  value;
+      this.flag4 = false;
+    }else{
+      this.flag4 =true;
     }
   }
 

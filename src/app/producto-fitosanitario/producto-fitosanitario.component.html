@@ -43,7 +43,7 @@
                       <td width="100px"> {{ fito.mojamiento}} lt/ha</td>
                       <td width="90px"> {{ fito.carencia}}</td>
                       <td>
-                        <a href="#editEmployeeModal" (click)='cargarFitosanitario(fito.idFitosanitario)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
+                        <a href="#editEmployeeModal" (click)='cargarFitosanitario(fito)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
                         <a (click)='delete(fito)' href="" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Eliminar">&#xE872;</i></a>
                       </td>
                     </tr>
@@ -101,11 +101,7 @@
                     <label for="tipo">Tipo</label>
                     <select #mySelect (change)='enviarId(mySelect.value)' ([ngModel])="fitosanitario.tipo" name="tipo" class="form-control" id="select" required>
                       <option value="">Seleccione</option>
-                      <option value="Fungicida">Fungicida</option>
-                      <option value="Insecticida">Insecticida</option>
-                      <option value="Herbicida">Herbicida</option>
-                      <option value="Acaricida">Acaricida</option>
-                      <option value="Bactericida">Bactericida</option>
+                      <option *ngFor="let tipoF of tipos" [selected]="tipoF.nombre == tipo" value="{{tipoF.nombre}}">{{tipoF.nombre}}</option>
                     </select>
                     <div class="alert alert-danger" *ngIf="mySelect.invalid && (mySelect.dirty || mySelect.touched)">
                       <div *ngIf="mySelect.errors.required">
@@ -212,16 +208,12 @@
 
                   <div class="form-group">
                     <label for="tipo">Tipo</label>
-                    <select #mySelect (change)='enviarId(mySelect.value)' ([ngModel])="fitosanitario.tipo" name="tipoEdi" class="form-control" id="selectEdi" required>
+                    <select #mySelect2 (change)='enviarId2(mySelect2.value)' ([ngModel])="fitosanitario.tipo" name="tipoEdi" class="form-control" id="selectEdi" required>
                       <option value="">Seleccione</option>
-                      <option value="Fungicida">Fungicida</option>
-                      <option value="Insecticida">Insecticida</option>
-                      <option value="Herbicida">Herbicida</option>
-                      <option value="Acaricida">Acaricida</option>
-                      <option value="Bactericida">Bactericida</option>
+                      <option *ngFor="let tipoF of tipos" [selected]="tipoF.nombre == tipo" value="{{tipoF.nombre}}">{{tipoF.nombre}}</option>
                     </select>
-                    <div class="alert alert-danger" *ngIf="mySelect.invalid && (mySelect.dirty || mySelect.touched)">
-                      <div *ngIf="mySelect.errors.required">
+                    <div class="alert alert-danger" *ngIf="mySelect2.invalid && (mySelect2.dirty || mySelect2.touched)">
+                      <div *ngIf="mySelect2.errors.required">
                         El campo es requerido
                       </div>
                     </div>
@@ -272,7 +264,7 @@
                 </div>
                 <div class="modal-footer">
                   <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
-                  <input type="button" (click)='update()' data-dismiss="modal" class="btn btn-success" [disabled]="!fitoEditForm.form.valid || flag" value="Guardar">
+                  <input type="button" (click)='update()' data-dismiss="modal" class="btn btn-success" [disabled]="!fitoEditForm.form.valid || flag2" value="Guardar">
                 </div>
               </form>
             </div>

@@ -9,4 +9,7 @@ export class RegistroFitosanitario {
   idEncargadoBPA: string;
   idFitosanitario: number;
   idCuartel: number;
+  nombreEncargadoBPA: string;
+  nombreFitosanitario: string;
+  nombreCuartel: string;
 }
