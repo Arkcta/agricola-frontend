@@ -35,7 +35,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr *ngFor="let cuartel of cuarteles">
+                      <tr *ngFor="let cuartel of cuarteles | paginate: {itemsPerPage: 5, currentPage: pageActual}">
                         <td width="200px"> {{cuartel.nombre}}</td>
                         <td width="200px"> {{cuartel.hectareas}}</td>
                         <td width="200px"> {{cuartel.tipoUva}}</td>
@@ -49,6 +49,9 @@
                     </tbody>
                   </table>
                 </div>
+              </div>
+              <div style="margin-left: 567px; width: 300px; background-color: lightslategrey; margin-top: 15px;">
+                <pagination-controls  (pageChange)="pageActual = $event"></pagination-controls>
               </div>
             </div>
           </div>

@@ -54,7 +54,6 @@ export class CamposComponent implements OnInit {
     this.duenoSelect.subscribe(duenos => {
       duenos.forEach(dueno =>{
         this.arrayDueno.push(dueno);
-        console.log(this.arrayDueno);
       })
     });
   }

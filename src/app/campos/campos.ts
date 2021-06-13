@@ -6,4 +6,5 @@ export class Campos {
   runDuenoCampo: string;
   runAdministradorCampo: string;
   nombreAdministrador: string;
+  nombreDuenoCampo: string;
 }

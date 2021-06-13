@@ -33,18 +33,21 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr *ngFor="let fertilizante of fertilizantes">
+                    <tr *ngFor="let fertilizante of fertilizantes | paginate: {itemsPerPage: 5, currentPage: pageActual}">
                       <td width="200px"> {{ fertilizante.nombreComercial}}</td>
                       <td width="100px"> {{ fertilizante.tipo}}</td>
                       <td width="150px"> {{ fertilizante.variedad}}</td>
                       <td width="30px"> {{ fertilizante.concentracion}} %</td>
                       <td>
-                        <a href="#editEmployeeModal" (click)='cargarFertilizante(fertilizante.idFertilizante)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
+                        <a href="#editEmployeeModal" (click)='cargarFertilizante(fertilizante)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
                         <a (click)='delete(fertilizante)' href="" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Eliminar">&#xE872;</i></a>
                       </td>
                     </tr>
                   </tbody>
                 </table>
+              </div>
+              <div style="margin-left: 567px; width: 300px; background-color: lightslategrey; margin-top: 15px;">
+                <pagination-controls  (pageChange)="pageActual = $event"></pagination-controls>
               </div>
             </div>
           </div>
@@ -81,25 +84,18 @@
                      </div>
                    </div>
                   </div>
-
+                  
                   <div class="form-group">
                     <label for="tipo">Tipo</label>
-                    <input type="text" class="form-control" [(ngModel)]="fertilizante.tipo" name="tipo" #tipo="ngModel" required minlength="5"
-                    maxlength="25" onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
-                                       || (event.charCode >= 65 && event.charCode <= 90)
-                                       || (event.charCode == 32 )
-                                       || (event.charCode ==241) || (event.charCode ==209)
-                                       || (event.charCode ==193) || (event.charCode ==201) || (event.charCode ==205) || (event.charCode ==211)
-                                       ||  (event.charCode ==218) || (event.charCode ==225) || (event.charCode ==233) || (event.charCode ==237)
-                                       || (event.charCode ==243) || (event.charCode ==250)) '>
-                   <div class="alert alert-danger" *ngIf="tipo.invalid && (tipo.dirty || tipo.touched)">
-                     <div *ngIf="tipo.errors.required">
-                       Tipo es requerido
-                     </div>
-                     <div *ngIf="tipo.errors.minlength">
-                       Tipo debe tener mínimo 5 caracteres
-                     </div>
-                   </div>
+                    <select #mySelect (change)='enviarId(mySelect.value)' ([ngModel])="fertilizante.tipo" name="tipo" class="form-control" id="select" required>
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let tipoFerti of tipos" value="{{tipoFerti.nombre}}">{{tipoFerti.nombre}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="mySelect.invalid && (mySelect.dirty || mySelect.touched)">
+                      <div *ngIf="mySelect.errors.required">
+                        El tipo es requerido
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
@@ -147,7 +143,7 @@
                 </div>
                 <div class="modal-footer">
                   <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
-                  <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success" [disabled]="!fertilizanteForm.form.valid" value="Agregar">
+                  <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success" [disabled]="!fertilizanteForm.form.valid || flag" value="Agregar">
                 </div>
               </form>
             </div>
@@ -188,22 +184,15 @@
 
                   <div class="form-group">
                     <label for="tipo">Tipo</label>
-                    <input type="text" class="form-control" [(ngModel)]="fertilizante.tipo" name="tipo" #tipo="ngModel" required minlength="5"
-                    maxlength="25" onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
-                                       || (event.charCode >= 65 && event.charCode <= 90)
-                                       || (event.charCode == 32 )
-                                       || (event.charCode ==241) || (event.charCode ==209)
-                                       || (event.charCode ==193) || (event.charCode ==201) || (event.charCode ==205) || (event.charCode ==211)
-                                       ||  (event.charCode ==218) || (event.charCode ==225) || (event.charCode ==233) || (event.charCode ==237)
-                                       || (event.charCode ==243) || (event.charCode ==250)) '>
-                   <div class="alert alert-danger" *ngIf="tipo.invalid && (tipo.dirty || tipo.touched)">
-                     <div *ngIf="tipo.errors.required">
-                       Tipo es requerido
-                     </div>
-                     <div *ngIf="tipo.errors.minlength">
-                       Tipo debe tener mínimo 5 caracteres
-                     </div>
-                   </div>
+                    <select #mySelect2 (change)='enviarId2(mySelect2.value)' ([ngModel])="fertilizante.tipo" name="tipo" class="form-control" id="selectEdit" required>
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let tipoFerti of tipos"  [selected]="tipoFerti.nombre == tipo"  value="{{tipoFerti.nombre}}">{{tipoFerti.nombre}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="mySelect2.invalid && (mySelect2.dirty || mySelect2.touched)">
+                      <div *ngIf="mySelect2.errors.required">
+                        El tipo es requerido
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
@@ -252,7 +241,7 @@
                 </div>
                 <div class="modal-footer">
                   <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
-                  <input type="button" (click)='update()' data-dismiss="modal" class="btn btn-success" [disabled]="!fertilizanteFormEdit.form.valid" value="Guardar">
+                  <input type="button" (click)='update()' data-dismiss="modal" class="btn btn-success" [disabled]="!fertilizanteFormEdit.form.valid || flag2" value="Guardar">
                 </div>
               </form>
             </div>

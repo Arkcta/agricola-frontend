@@ -8,4 +8,7 @@ export class RegistroFertilizante {
  runEncargadoBPA: string;
  idFertilizante: number;
  idCuartel: number;
+ nombreEncargadoBPA: string;
+ nombreFertilizante: string;
+ nombreCuartel: string;
 }

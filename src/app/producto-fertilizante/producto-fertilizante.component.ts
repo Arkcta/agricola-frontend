@@ -11,8 +11,14 @@ import swal from 'sweetalert2';
 })
 export class ProductoFertilizanteComponent implements OnInit {
 
+    pageActual: number = 1;
+
     fertilizante: ProductoFertilizante = new ProductoFertilizante();
     fertilizantes: ProductoFertilizante[];
+    tipos = [{nombre: 'Nitrógeno'},{nombre: 'Fósforo'},{nombre: 'Potasio'},{nombre: 'Calcio'},{nombre: 'Magnesio'},{nombre: 'Azufre'}];
+    tipo: string;
+    flag: boolean = true;
+    flag2: boolean = false;
 
     constructor(private fertilizanteService: ProductoFertilizanteService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
@@ -88,16 +94,39 @@ export class ProductoFertilizanteComponent implements OnInit {
       )
     }
 
-    cargarFertilizante(id: number): void {
+    cargarFertilizante(ferti: ProductoFertilizante): void {
+      this.tipo = ferti.tipo;
       this.activatedRoute.params.subscribe(params => {
-        if (id) {
-          this.fertilizanteService.getFertilizante(id).subscribe((fertilizante) => this.fertilizante = fertilizante);
+        if (ferti.idFertilizante) {
+          this.fertilizanteService.getFertilizante(ferti.idFertilizante).subscribe((fertilizante) => this.fertilizante = fertilizante);
         }
       })
     }
 
     vaciarInputs() {
       this.fertilizante = new ProductoFertilizante();
+      let select = <HTMLInputElement>document.getElementById("select");
+      select.value="";
+    }
+
+    enviarId(value:string){
+
+      if(value != ""){
+        this.fertilizante.tipo = value;
+        this.flag = false;
+      }else{
+        this.flag =true;
+      }
+    }
+
+    enviarId2(value:string){
+
+      if(value != ""){
+        this.fertilizante.tipo = value;
+        this.flag2 = false;
+      }else{
+        this.flag2 =true;
+      }
     }
 
 }
