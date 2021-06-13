@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map, catchError,tap } from 'rxjs/operators';
 import {Router} from '@angular/router';
+import swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -12,62 +13,58 @@ export class RegistroFertilizanteService {
 
   urlEndPoint: string = 'http://localhost:8080/api/registrosFertilizantes';
 
-    private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
      constructor(private http: HttpClient, private router:Router) { }
 
-     private isNoAutorizado(e):boolean{
-       if(e.status==401 || e.status==403){
-         this.router.navigate(['/login'])
-         return true;
-       }
-       return false;
-     }
 
     getRegistrosFertilizantes(): Observable<RegistroFertilizante[]> {
       return this.http.get(this.urlEndPoint).pipe(
-        map((response) => response as RegistroFertilizante[]),
-        catchError(e =>{
-          this.isNoAutorizado(e);
-          return throwError(e);
-        })
+        map((response) => response as RegistroFertilizante[])
       );
     }
 
     crearRegistroFertilizantes(registroFertilizante: RegistroFertilizante): Observable<RegistroFertilizante> {
-      return this.http.post<RegistroFertilizante>(this.urlEndPoint, registroFertilizante, { headers: this.httpHeaders }).pipe(
-        catchError(e =>{
-          this.isNoAutorizado(e);
-          return throwError(e);
-        })
-       );
+      return this.http.post<RegistroFertilizante>(this.urlEndPoint, registroFertilizante).pipe(
+         catchError(e => {
+           this.router.navigate["/registrosFertilizantes"];
+           console.error(e.error.mensaje);
+           swal.fire('Error al crear', e.error.mensaje,'error');
+           return throwError(e);
+         })
+      );
 
     }
 
     getRegistroFertilizante(id: any): Observable<RegistroFertilizante> {
       return this.http.get<RegistroFertilizante>(`${this.urlEndPoint}/${id}`).pipe(
-        catchError(e =>{
-          this.isNoAutorizado(e);
-          return throwError(e);
-        })
-       );
+         catchError(e => {
+           this.router.navigate["/registrosFertilizantes"];
+           console.error(e.error.mensaje);
+           swal.fire('Error al editar', e.error.mensaje,'error');
+           return throwError(e);
+         })
+      );
     }
 
     updateRegistroFertilizantes(registroFertilizante: RegistroFertilizante): Observable<RegistroFertilizante>{
-      return this.http.put<RegistroFertilizante>(`${this.urlEndPoint}/${registroFertilizante.idRegistro}`, registroFertilizante, {headers: this.httpHeaders}).pipe(
-        catchError(e =>{
-          this.isNoAutorizado(e);
-          return throwError(e);
-        })
-       )
+      return this.http.put<RegistroFertilizante>(`${this.urlEndPoint}/${registroFertilizante.idRegistro}`, registroFertilizante).pipe(
+         catchError(e => {
+           this.router.navigate["/registrosFertilizante"];
+           console.error(e.error.mensaje);
+           swal.fire('Error al editar', e.error.mensaje,'error');
+           return throwError(e);
+         })
+      );
     }
 
     deleteRegistroFertilizantes(id: any): Observable<RegistroFertilizante>{
-      return this.http.delete<RegistroFertilizante>(`${this.urlEndPoint}/${id}`, {headers: this.httpHeaders}).pipe(
-        catchError(e =>{
-          this.isNoAutorizado(e);
-          return throwError(e);
-        })
-       );
+      return this.http.delete<RegistroFertilizante>(`${this.urlEndPoint}/${id}`).pipe(
+         catchError(e => {
+           this.router.navigate["/registrosFertilizante"];
+           console.error(e.error.mensaje);
+           swal.fire('Error al eliminar', e.error.mensaje,'error');
+           return throwError(e);
+         })
+      );
     }
 }

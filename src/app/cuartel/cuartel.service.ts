@@ -4,6 +4,7 @@ import { Observable, throwError } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map,catchError,tap } from 'rxjs/operators';
 import {Router} from '@angular/router';
+import swal from 'sweetalert2';
 
 @Injectable({
   providedIn: 'root'
@@ -12,61 +13,56 @@ export class CuartelService {
 
   urlEndPoint: string = 'http://localhost:8080/api/cuarteles';
 
-  private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient, private router:Router) { }
 
-  private isNoAutorizado(e):boolean{
-       if(e.status==401 || e.status==403){
-         this.router.navigate(['/login'])
-         return true;
-       }
-       return false;
-     }
   getCuarteles(): Observable<Cuartel[]> {
     return this.http.get(this.urlEndPoint).pipe(
-      map((response) => response as Cuartel[]),
-        catchError(e =>{
-          this.isNoAutorizado(e);
-          return throwError(e);
-        })
+      map((response) => response as Cuartel[])
     );
   }
 
   crearCuartel(cuartel: Cuartel): Observable<Cuartel> {
-    return this.http.post<Cuartel>(this.urlEndPoint, cuartel, { headers: this.httpHeaders }).pipe(
-        catchError(e =>{
-          this.isNoAutorizado(e);
+    return this.http.post<Cuartel>(this.urlEndPoint, cuartel).pipe(
+      catchError(e => {
+          this.router.navigate["/cuarteles"];
+          console.error(e.error.mensaje);
+          swal.fire('Error al crear', e.error.mensaje,'error');
           return throwError(e);
         })
        );
-
   }
 
   getCuartel(id: any): Observable<Cuartel> {
     return this.http.get<Cuartel>(`${this.urlEndPoint}/${id}`).pipe(
-        catchError(e =>{
-          this.isNoAutorizado(e);
-          return throwError(e);
-        })
-       );
+         catchError(e => {
+           this.router.navigate["/cuarteles"];
+           console.error(e.error.mensaje);
+           swal.fire('Error al buscar', e.error.mensaje,'error');
+           return throwError(e);
+         })
+      );
   }
 
-  updateCuartel(cuartel:Cuartel): Observable<Cuartel>{
-    return this.http.put<Cuartel>(`${this.urlEndPoint}/${cuartel.idCuartel}`, cuartel, {headers: this.httpHeaders}).pipe(
-        catchError(e =>{
-          this.isNoAutorizado(e);
-          return throwError(e);
-        })
-       )
+  updateCuartel(cuartel:Cuartel): Observable<any>{
+    return this.http.put<any>(`${this.urlEndPoint}/${cuartel.idCuartel}`, cuartel).pipe(
+         catchError(e => {
+           this.router.navigate["/cuarteles"];
+           console.error(e.error.mensaje);
+           swal.fire('Error al actualizar', e.error.mensaje,'error');
+           return throwError(e);
+         })
+      );
   }
 
   deleteCuartel(id: any): Observable<Cuartel>{
-    return this.http.delete<Cuartel>(`${this.urlEndPoint}/${id}`, {headers: this.httpHeaders}).pipe(
-        catchError(e =>{
-          this.isNoAutorizado(e);
-          return throwError(e);
-        })
-       );
-  }
+    return this.http.delete<Cuartel>(`${this.urlEndPoint}/${id}`).pipe(
+         catchError(e => {
+           this.router.navigate["/cuarteles"];
+           console.error(e.error.mensaje);
+           swal.fire('Error al eliminar', e.error.mensaje,'error');
+           return throwError(e);
+         })
+      );;
+    }
 }
