@@ -124,8 +124,9 @@
 
                   <div class="form-group">
                     <label for="concentracion">Concentración</label>
-                    <input type="text" class="form-control" [(ngModel)]="fertilizante.concentracion" #concentracion="ngModel" name="concentracion"
-                    required minlength="1" maxlength="5"
+                    <input type="text" class="form-control" [(ngModel)]="fertilizante.concentracion" placeholder="ej 2.0 , 2.3"
+                     #concentracion="ngModel" name="concentracion"
+                    required minlength="1" maxlength="5" pattern="[\d]{1,2}.[\d]{1,2}"
                     onkeypress='return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode <= 46))'>
                     <div class="alert alert-danger" *ngIf="concentracion.invalid && (concentracion.dirty || concentracion.touched)">
                       <div *ngIf="concentracion.errors.required">
@@ -133,6 +134,12 @@
                       </div>
                       <div *ngIf="concentracion.errors.minlength">
                         Concentración debe tener mínimo 1 digitos
+                      </div>
+                      <div *ngIf="concentracion.errors.maxlength">
+                        Concentración debe tener maximo dos decimales ej 22.22
+                      </div>
+                      <div *ngIf="concentracion.errors">
+                           máximo dos decimales, formato requerido xx.xx , x.xx , x.x , xx.x
                       </div>
                     </div>
                   </div>
@@ -221,8 +228,9 @@
 
                   <div class="form-group">
                     <label for="concentracion">Concentración</label>
-                    <input type="text" class="form-control" [(ngModel)]="fertilizante.concentracion" #concentracion="ngModel" name="concentracion"
-                    required minlength="1" maxlength="5"
+                    <input type="text" class="form-control" [(ngModel)]="fertilizante.concentracion" placeholder="ej 2.0 , 2.3"
+                     #concentracion="ngModel" name="concentracion"
+                    required minlength="1" maxlength="5" pattern="[\d]{1,2}.[\d]{1,2}"
                     onkeypress='return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode <= 46))'>
                     <div class="alert alert-danger" *ngIf="concentracion.invalid && (concentracion.dirty || concentracion.touched)">
                       <div *ngIf="concentracion.errors.required">
@@ -230,6 +238,12 @@
                       </div>
                       <div *ngIf="concentracion.errors.minlength">
                         Concentración debe tener mínimo 1 digitos
+                      </div>
+                      <div *ngIf="concentracion.errors.maxlength">
+                        Concentración debe tener maximo dos decimales ej 22.22
+                      </div>
+                      <div *ngIf="concentracion.errors">
+                           máximo dos decimales, formato requerido xx.xx , x.xx , x.x , xx.x
                       </div>
                     </div>
                   </div>

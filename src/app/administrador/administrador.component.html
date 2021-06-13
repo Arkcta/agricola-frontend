@@ -69,7 +69,8 @@
 
                   <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" [(ngModel)]="administrador.nombre" name="nombre" #nombre="ngModel" required minlength="6" maxlength="50" onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
+                    <input type="text" class="form-control" [(ngModel)]="administrador.nombre" name="nombre" placeholder="Ingrese nombre"
+                     #nombre="ngModel" required minlength="6" maxlength="50" onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
                                         || (event.charCode >= 65 && event.charCode <= 90)
                                         || (event.charCode == 32 )
                                         || (event.charCode ==241) || (event.charCode ==209)
@@ -134,9 +135,10 @@
 
                   <div class="form-group">
                     <label for="email">Email</label>
-                    <input type="email" class="form-control" [(ngModel)]="administrador.email" name="email" required #email="ngModel" pattern=".+@[aA][gG][rR][iI][cC][oO][lL][aA][.][cC][lL]"
+                    <input type="email" class="form-control" [(ngModel)]="administrador.email" name="email" required #email="ngModel"
+                     pattern=".+@[aA][gG][rR][iI][cC][oO][lL][aA][.][cC][lL]"
                     minlength="15" maxlength="50"
-                      placeholder="Ingrese su email">
+                      placeholder="Ingrese su email ej xxxxxx@agricola.cl ">
                     <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
                       <div *ngIf="email.errors.required">
                         Email es requerido
@@ -191,7 +193,8 @@
 
                   <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input  type="text" class="form-control" [(ngModel)]="administrador.nombre" name="nombre" #nombreEdit="ngModel" required minlength="6" maxlength="50" onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
+                    <input  type="text" class="form-control" [(ngModel)]="administrador.nombre" name="nombre" #nombreEdit="ngModel" placeholder="Ingrese nombre"
+                    required minlength="6" maxlength="50" onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
                                                           || (event.charCode >= 65 && event.charCode <= 90)
                                                           || (event.charCode == 32 )
                                                           || (event.charCode ==241) || (event.charCode ==209)
@@ -239,7 +242,7 @@
                   <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" class="form-control" [(ngModel)]="administrador.email" name="email" required #emailEdit="ngModel" pattern=".+@[aA][gG][rR][iI][cC][oO][lL][aA][.][cC][lL]" minlength="15" maxlength="40"
-                      placeholder="Ingrese su email">
+                    placeholder="Ingrese su email ej xxxxxx@agricola.cl ">
                     <div class="alert alert-danger" *ngIf="emailEdit.invalid && (emailEdit.dirty || emailEdit.touched)">
                       <div *ngIf="emailEdit.errors.required">
                         Email es requerido

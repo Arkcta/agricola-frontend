@@ -37,6 +37,10 @@ export class RegistroFitosanitarioComponent implements OnInit {
   fito: number;
   cuar: number;
 
+    // variable para hacer el filtrado
+    filterRegistro='';
+  
+
   flag: boolean = true;
   flag2: boolean = true;
   flag3: boolean = true;

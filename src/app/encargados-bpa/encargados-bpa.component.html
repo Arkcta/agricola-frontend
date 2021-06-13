@@ -89,13 +89,23 @@
 
                   <div class="form-group">
                     <label for="run">Run</label>
-                    <input type="text" class="form-control" [(ngModel)]="encargado.run" name="run" #run="ngModel" required minlength="8">
+                    <input type="text" pattern="[\d]{1,2}.\d{3}.\d{3}-[\d|kK]{1}" class="form-control"
+                     [(ngModel)]="encargado.run" name="run" required
+                    #run="ngModel" maxlength="12" minlength="11" placeholder="X.XXX.XXX-X"
+                      onkeypress='return ((event.charCode >= 48 && event.charCode <= 57)  || (event.charCode == 46)
+                      || (event.charCode == 75) || (event.charCode == 107) || (event.charCode == 45))'>
                     <div class="alert alert-danger" *ngIf="run.invalid && (run.dirty || run.touched)">
                       <div *ngIf="run.errors.required">
-                        Run es requerido
+                        RUN es requerido
+                      </div>
+                      <div *ngIf="run.errors.pattern">
+                        RUN debe tener un formato válido "X.XXX.XXX-X"
                       </div>
                       <div *ngIf="run.errors.minlength">
-                        Ingrese un run valido
+                        Faltan Números
+                      </div>
+                      <div *ngIf="run.errors.maxlength">
+                        Excede el máximo de numeros
                       </div>
                     </div>
                   </div>
