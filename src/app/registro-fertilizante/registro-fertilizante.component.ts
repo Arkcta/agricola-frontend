@@ -19,6 +19,11 @@ import { AuthService } from '../usuarios/auth.service';
 })
 export class RegistroFertilizanteComponent implements OnInit {
 
+
+  // variable para hacer el filtrado
+  filterRegistro='';
+  
+
   registro: RegistroFertilizante = new RegistroFertilizante();
   registros: RegistroFertilizante[];
 
@@ -252,7 +257,7 @@ constructor(private registroService: RegistroFertilizanteService,
         vertical: 'middle',
         horizontal: 'center',
       };
-      
+
       cell.fill = {
         type: 'pattern',
         pattern: 'solid',
@@ -288,22 +293,22 @@ constructor(private registroService: RegistroFertilizanteService,
       this.fertilizante,
       this.cuartel
       );
-      
+
       let style = worksheet.addRow(temp);
 
       style.eachCell((cell, number) => {
         cell.alignment = {
           vertical: 'middle',
           horizontal: 'center',
-          
+
         };
-        
+
         cell.border = {
           top: { style: 'thin' },
           left: { style: 'thin' },
           bottom: { style: 'thin' },
           right: { style: 'thin' },
-          
+
         };
       });
       for(let i=0; i< worksheet.columns.length ;i++){
@@ -315,7 +320,7 @@ constructor(private registroService: RegistroFertilizanteService,
         if(i == 5) worksheet.columns[i].width = 20;
         if(i == 6) worksheet.columns[i].width = 22;
         if(i == 7) worksheet.columns[i].width = 20;
-      } 
+      }
     }
 
     let fname = 'Registros Fertilizantes';

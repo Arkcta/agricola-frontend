@@ -31,6 +31,8 @@ import { EstadisticasComponent } from './estadisticas/estadisticas.component';
 import {AuthGuard} from './usuarios/guards/auth.guard';
 import { TokenInterceptor } from './usuarios/interceptors/token.interceptor';
 import { AuthInterceptor } from './usuarios/interceptors/auth.interceptor';
+import { NgxMaskModule, IConfig } from 'ngx-mask';
+import { FilterPipe } from './pipes/filter.pipe';
 
 
 const routes: Routes = [
@@ -49,6 +51,8 @@ const routes: Routes = [
   {path: 'estadisticas', component: EstadisticasComponent,canActivate:[AuthGuard]},
 ];
 
+export const options: Partial<IConfig> | (() => Partial<IConfig>) = null;
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -65,7 +69,8 @@ const routes: Routes = [
     AdministradorComponent,
     LoginComponent,
     NavbarComponent,
-    EstadisticasComponent
+    EstadisticasComponent,
+    FilterPipe
 
   ],
   imports: [
@@ -73,6 +78,7 @@ const routes: Routes = [
     HttpClientModule,
     RouterModule.forRoot(routes),
     FormsModule,
+    NgxMaskModule.forRoot(),
   ],
   providers: [
     EncargadoBPAService,

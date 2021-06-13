@@ -5,4 +5,6 @@ export class Cuartel {
   tipoUva:String;
   runEncargadoBPA:String;
   idPredio:number;
+  nombrePredio:String;
+  nombreEncargadoBPA:String;
 }

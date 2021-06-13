@@ -44,8 +44,8 @@ export class CuartelService {
       );
   }
 
-  updateCuartel(cuartel:Cuartel): Observable<Cuartel>{
-    return this.http.put<Cuartel>(`${this.urlEndPoint}/${cuartel.idCuartel}`, cuartel).pipe(
+  updateCuartel(cuartel:Cuartel): Observable<any>{
+    return this.http.put<any>(`${this.urlEndPoint}/${cuartel.idCuartel}`, cuartel).pipe(
          catchError(e => {
            this.router.navigate["/cuarteles"];
            console.error(e.error.mensaje);
