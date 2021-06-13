@@ -7,14 +7,21 @@
     <app-navbar></app-navbar>
 
     <div class="row">
-      <div class="row" >
-        <div style="margin: 10px;position: center;text-align: right;">
-         <h4 >Buscar registros por fecha  <i class="fa fa-search" aria-hidden="true"></i> </h4>
-         </div>
-         <div style="margin: 5px;" class="form-group">
-           <input  type="date"  class="form-control" [(ngModel)]="filterRegistro" name="fecha"
-           style="width:200px;height:50px">
-         </div>
+      <div class="col-lg-12">
+        <div class="container pt-3">
+          <div class="table-responsive">
+            <div style="color: black; opacity: 89%;text-align: center;border-radius: 45px;margin-bottom: 40px; margin-top: 10px; margin-left: 75px; background: rgb(146, 202, 32, 0.7); width: 90%; height: 60px;">
+                <div style="margin-left: 70px; position: center;text-align: center; width: 300px;">
+                  <label style="font-size: 1.4em;" class="search">Buscar registros por fecha <i class="fa fa-search" aria-hidden="true"></i> </label>
+                </div>
+                <div style="margin-left: 400px; margin-top: -45px;" class="form-group">
+                  <input  type="date" id="clearDate" class="form-control" [(ngModel)]="filterRegistro" name="fecha"
+                  style="width:200px;height:40px; margin-top: 2px;">
+                </div>
+                <div style="margin-left: 590px; margin-top: -55px;" class="form-group">
+                  <button style="background-color: #D68910;" (click)="limpiarDate()" class="btn btn-primary">Limpiar fecha</button>
+                </div>
+            </div>      
  
       <div class="col-lg-12">
         <div class="container pt-3">
@@ -69,7 +76,7 @@
               <button style="margin-left: 50px;" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')||  authService.hasRole('ROLE_ADMINCAMPO')" (click)="dowloadPDF()" class="colorPDF" title="Exportar a PDF"><img class="pdf" src="assets/imagen-header/pdf.png"></button>
               <button style="margin-left: 10px"*ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')"(click)="dowloadExcel()" class="colorExcel" title="Exportar a Excel"><img class="excel" src="assets/imagen-header/excel.png"></button>
               </div>              
-              <div style="margin-left: 567px; width: 300px; background-color: lightslategrey; margin-top: -50px;">
+              <div style="margin-left: 567px; width: 300px; background-color: #D68910; margin-top: -50px;">
                 <pagination-controls  (pageChange)="pageActual = $event"></pagination-controls>
               </div>
             </div>

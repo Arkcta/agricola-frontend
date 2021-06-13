@@ -481,4 +481,9 @@ export class RegistroFitosanitarioComponent implements OnInit {
       this.flagEdi3 =true;
     }
   }
+  limpiarDate(){
+    let select = <HTMLInputElement>document.getElementById("clearDate");
+    select.valueAsDate = null;
+    this.filterRegistro = '';
+  }
 }
