@@ -1,10 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Administrador } from './Administrador';
-import { Observable} from 'rxjs';
+import { Observable, throwError} from 'rxjs';
 import { HttpClient} from '@angular/common/http';
-import { map} from 'rxjs/operators';
+import { map, catchError} from 'rxjs/operators';
 import {Router} from '@angular/router';
-import {AuthService} from '../usuarios/auth.service';
+import swal from 'sweetalert2';
 
 
 @Injectable({
@@ -14,8 +14,7 @@ export class AdministradorService {
 
     urlEndPoint: string = 'http://localhost:8080/api/administradores';
 
-    constructor(private http: HttpClient, private router:Router,
-    private authService: AuthService) { }
+    constructor(private http: HttpClient, private router:Router) { }
 
 
 
@@ -26,19 +25,47 @@ export class AdministradorService {
     }
 
 
-    crearAdministrador(administrador: Administrador): Observable<Administrador> {
-      return this.http.post<Administrador>(this.urlEndPoint, administrador)
+    crearAdministrador(administrador: Administrador): Observable<any> {
+      return this.http.post<any>(this.urlEndPoint, administrador).pipe(
+         catchError(e => {
+           this.router.navigate["/administradores"];
+           console.error(e.error.mensaje);
+           swal.fire('Error al crear', e.error.mensaje,'error');
+           return throwError(e);
+         })
+      );
     }
 
     getAdministrador(run: any): Observable<Administrador> {
-      return this.http.get<Administrador>(`${this.urlEndPoint}/${run}`);
+      return this.http.get<Administrador>(`${this.urlEndPoint}/${run}`).pipe(
+         catchError(e => {
+           this.router.navigate["/administradores"];
+           console.error(e.error.mensaje);
+           swal.fire('Error al editar', e.error.mensaje,'error');
+           return throwError(e);
+         })
+      );
     }
 
     updateAdministrador(administrador: Administrador): Observable<Administrador>{
-      return this.http.put<Administrador>(`${this.urlEndPoint}/${administrador.run}`, administrador);
+      return this.http.put<Administrador>(`${this.urlEndPoint}/${administrador.run}`, administrador).pipe(
+         catchError(e => {
+           this.router.navigate["/administradores"];
+           console.error(e.error.mensaje);
+           swal.fire('Error al editar', e.error.mensaje,'error');
+           return throwError(e);
+         })
+      );
     }
 
     deleteAdministrador(run: any): Observable<Administrador>{
-      return this.http.delete<Administrador>(`${this.urlEndPoint}/${run}`);
+      return this.http.delete<Administrador>(`${this.urlEndPoint}/${run}`).pipe(
+         catchError(e => {
+           this.router.navigate["/administradores"];
+           console.error(e.error.mensaje);
+           swal.fire('Error al eliminar', e.error.mensaje,'error');
+           return throwError(e);
+         })
+      );
     }
 }

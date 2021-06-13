@@ -1,8 +1,14 @@
 import { Component, OnInit } from '@angular/core';
 import { Cuartel} from './cuartel';
 import { CuartelService } from './cuartel.service';
+import { EncargadoBPAService } from '../encargados-bpa/encargado-bpa.service';
+import { EncargadoBPA } from '../encargados-bpa/encargado-bpa';
+import { PredioService } from '../predio/predio.service';
+import { Predio } from '../predio/predio';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
+import { Observable } from 'rxjs/internal/Observable';
+
 
 @Component({
   selector: 'app-cuartel',
@@ -11,13 +17,49 @@ import swal from 'sweetalert2';
 })
 export class CuartelComponent implements OnInit {
 
+  flag:boolean =true;
+  flag2:boolean =true;
+  flag3:boolean =false;
+  flag4:boolean =false;
+  
+  runEncargado: String;
+  idPredio: number;
+
   cuartel:Cuartel = new Cuartel();
   cuarteles: Cuartel[];
 
-constructor(private cuartelService: CuartelService, private router: Router, private activatedRoute: ActivatedRoute) { }
+  encargadosSelect:Observable<EncargadoBPA[]> = this.encargadoBPAService.getEncargados();
+  arrayEncargados:Array<EncargadoBPA> = [];
+
+  prediosSelect:Observable<Predio[]> = this.predioService.getPredios();
+  arrayPredios:Array<Predio> = [];
+
+constructor(private cuartelService: CuartelService, private router: Router,
+  private activatedRoute: ActivatedRoute, private encargadoBPAService:EncargadoBPAService,
+   private predioService:PredioService) { }
 
   ngOnInit(): void {
     this.listaCuartelesService();
+    this.cargarEncargados();
+    this.cargarPredios();
+
+  }
+
+  cargarPredios(){
+    this.prediosSelect.subscribe(
+      pre =>{
+        pre.forEach(predio =>{
+          this.arrayPredios.push(predio);
+        })
+      })
+  }
+  cargarEncargados(){
+    this.encargadosSelect.subscribe(
+      enc =>{
+        enc.forEach(encargado =>{
+          this.arrayEncargados.push(encargado);
+        })
+      })
   }
 
   listaCuartelesService() {
@@ -71,29 +113,33 @@ constructor(private cuartelService: CuartelService, private router: Router, priv
      this.cuartelService.crearCuartel(this.cuartel).subscribe(
        cuartel => {
          this.router.navigate(['/cuarteles'])
-         swal.fire('Nuevo Cuartel', `El Cuartel ${cuartel.nombre}, ha sido creado con éxito`, 'success');
+         swal.fire('Nuevo Cuartel', `El Cuartel ${this.cuartel.nombre}, ha sido creado con éxito`, 'success');
          this.listaCuartelesService();
        }
      )
    }
 
    update(): void {
+     console.log(this.cuartel);
      this.cuartelService.updateCuartel(this.cuartel).subscribe(
-      cuartel => {
+      
+      (json) => {
          this.router.navigate(['/cuarteles']);
-         swal.fire('Cuartel actualizado', `El Cuartel ${cuartel.nombre}, ha sido actualizado con éxito`, 'success');
-         this.cuartelService.getCuarteles().subscribe(
-           (cuarteles) => this.cuarteles = cuarteles
-           );
+         swal.fire('Cuartel actualizado', `El Cuartel ${this.cuartel.nombre}, ha sido actualizado con éxito`, 'success');
+         this.listaCuartelesService();
        }
-     )
+     );
+     
    }
 
-   cargarCuartel(id: number): void {
+   cargarCuartel(cuartel: Cuartel): void {
+
+     this.runEncargado=cuartel.runEncargadoBPA;
+     this.idPredio=cuartel.idPredio;
      this.activatedRoute.params.subscribe(params => {
-       //let id = params['id'];
-       if (id) {
-         this.cuartelService.getCuartel(id).subscribe((cuartel) => this.cuartel = cuartel);
+       
+       if (cuartel.idCuartel) {
+         this.cuartelService.getCuartel(cuartel.idCuartel).subscribe((cuartel) => this.cuartel = cuartel);
        }
      })
    }
@@ -101,6 +147,42 @@ constructor(private cuartelService: CuartelService, private router: Router, priv
    //metodo que vacia el form para crear
    vaciarInputs() {
      this.cuartel = new Cuartel();
+     let select1 = <HTMLInputElement>document.getElementById("select");
+    select1.value="";
+    let select2 = <HTMLInputElement>document.getElementById("select2");
+    select2.value="";
    }
 
+   enviarId(value:string){
+     if(value != ""){
+       this.cuartel.runEncargadoBPA = value;
+       this.flag = false;
+     }else{
+       this.flag =true;
+     }
+   }
+   enviarId2(value:string){
+     if(value != ""){
+       this.cuartel.idPredio = Number(value);
+       this.flag2 = false;
+     }else{
+       this.flag2 =true;
+     }
+   }
+   enviarId3(value:string){
+    if(value != ""){
+      this.cuartel.runEncargadoBPA =value;
+      this.flag3 = false;
+    }else{
+      this.flag3 =true;
+    }
+  }
+  enviarId4(value:string){
+    if(value != ""){
+      this.cuartel.idPredio = Number(value);
+      this.flag4 = false;
+    }else{
+      this.flag4 =true;
+    }
+  }
 }

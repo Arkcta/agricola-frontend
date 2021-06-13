@@ -72,7 +72,7 @@ export class ProductoFertilizanteComponent implements OnInit {
       this.fertilizanteService.crearFertilizante(this.fertilizante).subscribe(
         fertilizante => {
           this.router.navigate(['/fertilizantes'])
-          swal.fire('Nuevo producto Fertilizante', `El producto Fertilizante ${fertilizante.nombreComercial}, ha sido creado con éxito`, 'success');
+          swal.fire('Nuevo producto Fertilizante', `El producto Fertilizante ${this.fertilizante.nombreComercial}, ha sido creado con éxito`, 'success');
           this.listaFertilizantesService();
         }
       )
@@ -82,7 +82,7 @@ export class ProductoFertilizanteComponent implements OnInit {
       this.fertilizanteService.updateFertilizante(this.fertilizante).subscribe(
         fertilizante => {
           this.router.navigate(['/fertilizantes']);
-          swal.fire('Producto Fertilizante actualizado', `Fertilizante ${fertilizante.nombreComercial}, ha sido actualizado con éxito`, 'success');
+          swal.fire('Producto Fertilizante actualizado', `Fertilizante ${this.fertilizante.nombreComercial}, ha sido actualizado con éxito`, 'success');
           this.listaFertilizantesService();
         }
       )

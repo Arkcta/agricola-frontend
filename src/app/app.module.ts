@@ -34,6 +34,7 @@ import { TokenInterceptor } from './usuarios/interceptors/token.interceptor';
 import { AuthInterceptor } from './usuarios/interceptors/auth.interceptor';
 import { DuenoCampoComponent } from './dueno-campo/dueno-campo.component';
 import { DuenoService } from './dueno-campo/dueno.service';
+import { FilterPipe } from './pipes/filter.pipe';
 
 
 const routes: Routes = [
@@ -52,6 +53,7 @@ const routes: Routes = [
   {path: 'estadisticas', component: EstadisticasComponent,canActivate:[AuthGuard]},
 ];
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -69,7 +71,8 @@ const routes: Routes = [
     LoginComponent,
     NavbarComponent,
     EstadisticasComponent,
-    DuenoCampoComponent
+    DuenoCampoComponent,
+    FilterPipe
 
   ],
   imports: [

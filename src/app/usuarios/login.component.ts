@@ -31,7 +31,6 @@ export class LoginComponent implements OnInit{
     return;
   }
   this.authService.login(this.usuario).subscribe(response =>{
-  
     this.authService.guardarUsuario(response.access_token);
     this.authService.guardarToken(response.access_token);
     let usuario = this.authService.usuario;
