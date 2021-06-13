@@ -14,6 +14,7 @@ export class AdministradorComponent implements OnInit {
 
     administrador: Administrador = new Administrador();
     administradores: Administrador[];
+    pageActual: number = 1;
 
     constructor(private administradorService: AdministradorService, private router: Router,
        private activatedRoute: ActivatedRoute, private authService: AuthService) { }

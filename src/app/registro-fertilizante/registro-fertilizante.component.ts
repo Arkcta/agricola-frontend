@@ -11,6 +11,14 @@ import * as fs from 'file-saver';
 pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
 import { AuthService } from '../usuarios/auth.service';
+import { Observable } from 'rxjs/internal/Observable';
+import { EncargadoBPA } from '../encargados-bpa/encargado-bpa';
+import { EncargadoBPAService } from '../encargados-bpa/encargado-bpa.service';
+import { ProductoFertilizanteService } from '../producto-fertilizante/producto-fertilizante.service';
+import { CuartelService } from '../cuartel/cuartel.service';
+import { ProductoFertilizante } from '../producto-fertilizante/producto-fertilizante';
+import { Cuartel } from '../cuartel/cuartel';
+import { ClassGetter } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-registro-fertilizante',
@@ -19,6 +27,7 @@ import { AuthService } from '../usuarios/auth.service';
 })
 export class RegistroFertilizanteComponent implements OnInit {
 
+  pageActual: number = 1;
 
   // variable para hacer el filtrado
   filterRegistro='';
@@ -26,6 +35,22 @@ export class RegistroFertilizanteComponent implements OnInit {
 
   registro: RegistroFertilizante = new RegistroFertilizante();
   registros: RegistroFertilizante[];
+
+  encargadosSelect: Observable<EncargadoBPA[]> = this.encargadoService.getEncargados();
+  arraysEncargados: Array<EncargadoBPA> = [];
+  fertiSelect: Observable<ProductoFertilizante[]> = this.fertiService.getFertilizantes();
+  arraysFerti: Array<ProductoFertilizante> = [];
+  cuartelSelect: Observable<Cuartel[]> = this.cuartelService.getCuarteles();
+  arraysCuarteles: Array<Cuartel> = [];
+  flag: boolean = true;
+  flag2: boolean = true;
+  flag3: boolean = true;
+  flagEdi1: boolean = false;
+  flagEdi2: boolean = false;
+  flagEdi3: boolean = false;
+  runEn: string;
+  ferti: number;
+  cuar: number;
 
   //variables para descarga de excel
   fecha: any;
@@ -41,20 +66,60 @@ export class RegistroFertilizanteComponent implements OnInit {
 
   //variables para rescatar fecha actual
   now = new Date();
+  
   anioNowString: string;
   mesNowString: string;
   dayNowString: string;
   fechaNow: string;
 
 constructor(private registroService: RegistroFertilizanteService,
-  private router: Router, private activatedRoute: ActivatedRoute , public authService: AuthService) { }
+  private router: Router, 
+  private activatedRoute: ActivatedRoute, 
+  public authService: AuthService,
+  private encargadoService: EncargadoBPAService,
+  private fertiService: ProductoFertilizanteService,
+  private cuartelService: CuartelService) { }
 
   ngOnInit(): void {
     this.listaRegistrosService();
-    this.anioNowString = formatDate(this.now, 'yyyy', 'en-US', '+0530');
-    this.mesNowString = formatDate(this.now, 'MM', 'en-US', '+0530');
-    this.dayNowString = formatDate(this.now, 'dd', 'en-US', '+0530');
-    this.fechaNow = this.dayNowString+"/"+this.mesNowString+"/"+this.anioNowString;
+    this.anioNowString = formatDate(this.now, 'yyyy', 'en-US', '-0400');
+    this.mesNowString = formatDate(this.now, 'MM', 'en-US', '-0400');
+    this.dayNowString = formatDate(this.now, 'dd', 'en-US', '-0400');
+    this.fechaNow = (this.dayNowString)+"/"+this.mesNowString+"/"+this.anioNowString;
+
+    this.cargarEncargados();
+    this.cargarFertis();
+    this.cargarCuarteles();
+  }
+
+  limpiarDate(){
+    let select = <HTMLInputElement>document.getElementById("clearDate");
+    select.valueAsDate = null;
+    this.filterRegistro = '';
+  }
+
+  cargarEncargados(){
+    this.encargadosSelect.subscribe(encargados => {
+      encargados.forEach(encar =>{
+        this.arraysEncargados.push(encar);
+      })
+    });
+  }
+
+  cargarFertis(){
+    this.fertiSelect.subscribe(fitos => {
+      fitos.forEach(fit =>{
+        this.arraysFerti.push(fit);
+      })
+    });
+  }
+
+  cargarCuarteles(){
+    this.cuartelSelect.subscribe(cuarteles => {
+      cuarteles.forEach(cuartel =>{
+        this.arraysCuarteles.push(cuartel);
+      })
+    });
   }
 
   listaRegistrosService() {
@@ -134,11 +199,14 @@ constructor(private registroService: RegistroFertilizanteService,
       });
   }
 
-  cargarRegistroFertilizante(id: number): void {
+  cargarRegistroFertilizante(registro: RegistroFertilizante): void {
+    this.runEn = registro.runEncargadoBPA;
+    this.ferti = registro.idFertilizante;
+    this.cuar = registro.idCuartel;
     this.activatedRoute.params.subscribe((params) => {
-      if (id) {
+      if (registro.idRegistro) {
         this.registroService
-          .getRegistroFertilizante(id)
+          .getRegistroFertilizante(registro.idRegistro)
           .subscribe((registro) => (this.registro = registro));
       }
     });
@@ -204,9 +272,9 @@ constructor(private registroService: RegistroFertilizanteService,
       {text: row.estadoFenologico, alignment: 'center'},
       {text: row.cantidadAplicada, alignment: 'center'},
       {text: row.tipoMaquinaria, alignment: 'center'},
-      {text: row.runEncargadoBPA, alignment: 'center'},
-      {text: row.idFertilizante, alignment: 'center'},
-      {text: row.idCuartel, alignment: 'center'});
+      {text: row.nombreEncargadoBPA, alignment: 'center'},
+      {text: row.nombreFertilizante, alignment: 'center'},
+      {text: row.nombreCuartel, alignment: 'center'});
 
       body.push(dataRow);
     });
@@ -331,5 +399,65 @@ constructor(private registroService: RegistroFertilizanteService,
       });
       fs.saveAs(blob, fname + ' ' + this.fechaNow);
     });
+  }
+
+  enviarId(value:string){
+
+    if(value != ""){
+      this.registro.runEncargadoBPA = value;
+      this.flag = false;
+    }else{
+      this.flag =true;
+    }
+  }
+
+  enviarId2(value:string){
+
+    if(value != ""){
+      this.registro.idFertilizante = Number(value);
+      this.flag2 = false;
+    }else{
+      this.flag2 =true;
+    }
+  }
+
+  enviarId3(value:string){
+
+    if(value != ""){
+      this.registro.idCuartel = Number(value);
+      this.flag3 = false;
+    }else{
+      this.flag3 =true;
+    }
+  }
+
+  enviarIdEdi1(value:string){
+
+    if(value != ""){
+      this.registro.runEncargadoBPA = value;
+      this.flagEdi1 = false;
+    }else{
+      this.flagEdi1 =true;
+    }
+  }
+
+  enviarIdEdi2(value:string){
+
+    if(value != ""){
+      this.registro.idFertilizante = Number(value);
+      this.flagEdi2 = false;
+    }else{
+      this.flagEdi2 =true;
+    }
+  }
+
+  enviarIdEdi3(value:string){
+
+    if(value != ""){
+      this.registro.idCuartel = Number(value);
+      this.flagEdi3 = false;
+    }else{
+      this.flagEdi3 =true;
+    }
   }
 }

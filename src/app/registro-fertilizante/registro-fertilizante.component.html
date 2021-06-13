@@ -6,19 +6,21 @@
 
     <app-navbar></app-navbar>
     <div class="row">
-      <div class="row" >
-       <div style="margin: 10px;position: center;text-align: right;">
-        <h4 >Buscar registros por fecha  <i class="fa fa-search" aria-hidden="true"></i> </h4>
-        </div>
-        <div style="margin: 5px;" class="form-group">
-          <input  type="date"  class="form-control" [(ngModel)]="filterRegistro" name="fecha"
-          style="width:200px;height:50px">
-        </div>
-
-      </div>
       <div class="col-lg-12">
         <div class="container pt-3">
           <div class="table-responsive">
+            <div style="color: black; opacity: 89%;text-align: center;border-radius: 45px;margin-bottom: 40px; margin-top: 10px; margin-left: 75px; background: rgb(146, 202, 32, 0.7); width: 90%; height: 60px;">
+                <div style="margin-left: 70px; position: center;text-align: center; width: 300px;">
+                  <label style="font-size: 1.4em;" class="search">Buscar registros por fecha <i class="fa fa-search" aria-hidden="true"></i> </label>
+                </div>
+                <div style="margin-left: 400px; margin-top: -45px;" class="form-group">
+                  <input  type="date" id="clearDate" class="form-control" [(ngModel)]="filterRegistro" name="fecha"
+                  style="width:200px;height:40px; margin-top: 2px;">
+                </div>
+                <div style="margin-left: 590px; margin-top: -55px;" class="form-group">
+                  <button style="background-color: #D68910;" (click)="limpiarDate()" class="btn btn-primary">Limpiar fecha</button>
+                </div>
+            </div>            
             <div class="table-wrapper mar">
               <div class="table-title">
                 <div class="row ">
@@ -37,30 +39,36 @@
                     <th>Fecha</th>
                     <th>Estado fenológico</th>
                     <th>Cantidad Aplicada</th>
-                    <th>ID Fertilizante</th>
-                    <th>ID Cuartel</th>
+                    <th>Fertilizante</th>
+                    <th>Cuartel</th>
                     <th *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') || authService.hasRole('ROLE_ADMINCAMPO')">Acciones</th>
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let registro of registros | filter:filterRegistro">
+                  <tr *ngFor="let registro of registros | filter:filterRegistro | paginate: {itemsPerPage: 5, currentPage: pageActual}">
                     <td width="135px"> {{ registro.fecha}}</td>
                     <td width="100px"> {{ registro.estadoFenologico}}</td>
                     <td width="100px"> {{ registro.cantidadAplicada}}</td>
-                    <td width="90px"> {{ registro.idFertilizante}}</td>
-                    <td width="90px"> {{ registro.idCuartel}}</td>
+                    <td width="90px"> {{ registro.nombreFertilizante}}</td>
+                    <td width="90px"> {{ registro.nombreCuartel}}</td>
                     <td *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') ||authService.hasRole('ROLE_ADMINCAMPO')">
-                      <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') " href="#editEmployeeModal" (click)='cargarRegistroFertilizante(registro.idRegistro)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
+                      <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') " href="#editEmployeeModal" (click)='cargarRegistroFertilizante(registro)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
                       <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') "(click)='delete(registro)' href="" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Eliminar">&#xE872;</i></a>
-                      <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') || authService.hasRole('ROLE_ADMINCAMPO')" href="#detailEmployeeModal" (click)='cargarRegistroFertilizante(registro.idRegistro)' data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Detalles">&#xe8f4;</i></a>
+                      <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') || authService.hasRole('ROLE_ADMINCAMPO')" href="#detailEmployeeModal" (click)='cargarRegistroFertilizante(registro)' data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Detalles">&#xe8f4;</i></a>
                     </td>
                   </tr>
                 </tbody>
               </table>
+              <br>
+              <div>
+                <button *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')||  authService.hasRole('ROLE_ADMINCAMPO')"style="margin-left: 50px" (click)="dowloadPDF()" class="colorPDF" title="Exportar a PDF"><img class="pdf" src="assets/imagen-header/pdf.png"></button>
+                <button style="margin-left: 10px"*ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')" (click)="dowloadExcel()" class="colorExcel" title="Exportar a Excel"><img class="excel" src="assets/imagen-header/excel.png"></button>
+              </div>
+              <div style="margin-left: 567px; width: 300px; background-color: #D68910; margin-top: -50px;">
+                <pagination-controls  (pageChange)="pageActual = $event"></pagination-controls>
+              </div>
             </div>
           </div>
-          <button *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')||  authService.hasRole('ROLE_ADMINCAMPO')"style="margin-left: 75px" (click)="dowloadPDF()" class="colorPDF" title="Exportar a PDF"><img class="pdf" src="assets/imagen-header/pdf.png"></button>
-          <button style="margin-left: 10px"*ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')" (click)="dowloadExcel()" class="colorExcel" title="Exportar a Excel"><img class="excel" src="assets/imagen-header/excel.png"></button>
         </div>
 
 
@@ -161,24 +169,48 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="runEncargadoBpa">Run Encargado BPA</label>
-                    <input type="text" class="form-control" [(ngModel)]="registro.runEncargadoBPA" name="runEncargadoBpa">
+                    <label for="encargado1">Encargado BPA</label>
+                    <select #mySelect (change)='enviarId(mySelect.value)' class="form-control" id="select" required>
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let array of arraysEncargados" value="{{array.run}}">{{array.nombre}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="mySelect.invalid && (mySelect.dirty || mySelect.touched)">
+                      <div *ngIf="mySelect.errors.required">
+                        El encargado BPA es requerido
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="idFertilizante">Id Fertilizante</label>
-                    <input type="number" class="form-control" [(ngModel)]="registro.idFertilizante" name="idFertilizante">
+                    <label for="fito">Producto Fertilizante</label>
+                    <select #mySelect2 (change)='enviarId2(mySelect2.value)' class="form-control" id="select2" required>
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let array of arraysFerti" value="{{array.idFertilizante}}">{{array.nombreComercial}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="mySelect2.invalid && (mySelect2.dirty || mySelect2.touched)">
+                      <div *ngIf="mySelect.errors.required">
+                        El producto fitosanitario es requerido
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="idCuartel">Id cuartel</label>
-                    <input type="number" class="form-control" [(ngModel)]="registro.idCuartel" name="idCuartel">
+                    <label for="cuartel">Cuartel</label>
+                    <select #mySelect3 (change)='enviarId3(mySelect3.value)' class="form-control" id="select3" required>
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let array of arraysCuarteles" value="{{array.idCuartel}}">{{array.nombre}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="mySelect3.invalid && (mySelect3.dirty || mySelect3.touched)">
+                      <div *ngIf="mySelect3.errors.required">
+                        El producto fitosanitario es requerido
+                      </div>
+                    </div>
                   </div>
 
                 </div>
                 <div class="modal-footer">
                   <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
-                  <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success"[disabled]="!registroForm.form.valid" value="Agregar">
+                  <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success"[disabled]="!registroForm.form.valid || flag || flag2 || flag3" value="Agregar">
                 </div>
               </form>
             </div>
@@ -221,7 +253,7 @@
                   <div class="form-group">
                     <label for="estadoFenologico">Estado fenológico</label>
 
-                    <input type="text" class="form-control" [(ngModel)]="registro.estadoFenologico" id="estadofenologico" name="estadofenologico"
+                    <input type="text" class="form-control" [(ngModel)]="registro.estadoFenologico" id="estadofenologicoEdit" name="estadofenologico"
                     #estadofenologico="ngModel"
                     required minlength="5"
                     maxlength="40" onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
@@ -262,7 +294,7 @@
 
                   <div class="form-group">
                     <label for="tipoMaquinaria">Tipo maquinaria</label>
-                    <input type="text" class="form-control" [(ngModel)]="registro.tipoMaquinaria" id="tipoMaquinaria" name="tipoMaquinaria"
+                    <input type="text" class="form-control" [(ngModel)]="registro.tipoMaquinaria" id="tipoMaquinariaEdit" name="tipoMaquinaria"
                     #tipomaquinaria="ngModel"
                     required minlength="5"
                     maxlength="25" onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
@@ -283,24 +315,48 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="runEncargadoBpa">Run Encargado BPA</label>
-                    <input type="text" class="form-control" [(ngModel)]="registro.runEncargadoBPA" name="runEncargadoBpa">
+                    <label for="encargado2">Encargado BPA</label>
+                    <select #mySelect4 (change)='enviarIdEdi1(mySelect4.value)' class="form-control" id="select4" disabled required>
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let array of arraysEncargados" [selected]="array.run == runEn" value="{{array.run}}">{{array.nombre}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="mySelect4.invalid && (mySelect4.dirty || mySelect4.touched)">
+                      <div *ngIf="mySelect4.errors.required">
+                        El encargado BPA es requerido
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="idFertilizante">Id Fertilizante</label>
-                    <input type="number" class="form-control" [(ngModel)]="registro.idFertilizante" name="idFertilizante">
+                    <label for="fito2">Producto Fertilizante</label>
+                    <select #mySelect5 (change)='enviarIdEdi2(mySelect5.value)' class="form-control" id="select5" disabled required>
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let array of arraysFerti" [selected]="array.idFertilizante == ferti" value="{{array.idFertilizante}}">{{array.nombreComercial}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="mySelect5.invalid && (mySelect5.dirty || mySelect5.touched)">
+                      <div *ngIf="mySelect5.errors.required">
+                        El producto fertilizante es requerido
+                      </div>
+                    </div>
                   </div>
 
                   <div class="form-group">
-                    <label for="idCuartel">Id cuartel</label>
-                    <input type="number" class="form-control" [(ngModel)]="registro.idCuartel" name="idCuartel">
+                    <label for="cuartel2">Cuartel</label>
+                    <select #mySelect6 (change)='enviarIdEdi3(mySelect6.value)' class="form-control" id="select6" disabled required>
+                      <option value="">Seleccione</option>
+                      <option *ngFor="let array of arraysCuarteles" [selected]="array.idCuartel == cuar" value="{{array.idCuartel}}">{{array.nombre}}</option>
+                    </select>
+                    <div class="alert alert-danger" *ngIf="mySelect6.invalid && (mySelect6.dirty || mySelect6.touched)">
+                      <div *ngIf="mySelect6.errors.required">
+                        El producto fitosanitario es requerido
+                      </div>
+                    </div>
                   </div>
 
                 </div>
                 <div class="modal-footer">
                   <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
-                  <input type="button" (click)='update()' data-dismiss="modal" class="btn btn-success" [disabled]="!registroFormEdit.form.valid" value="Guardar">
+                  <input type="button" (click)='update()' data-dismiss="modal" class="btn btn-success" [disabled]="!registroFormEdit.form.valid || flagEdi1 || flagEdi2 || flagEdi3" value="Guardar">
                 </div>
               </form>
             </div>
@@ -329,19 +385,28 @@
                     <div>
                       <label style="margin-left: 10px; margin-top: 10px;">Cantidad aplicada</label>
                       <label style="margin-left: 115px;">Tipo maquinaria</label>
-                      <label style="margin-left: 125px;">Run Encargado BPA</label>
+                      <label style="margin-left: 125px;">Encargado BPA</label>
                       <br>
                       <input disabled style="margin-left: 10px;" [(ngModel)]="registro.cantidadAplicada" >
                       <input disabled style="margin-left: 60px;" [(ngModel)]="registro.tipoMaquinaria" >
-                      <input disabled style="margin-left: 60px;" [(ngModel)]="registro.runEncargadoBPA" >
+                      <select style="margin-left: 60px; height: 35px; width: 185px;" id="select4" disabled>
+                        <option value="">Seleccione</option>
+                        <option *ngFor="let array of arraysEncargados" [selected]="array.run == runEn" value="{{array.run}}">{{array.nombre}}</option>
+                      </select>
                     </div>
 
                     <div>
-                      <label style="margin-left: 10px; margin-top: 10px;">Id Fertilizante</label>
-                      <label style="margin-left: 155px;">Id cuartel</label>
+                      <label style="margin-left: 10px; margin-top: 10px;">Fertilizante</label>
+                      <label style="margin-left: 170px;">Cuartel</label>
                       <br>
-                      <input disabled style="margin-left: 10px;" [(ngModel)]="registro.idFertilizante">
-                      <input disabled style="margin-left: 60px;" [(ngModel)]="registro.idCuartel">
+                      <select style="margin-left: 10px; height: 35px; width: 185px;" id="select5" disabled>
+                        <option value="">Seleccione</option>
+                        <option *ngFor="let array of arraysFerti" [selected]="array.idFertilizante == ferti" value="{{array.idFertilizante}}">{{array.nombreComercial}}</option>
+                      </select>
+                      <select style="margin-left: 60px; height: 35px; width: 185px;" id="select6" disabled required>
+                        <option value="">Seleccione</option>
+                        <option *ngFor="let array of arraysCuarteles" [selected]="array.idCuartel == cuar" value="{{array.idCuartel}}">{{array.nombre}}</option>
+                      </select>
                     </div>
                   </div>
 
@@ -352,7 +417,6 @@
             </div>
           </div>
         </div>
-
       </div>
     </div>
   </div>

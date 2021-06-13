@@ -1,3 +1,13 @@
+.ngx-pagination .current{
+  background: #e06464 !important;
+  border-radius: 20px !important; 
+  border: transparent !important;
+}
+
+.search{
+  margin-top: 12px !important;
+}
+
 .mar {
   width: 95%;
   margin-top: -40px;

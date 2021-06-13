@@ -206,7 +206,6 @@ export class EstadisticasComponent implements OnInit {
   }
 
   mostrar4() {
-    console.log("entre");
     var y = document.getElementById("chart1");
     var x = document.getElementById("chart2");
     var z = document.getElementById("chart3");
@@ -220,7 +219,6 @@ export class EstadisticasComponent implements OnInit {
   }
 
   mostrar5() {
-    console.log("entre");
     var y = document.getElementById("chart1");
     var x = document.getElementById("chart2");
     var z = document.getElementById("chart3");
@@ -520,11 +518,11 @@ export class EstadisticasComponent implements OnInit {
 
             if (this.mesFertiTipo == 8) {
               switch (tipo) {
-                case "Nitrogeno": {
+                case "Nitrógeno": {
                   this.nitrogeno[0] += this.cantidadAplicada;
                   break;
                 }
-                case "Fosforo": {
+                case "Fósforo": {
                   this.fosforo[0] += this.cantidadAplicada;
                   break;
                 }
@@ -551,11 +549,11 @@ export class EstadisticasComponent implements OnInit {
             } else {
               if (this.mesFertiTipo == 9) {
                 switch (tipo) {
-                  case "Nitrogeno": {
+                  case "Nitrógeno": {
                     this.nitrogeno[1] += this.cantidadAplicada;
                     break;
                   }
-                  case "Fosforo": {
+                  case "Fósforo": {
                     this.fosforo[1] += this.cantidadAplicada;
                     break;
                   }
@@ -582,11 +580,11 @@ export class EstadisticasComponent implements OnInit {
               } else {
                 if (this.mesFertiTipo == 10) {
                   switch (tipo) {
-                    case "Nitrogeno": {
+                    case "Nitrógeno": {
                       this.nitrogeno[2] += this.cantidadAplicada;
                       break;
                     }
-                    case "Fosforo": {
+                    case "Fósforo": {
                       this.fosforo[2] += this.cantidadAplicada;
                       break;
                     }
@@ -613,11 +611,11 @@ export class EstadisticasComponent implements OnInit {
                 } else {
                   if (this.mesFertiTipo == 11) {
                     switch (tipo) {
-                      case "Nitrogeno": {
+                      case "Nitrógeno": {
                         this.nitrogeno[3] += this.cantidadAplicada;
                         break;
                       }
-                      case "Fosforo": {
+                      case "Fósforo": {
                         this.fosforo[3] += this.cantidadAplicada;
                         break;
                       }
@@ -644,11 +642,11 @@ export class EstadisticasComponent implements OnInit {
                   } else {
                     if (this.mesFertiTipo == 12) {
                       switch (tipo) {
-                        case "Nitrogeno": {
+                        case "Nitrógeno": {
                           this.nitrogeno[4] += this.cantidadAplicada;
                           break;
                         }
-                        case "Fosforo": {
+                        case "Fósforo": {
                           this.fosforo[4] += this.cantidadAplicada;
                           break;
                         }
@@ -682,11 +680,11 @@ export class EstadisticasComponent implements OnInit {
 
             if (this.mesFertiTipo == 1) {
               switch (tipo) {
-                case "Nitrogeno": {
+                case "Nitrógeno": {
                   this.nitrogeno[5] += this.cantidadAplicada;
                   break;
                 }
-                case "Fosforo": {
+                case "Fósforo": {
                   this.fosforo[5] += this.cantidadAplicada;
                   break;
                 }
@@ -713,11 +711,11 @@ export class EstadisticasComponent implements OnInit {
             } else {
               if (this.mesFertiTipo == 2) {
                 switch (tipo) {
-                  case "Nitrogeno": {
+                  case "Nitrógeno": {
                     this.nitrogeno[6] += this.cantidadAplicada;
                     break;
                   }
-                  case "Fosforo": {
+                  case "Fósforo": {
                     this.fosforo[6] += this.cantidadAplicada;
                     break;
                   }
@@ -744,11 +742,11 @@ export class EstadisticasComponent implements OnInit {
               } else {
                 if (this.mesFertiTipo == 3) {
                   switch (tipo) {
-                    case "Nitrogeno": {
+                    case "Nitrógeno": {
                       this.nitrogeno[7] += this.cantidadAplicada;
                       break;
                     }
-                    case "Fosforo": {
+                    case "Fósforo": {
                       this.fosforo[7] += this.cantidadAplicada;
                       break;
                     }
@@ -775,11 +773,11 @@ export class EstadisticasComponent implements OnInit {
                 } else {
                   if (this.mesFertiTipo == 4) {
                     switch (tipo) {
-                      case "Nitrogeno": {
+                      case "Nitrógeno": {
                         this.nitrogeno[8] += this.cantidadAplicada;
                         break;
                       }
-                      case "Fosforo": {
+                      case "Fósforo": {
                         this.fosforo[8] += this.cantidadAplicada;
                         break;
                       }
@@ -806,11 +804,11 @@ export class EstadisticasComponent implements OnInit {
                   } else {
                     if (this.mesFertiTipo == 5) {
                       switch (tipo) {
-                        case "Nitrogeno": {
+                        case "Nitrógeno": {
                           this.nitrogeno[9] += this.cantidadAplicada;
                           break;
                         }
-                        case "Fosforo": {
+                        case "Fósforo": {
                           this.fosforo[9] += this.cantidadAplicada;
                           break;
                         }
@@ -862,7 +860,7 @@ export class EstadisticasComponent implements OnInit {
       data: {
         labels: ['Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre', 'Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo'],
         datasets: [{
-          label: 'Nitrogeno',
+          label: 'Nitrógeno',
           data: this.nitrogeno,
           backgroundColor: [
             'rgba(18, 115, 35, 0.7)',
@@ -896,7 +894,7 @@ export class EstadisticasComponent implements OnInit {
           ],
           borderWidth: 3
         }, {
-          label: 'Fosforo',
+          label: 'Fósforo',
           data: this.fosforo,
           backgroundColor: [
             'rgba(152, 15, 11, 0.7)',
@@ -1684,7 +1682,6 @@ export class EstadisticasComponent implements OnInit {
               let date = new Date(element.fecha);
               this.mesLinealFito = date.getMonth() + 1;
               this.anioLinealFito = date.getFullYear();
-              console.log(this.anioLinealFito + "-" + this.anioComparativaFito1)
               if (this.anioLinealFito == this.anioComparativaFito1) {
                 if (this.mesLinealFito == 8) {
                   this.arregloMesesLinealFito[0]++;

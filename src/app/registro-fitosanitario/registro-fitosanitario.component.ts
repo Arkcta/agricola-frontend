@@ -76,10 +76,10 @@ export class RegistroFitosanitarioComponent implements OnInit {
 
   ngOnInit(): void {
     this.listaRegistroFitoService();
-    this.anioNowString = formatDate(this.now, 'yyyy', 'en-US', '+0530');
-    this.mesNowString = formatDate(this.now, 'MM', 'en-US', '+0530');
-    this.dayNowString = formatDate(this.now, 'dd', 'en-US', '+0530');
-    this.fechaNow = Number(this.dayNowString)-1 + '/' + this.mesNowString + '/' + this.anioNowString;
+    this.anioNowString = formatDate(this.now, 'yyyy', 'en-US', '-0400');
+    this.mesNowString = formatDate(this.now, 'MM', 'en-US', '-0400');
+    this.dayNowString = formatDate(this.now, 'dd', 'en-US', '-0400');
+    this.fechaNow = Number(this.dayNowString) + '/' + this.mesNowString + '/' + this.anioNowString;
     this.cargarEncargados();
     this.cargarFitos();
     this.cargarCuarteles();

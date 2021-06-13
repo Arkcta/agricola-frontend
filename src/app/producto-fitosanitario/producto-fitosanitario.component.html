@@ -101,7 +101,7 @@
                     <label for="tipo">Tipo</label>
                     <select #mySelect (change)='enviarId(mySelect.value)' ([ngModel])="fitosanitario.tipo" name="tipo" class="form-control" id="select" required>
                       <option value="">Seleccione</option>
-                      <option *ngFor="let tipoF of tipos" [selected]="tipoF.nombre == tipo" value="{{tipoF.nombre}}">{{tipoF.nombre}}</option>
+                      <option *ngFor="let tipoF of tipos" value="{{tipoF.nombre}}">{{tipoF.nombre}}</option>
                     </select>
                     <div class="alert alert-danger" *ngIf="mySelect.invalid && (mySelect.dirty || mySelect.touched)">
                       <div *ngIf="mySelect.errors.required">
