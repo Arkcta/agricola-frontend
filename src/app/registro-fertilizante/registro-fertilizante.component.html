@@ -135,7 +135,7 @@
                   <div class="form-group">
                     <label for="cantidadAplicada">Cantidad aplicada</label>
                     <input type="text" class="form-control" [(ngModel)]="registro.cantidadAplicada" #cantidadaplicada="ngModel" name="cantidadaplicada"
-                     required minlength="1" maxlength="6"  pattern="[\d]{1,3}.[\d]{1,2}" placeholder="Ingrese cantidad aplicada ej  40.0"
+                     required minlength="1" maxlength="6"  pattern="[\d]{1,3}[.][\d]{1,2}" placeholder="Ej 40.0"
                      onkeypress='return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode <= 46))'>
                     <div class="alert alert-danger" *ngIf="cantidadaplicada.invalid && (cantidadaplicada.dirty || cantidadaplicada.touched)">
                       <div *ngIf="cantidadaplicada.errors.required">
@@ -214,7 +214,7 @@
 
                 </div>
                 <div class="modal-footer">
-                  <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
+                  <input type="button" class="btn btn-default left" data-dismiss="modal" style="background: #BF3D3D; color: white" value="Cancel">
                   <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success"[disabled]="!registroForm.form.valid || flag || flag2 || flag3" value="Agregar">
                 </div>
               </form>
@@ -285,7 +285,7 @@
                   <div class="form-group">
                     <label for="cantidadAplicada">Cantidad aplicada</label>
                     <input type="text" class="form-control" [(ngModel)]="registro.cantidadAplicada" #cantidadaplicadaEdit="ngModel" name="cantidadaplicada"
-                     required minlength="1" maxlength="6"  pattern="[\d]{1,3}.[\d]{1,2}" placeholder=" ej  40.0"
+                     required minlength="1" maxlength="6"  pattern="[\d]{1,3}[.][\d]{1,2}" placeholder=" ej  40.0"
                      onkeypress='return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode <= 46))'>
                     <div class="alert alert-danger" *ngIf="cantidadaplicadaEdit.invalid && (cantidadaplicadaEdit.dirty || cantidadaplicadaEdit.touched)">
                       <div *ngIf="cantidadaplicadaEdit.errors.required">
@@ -364,8 +364,8 @@
 
                 </div>
                 <div class="modal-footer">
-                  <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
-                  <input type="button" (click)='update()' data-dismiss="modal" class="btn btn-success" [disabled]="!registroFormEdit.form.valid || flagEdi1 || flagEdi2 || flagEdi3" value="Guardar">
+                  <input type="button" class="btn btn-default left" data-dismiss="modal" style="background: #BF3D3D; color: white" value="Cancel">
+                  <input type="button" (click)='update()' data-dismiss="modal" class="btn btn-success" style="background: #17a2b8;"  [disabled]="!registroFormEdit.form.valid || flagEdi1 || flagEdi2 || flagEdi3" value="Guardar">
                 </div>
               </form>
             </div>

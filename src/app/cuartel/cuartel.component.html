@@ -71,7 +71,7 @@
 
                   <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" [(ngModel)]="cuartel.nombre" name="nombre" #nombre="ngModel" 
+                    <input type="text" class="form-control" [(ngModel)]="cuartel.nombre" name="nombre" #nombre="ngModel" placeholder="Ingrese nombre"
                     required minlength="5" maxlength="30" onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
                       || (event.charCode >= 65 && event.charCode <= 90)
                       || (event.charCode == 32 )
@@ -92,7 +92,7 @@
 
                   <div class="form-group">
                     <label for="hectareas">Hectáreas</label>
-                    <input type="text" class="form-control" [(ngModel)]="cuartel.hectareas" #hectareas="ngModel" name="hectareas"
+                    <input type="text" class="form-control" [(ngModel)]="cuartel.hectareas" #hectareas="ngModel" name="hectareas" placeholder="Ingrese hectáreas"
                     required minlength="1" maxlength="2" onkeypress='return ((event.charCode >= 48 && event.charCode <= 57))'>
                     <div class="alert alert-danger" *ngIf="hectareas.invalid && (hectareas.dirty || hectareas.touched)">
                       <div *ngIf="hectareas.errors.required">
@@ -106,7 +106,7 @@
 
                   <div class="form-group">
                     <label for="tipoUva">Tipo de Uva </label>
-                    <input type="text" class="form-control" [(ngModel)]="cuartel.tipoUva" id="tipoUva" name="tipoUva" #tipoUva="ngModel" 
+                    <input type="text" class="form-control" [(ngModel)]="cuartel.tipoUva" id="tipoUva" name="tipoUva" #tipoUva="ngModel" placeholder="Ingrese tipo de uva"
                     required minlength="3" maxlength="25" onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
                      || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode == 32 )
                      || (event.charCode ==241) || (event.charCode ==209)
@@ -151,7 +151,7 @@
 
                 </div>
                 <div class="modal-footer">
-                  <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
+                  <input type="button" class="btn btn-default left" data-dismiss="modal" style="background: #BF3D3D; color: white" value="Cancel">
                   <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success" [disabled]="!cuartelForm.form.valid || flag || flag2" value="Agregar">
                 </div>
               </form>
@@ -242,7 +242,7 @@
 
                   <div class="form-group">
                     <label for="predio">Predio</label>
-                    <select #mySelect4 (change)='enviarId4(mySelect4.value)' class="form-control" id="select5" required>
+                    <select #mySelect4 (change)='enviarId4(mySelect4.value)' class="form-control" id="select5" disabled required>
                       <option value="">Seleccione</option>
                       <option *ngFor="let array of arrayPredios"  [selected]="array.idPredio == idPredio"
                        value="{{array.idPredio}}">{{array.nombre}}</option>
@@ -256,7 +256,7 @@
 
                 </div>
                 <div class="modal-footer">
-                  <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
+                  <input type="button" class="btn btn-default left" data-dismiss="modal" style="background: #BF3D3D; color: white" value="Cancel">
                   <input type="button" (click)='update()' class="btn btn-info" 
                   [disabled]="!cuartelFormEdit.form.valid || flag3 || flag4" data-dismiss="modal" value="Guardar">
                 </div>

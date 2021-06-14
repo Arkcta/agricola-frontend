@@ -1,7 +1,5 @@
-.ngx-pagination .current{
-  background: #e06464 !important;
-  border-radius: 20px !important; 
-  border: transparent !important;
+::placeholder {
+  font-size: 0.8em;
 }
 
 .search{

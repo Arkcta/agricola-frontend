@@ -67,7 +67,7 @@
 
                   <div class="form-group">
                     <label for="nombreComercial">Nombre comercial</label>
-                    <input type="text" class="form-control" [(ngModel)]="fertilizante.nombreComercial" name="nombrecomercial" #nombrecomercial="ngModel" required minlength="5"
+                    <input type="text" class="form-control" [(ngModel)]="fertilizante.nombreComercial" name="nombrecomercial" #nombrecomercial="ngModel" required minlength="5" placeholder="Ingrese nombre comercial"
                     maxlength="25" onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
                                        || (event.charCode >= 65 && event.charCode <= 90)
                                        || (event.charCode == 32 )
@@ -100,7 +100,7 @@
 
                   <div class="form-group">
                     <label for="variedad">Variedad</label>
-                    <input type="text" class="form-control" [(ngModel)]="fertilizante.variedad" name="variedad" #variedad="ngModel" required minlength="5"
+                    <input type="text" class="form-control" [(ngModel)]="fertilizante.variedad" name="variedad" #variedad="ngModel" required minlength="5" placeholder="Ingrese variedad"
                     maxlength="30" onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
                                        || (event.charCode >= 65 && event.charCode <= 90)
                                        || (event.charCode == 32 )
@@ -119,10 +119,10 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="concentracion">Concentración</label>
+                    <label for="concentracion">Concentración (%)</label>
                     <input type="text" class="form-control" [(ngModel)]="fertilizante.concentracion" placeholder="ej 2.0 , 2.3"
                      #concentracion="ngModel" name="concentracion"
-                    required minlength="1" maxlength="5" pattern="[\d]{1,2}.[\d]{1,2}"
+                    required minlength="1" maxlength="5" pattern="[\d]{1,2}[.][\d]{1,2}"
                     onkeypress='return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode <= 46))'>
                     <div class="alert alert-danger" *ngIf="concentracion.invalid && (concentracion.dirty || concentracion.touched)">
                       <div *ngIf="concentracion.errors.required">
@@ -142,7 +142,7 @@
 
                 </div>
                 <div class="modal-footer">
-                  <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
+                  <input type="button" class="btn btn-default left" data-dismiss="modal" style="background: #BF3D3D; color: white" value="Cancel">
                   <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success" [disabled]="!fertilizanteForm.form.valid || flag" value="Agregar">
                 </div>
               </form>
@@ -216,10 +216,10 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="concentracion">Concentración</label>
+                    <label for="concentracion">Concentración (%)</label>
                     <input type="text" class="form-control" [(ngModel)]="fertilizante.concentracion" placeholder="ej 2.0 , 2.3"
                      #concentracion="ngModel" name="concentracion"
-                    required minlength="1" maxlength="5" pattern="[\d]{1,2}.[\d]{1,2}"
+                    required minlength="1" maxlength="5" pattern="[\d]{1,2}[.][\d]{1,2}"
                     onkeypress='return ((event.charCode >= 48 && event.charCode <= 57) || (event.charCode <= 46))'>
                     <div class="alert alert-danger" *ngIf="concentracion.invalid && (concentracion.dirty || concentracion.touched)">
                       <div *ngIf="concentracion.errors.required">
@@ -240,8 +240,8 @@
 
                 </div>
                 <div class="modal-footer">
-                  <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
-                  <input type="button" (click)='update()' data-dismiss="modal" class="btn btn-success" [disabled]="!fertilizanteFormEdit.form.valid || flag2" value="Guardar">
+                  <input type="button" class="btn btn-default left" data-dismiss="modal" style="background: #BF3D3D; color: white" value="Cancel">
+                  <input type="button" (click)='update()' data-dismiss="modal" class="btn btn-success" style="background: #17a2b8;" [disabled]="!fertilizanteFormEdit.form.valid || flag2" value="Guardar">
                 </div>
               </form>
             </div>

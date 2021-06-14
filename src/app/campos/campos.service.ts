@@ -38,7 +38,7 @@ export class CamposService {
         catchError(e =>{
           console.log(e.error.mensaje);
           this.isNoAutorizado(e);
-          swal.fire(e.error.mensaje, e.error.mensaje, 'error')
+          swal.fire("Error al crear el campo", e.error.mensaje, 'error')
           return throwError(e);
         })
     );

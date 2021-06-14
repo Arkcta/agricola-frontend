@@ -29,7 +29,7 @@
                         <th>Nombre</th>
                         <th>Dirección</th>
                         <th>Hectáreas</th>
-                        <th>RUN Dueño</th>
+                        <th>Dueño de campo</th>
                         <th>Nombre administrador</th>
                         <th>Acciones</th>
                       </tr>
@@ -71,8 +71,15 @@
 
                   <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" [(ngModel)]="campo.nombre" name="nombre" #nombre="ngModel" required minlength="5" maxlength="30"
-                    onkeypress='return ((event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode == 32 ))'>
+                    <input type="text" class="form-control" [(ngModel)]="campo.nombre" name="nombre" #nombre="ngModel" required minlength="5" maxlength="30" placeholder="Ingrese nombre"
+                    onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
+                      || (event.charCode >= 65 && event.charCode <= 90)
+                      || (event.charCode == 32 )
+                      || (event.charCode >= 48 && event.charCode <= 57)
+                      || (event.charCode ==241) || (event.charCode ==209)
+                      || (event.charCode ==193) || (event.charCode ==201) || (event.charCode ==205) || (event.charCode ==211)
+                      ||  (event.charCode ==218) || (event.charCode ==225) || (event.charCode ==233) || (event.charCode ==237)
+                      || (event.charCode ==243) || (event.charCode ==250)) '>
                     <div class="alert alert-danger" *ngIf="nombre.invalid && (nombre.dirty || nombre.touched)">
                       <div *ngIf="nombre.errors.required">
                         Nombre es requerido
@@ -84,9 +91,16 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="direccion">Direccion</label>
-                    <input type="text" class="form-control" [(ngModel)]="campo.direccion" name="direccion" #direccion="ngModel" required minlength="5" maxlength="80"
-                    onkeypress='return ((event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode == 32 ) || (event.charCode >= 48 && event.charCode <= 57))'>
+                    <label for="direccion">Dirección</label>
+                    <input type="text" class="form-control" [(ngModel)]="campo.direccion" name="direccion" #direccion="ngModel" required minlength="5" maxlength="80" placeholder="Ingrese dirección"
+                    onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
+                      || (event.charCode >= 65 && event.charCode <= 90)
+                      || (event.charCode == 32 )
+                      || (event.charCode >= 48 && event.charCode <= 57)
+                      || (event.charCode ==241) || (event.charCode ==209)
+                      || (event.charCode ==193) || (event.charCode ==201) || (event.charCode ==205) || (event.charCode ==211)
+                      ||  (event.charCode ==218) || (event.charCode ==225) || (event.charCode ==233) || (event.charCode ==237)
+                      || (event.charCode ==243) || (event.charCode ==250)) '>
                     <div class="alert alert-danger" *ngIf="direccion.invalid && (direccion.dirty || direccion.touched)">
                       <div *ngIf="direccion.errors.required">
                         La dirección es requerida
@@ -98,8 +112,8 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="hectareas">Hectareas</label>
-                    <input type="text" class="form-control" [(ngModel)]="campo.hectareas" name="hectareas" #hectareas="ngModel" required minlength="1" maxlength="2"
+                    <label for="hectareas">Hectáreas</label>
+                    <input type="text" class="form-control" [(ngModel)]="campo.hectareas" name="hectareas" #hectareas="ngModel" required minlength="1" maxlength="2" placeholder="Ingrese hectáreas"
                     onkeypress='return ((event.charCode >= 48 && event.charCode <= 57))'>
                     <div class="alert alert-danger" *ngIf="hectareas.invalid && (hectareas.dirty || hectareas.touched)">
                       <div *ngIf="hectareas.errors.required">
@@ -139,7 +153,7 @@
 
                 </div>
                 <div class="modal-footer">
-                  <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
+                  <input type="button" class="btn btn-default left" data-dismiss="modal" style="background: #BF3D3D; color: white" value="Cancel">
                   <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success" [disabled]="!campoForm.form.valid || flag || flag3" value="Agregar">
                 </div>
               </form>
@@ -165,7 +179,14 @@
                   <div class="form-group">
                     <label for="nombre">Nombre</label>
                     <input type="text" class="form-control" [(ngModel)]="campo.nombre" name="nombre" #nombreEdi="ngModel" required minlength="5" maxlength="30"
-                    onkeypress='return ((event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode == 32 ))'>
+                    onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
+                      || (event.charCode >= 65 && event.charCode <= 90)
+                      || (event.charCode == 32 )
+                      || (event.charCode >= 48 && event.charCode <= 57)
+                      || (event.charCode ==241) || (event.charCode ==209)
+                      || (event.charCode ==193) || (event.charCode ==201) || (event.charCode ==205) || (event.charCode ==211)
+                      ||  (event.charCode ==218) || (event.charCode ==225) || (event.charCode ==233) || (event.charCode ==237)
+                      || (event.charCode ==243) || (event.charCode ==250)) '>
                     <div class="alert alert-danger" *ngIf="nombreEdi.invalid && (nombreEdi.dirty || nombreEdi.touched)">
                       <div *ngIf="nombreEdi.errors.required">
                         Nombre es requerido
@@ -177,9 +198,16 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="direccion">Direccion</label>
+                    <label for="direccion">Dirección</label>
                     <input type="text" class="form-control" [(ngModel)]="campo.direccion" id="direccion" name="direccion" #direccionEdi="ngModel" required minlength="5" maxlength="50"
-                    onkeypress='return ((event.charCode >= 97 && event.charCode <= 122) || (event.charCode >= 65 && event.charCode <= 90) || (event.charCode == 32 ) || (event.charCode >= 48 && event.charCode <= 57))'>
+                    onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
+                      || (event.charCode >= 65 && event.charCode <= 90)
+                      || (event.charCode == 32 )
+                      || (event.charCode >= 48 && event.charCode <= 57)
+                      || (event.charCode ==241) || (event.charCode ==209)
+                      || (event.charCode ==193) || (event.charCode ==201) || (event.charCode ==205) || (event.charCode ==211)
+                      ||  (event.charCode ==218) || (event.charCode ==225) || (event.charCode ==233) || (event.charCode ==237)
+                      || (event.charCode ==243) || (event.charCode ==250)) '>
                     <div class="alert alert-danger" *ngIf="direccionEdi.invalid && (direccionEdi.dirty || direccionEdi.touched)">
                       <div *ngIf="direccionEdi.errors.required">
                         La dirección es requerida
@@ -191,7 +219,7 @@
                   </div>
 
                   <div class="form-group">
-                    <label for="hectareas">Hectareas</label>
+                    <label for="hectareas">Hectáreas</label>
                     <input type="number" class="form-control" [(ngModel)]="campo.hectareas" id="hectareas" name="hectareas" #hectareasEdi="ngModel" required minlength="1" maxlength="2"
                     onkeypress='return ((event.charCode >= 48 && event.charCode <= 57))'>
                     <div class="alert alert-danger" *ngIf="hectareasEdi.invalid && (hectareasEdi.dirty || hectareasEdi.touched)">
@@ -219,7 +247,7 @@
 
                   <div class="form-group">
                     <label for="idCampo">Administrador de campo</label>
-                    <select #mySelect2 (change)='enviarId2(mySelect2.value)' class="form-control" id="selectEdi" disabled required>
+                    <select #mySelect2 (change)='enviarId2(mySelect2.value)' class="form-control" id="selectEdi" required>
                       <option value="">Seleccione</option>
                       <option *ngFor="let array of arraysAdmin" [selected]="array.run == run" value="{{array.run}}">{{array.nombre}}</option>
                     </select>
@@ -232,8 +260,8 @@
 
                 </div>
                 <div class="modal-footer">
-                  <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
-                  <input type="button" (click)='update()' data-dismiss="modal" class="btn btn-success" [disabled]="!campoEditForm.form.valid || flag2 || flag4" value="Guardar">
+                  <input type="button" class="btn btn-default left" data-dismiss="modal" style="background: #BF3D3D; color: white" value="Cancel">
+                  <input type="button" (click)='update()' data-dismiss="modal" style="background: #17a2b8;" class="btn btn-success" [disabled]="!campoEditForm.form.valid || flag2 || flag4" value="Guardar">
                 </div>
               </form>
             </div>

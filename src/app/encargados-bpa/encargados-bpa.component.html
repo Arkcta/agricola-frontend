@@ -70,7 +70,7 @@
 
                   <div class="form-group">
                     <label for="nombre">Nombre</label>
-                    <input type="text" class="form-control" [(ngModel)]="encargado.nombre" name="nombre" #nombre="ngModel" required minlength="5" maxlength="30" placeholder="Nombre1 Apellido1 Apellido2" onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
+                    <input type="text" class="form-control" [(ngModel)]="encargado.nombre" name="nombre" #nombre="ngModel" required minlength="5" maxlength="30" placeholder="Nombre apellido apellido" onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
                                         || (event.charCode >= 65 && event.charCode <= 90)
                                         || (event.charCode == 32 )
                                         || (event.charCode ==241) || (event.charCode ==209)
@@ -89,7 +89,7 @@
 
                   <div class="form-group">
                     <label for="run">Run</label>
-                    <input type="text" pattern="[\d]{1,2}.\d{3}.\d{3}-[\d|kK]{1}" class="form-control"
+                    <input type="text" pattern="[\d]{1,2}[.]{1}\d{3}[.]{1}\d{3}-[\d|kK]{1}" class="form-control"
                      [(ngModel)]="encargado.run" name="run" required
                     #run="ngModel" maxlength="12" minlength="11" placeholder="X.XXX.XXX-X"
                       onkeypress='return ((event.charCode >= 48 && event.charCode <= 57)  || (event.charCode == 46)
@@ -136,7 +136,7 @@
                     <input type="email" class="form-control" [(ngModel)]="encargado.email" name="email"
                     required #email="ngModel" pattern=".+@[aA][gG][rR][iI][cC][oO][lL][aA][.][cC][lL]" minlength="15"
                     maxlength="40"
-                      placeholder="Ingrese su email">
+                      placeholder="Ej xxxxx@agricola.cl">
                     <div class="alert alert-danger" *ngIf="email.invalid && (email.dirty || email.touched)">
                       <div *ngIf="email.errors.required">
                         Email es requerido
@@ -166,7 +166,7 @@
 
                 </div>
                 <div class="modal-footer">
-                  <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
+                  <input type="button" class="btn btn-default left" data-dismiss="modal" style="background: #BF3D3D; color: white" value="Cancel">
                   <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success" [disabled]="!encargadoForm.form.valid" value="Agregar">
                 </div>
               </form>
@@ -269,7 +269,7 @@
 
                 </div>
                 <div class="modal-footer">
-                  <input type="button" class="btn btn-default left" data-dismiss="modal" value="Cancel">
+                  <input type="button" class="btn btn-default left" data-dismiss="modal" style="background: #BF3D3D; color: white" value="Cancel">
                   <input type="button" (click)='update()' class="btn btn-info" data-dismiss="modal" [disabled]="!encargadoEdiForm.form.valid" value="Guardar">
                 </div>
               </form>
