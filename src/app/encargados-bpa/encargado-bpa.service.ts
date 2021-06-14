@@ -27,11 +27,13 @@ export class EncargadoBPAService {
 
   getEncargados(): Observable<EncargadoBPA[]> {
     return this.http.get(this.urlEndPoint).pipe(
-      map((response) => response as EncargadoBPA[]),
-        catchError(e =>{
-          this.isNoAutorizado(e);
-          return throwError(e);
+      map(response => {
+        let encargados = response as EncargadoBPA[];
+        return encargados.map(encargado => {
+          encargado.nombre = encargado.nombre.toUpperCase();
+          return encargado;
         })
+      })
     );
   }
 

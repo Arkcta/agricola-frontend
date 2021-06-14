@@ -19,7 +19,16 @@ export class CamposService {
 
   getCampos(): Observable<Campos[]> {
     return this.http.get(this.urlEndPoint).pipe(
-      map((response) => response as Campos[]),
+      map(response => {
+        let campos = response as Campos[];
+        return campos.map(campo => {
+          campo.nombre = campo.nombre.toUpperCase();
+          campo.direccion = campo.direccion.toUpperCase();
+          campo.nombreDuenoCampo = campo.nombreDuenoCampo.toUpperCase();
+          campo.nombreAdministrador = campo.nombreAdministrador.toUpperCase();
+          return campo;
+        })
+      }),
     );
   }
 

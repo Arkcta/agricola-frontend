@@ -18,7 +18,16 @@ export class CuartelService {
 
   getCuarteles(): Observable<Cuartel[]> {
     return this.http.get(this.urlEndPoint).pipe(
-      map((response) => response as Cuartel[])
+      map(response => { 
+        let cuarteles = response as Cuartel[];
+        return cuarteles.map(cuartel => {
+          cuartel.nombre = cuartel.nombre.toUpperCase();
+          cuartel.tipoUva = cuartel.tipoUva.toUpperCase();
+          cuartel.nombreEncargadoBPA = cuartel.nombreEncargadoBPA.toUpperCase();
+          cuartel.nombrePredio = cuartel.nombrePredio.toUpperCase();
+          return cuartel;
+        })
+      })
     );
   }
 

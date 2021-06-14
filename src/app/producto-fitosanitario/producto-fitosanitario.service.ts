@@ -26,11 +26,16 @@ export class ProductoFitosanitarioService {
     }
   getFitosanitarios(): Observable<ProductoFitosanitario[]> {
     return this.http.get(this.urlEndPoint).pipe(
-      map((response) => response as ProductoFitosanitario[]),
-        catchError(e =>{
-          this.isNoAutorizado(e);
-          return throwError(e);
+      map(response => {
+        let fitosanitarios = response as ProductoFitosanitario[];
+        return fitosanitarios.map(fito => {
+          fito.nombreComercial = fito.nombreComercial.toUpperCase();
+          fito.objetivo = fito.objetivo.toUpperCase();
+          fito.tipo = fito.tipo.toUpperCase();
+          fito.ingredienteActivo = fito.ingredienteActivo.toUpperCase();
+          return fito;
         })
+      })
     );
   }
 

@@ -18,7 +18,15 @@ export class ProductoFertilizanteService {
 
    getFertilizantes(): Observable<ProductoFertilizante[]> {
      return this.http.get(this.urlEndPoint).pipe(
-       map((response) => response as ProductoFertilizante[])
+       map(response => {
+         let fertilizantes = response as ProductoFertilizante[];     
+         return fertilizantes.map(ferti => {
+           ferti.nombreComercial = ferti.nombreComercial.toUpperCase();
+           ferti.tipo = ferti.tipo.toUpperCase();
+           ferti.variedad = ferti.variedad.toUpperCase();
+           return ferti;
+         }) 
+      })
      );
    }
 

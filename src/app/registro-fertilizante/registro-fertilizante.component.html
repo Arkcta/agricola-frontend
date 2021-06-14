@@ -46,10 +46,10 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let registro of registros | filter:filterRegistro | paginate: {itemsPerPage: 5, currentPage: pageActual}">
-                    <td width="135px"> {{ registro.fecha}}</td>
+                    <td width="100px"> {{ registro.fecha}}</td>
                     <td width="100px"> {{ registro.estadoFenologico}}</td>
-                    <td width="100px"> {{ registro.cantidadAplicada}}</td>
-                    <td width="90px"> {{ registro.nombreFertilizante}}</td>
+                    <td width="50px"> {{ registro.cantidadAplicada}}</td>
+                    <td width="70px"> {{ registro.nombreFertilizante}}</td>
                     <td width="90px"> {{ registro.nombreCuartel}}</td>
                     <td *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') ||authService.hasRole('ROLE_ADMINCAMPO')">
                       <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') " href="#editEmployeeModal" (click)='cargarRegistroFertilizante(registro)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
@@ -421,7 +421,7 @@
 
                 </div>
                 <div class="modal-footer">
-                  <input style="margin-left: auto; margin-right: auto;" type="button" class="btn btn-default left" data-dismiss="modal" value="Cerrar">
+                  <input type="button" style="background: #BF3D3D; color: white; margin-left: auto; margin-right: auto;" class="btn btn-default left" data-dismiss="modal" value="Cerrar">
                 </div>
             </div>
           </div>

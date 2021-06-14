@@ -20,7 +20,13 @@ export class AdministradorService {
 
     getAdministradores(): Observable<Administrador[]> {
       return this.http.get(this.urlEndPoint).pipe(
-        map((response) => response as Administrador[])
+        map(response => {
+          let admnis = response as Administrador[];
+          return admnis.map(admin => {
+            admin.nombre = admin.nombre.toUpperCase();
+            return admin;
+          })
+        })
       );
     }
 

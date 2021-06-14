@@ -235,16 +235,16 @@ export class RegistroFitosanitarioComponent implements OnInit {
         },
         this.table(this.registrosFitosanitarios, [
           { text: 'Tipo maquinaria', bold: true, fillColor: '#D68910' },
-          { text: 'Estado fenologico', bold: true, fillColor: '#D68910' },
-          { text: 'Dosis', bold: true, fillColor: '#D68910' },
+          { text: 'Estado fenológico', bold: true, fillColor: '#D68910' },
+          { text: 'Dosis (Lt/Ha)', bold: true, fillColor: '#D68910' },
           { text: 'Fecha', bold: true, fillColor: '#D68910' },
-          { text: 'Hora termino', bold: true, fillColor: '#D68910' },
+          { text: 'Hora término', bold: true, fillColor: '#D68910' },
           {
-            text: 'Condiciones metereologicas',
+            text: 'Condiciones metereológicas',
             bold: true,
             fillColor: '#D68910',
           },
-          { text: 'Run Encargado BPA', bold: true, fillColor: '#D68910' },
+          { text: 'Encargado BPA', bold: true, fillColor: '#D68910' },
           { text: 'Nombre Fitosanitario', bold: true, fillColor: '#D68910' },
           { text: 'Nombre Cuartel', bold: true, fillColor: '#D68910' },
         ]),
@@ -261,7 +261,7 @@ export class RegistroFitosanitarioComponent implements OnInit {
         widths: [
           'auto',
           'auto',
-          'auto',
+            50,
           'auto',
           'auto',
           'auto',
@@ -326,12 +326,12 @@ export class RegistroFitosanitarioComponent implements OnInit {
 
     let header = [
       'Tipo maquinaria',
-      'Estado fenologico',
-      'Dosis (L)',
+      'Estado fenológico',
+      'Dosis (Lt/Ha)',
       'Fecha',
-      'Hora termino',
-      'Condiciones metereologicas',
-      'Run Encargado BPA',
+      'Hora término',
+      'Condiciones metereológicas',
+      'Encargado BPA',
       'Nombre Fitosanitario',
       'Nombre Cuartel',
     ];
@@ -402,7 +402,7 @@ export class RegistroFitosanitarioComponent implements OnInit {
       for(let i=0; i< worksheet.columns.length ;i++){
         if(i == 0) worksheet.columns[i].width = 20; //TIPO
         if(i == 1) worksheet.columns[i].width = 25;//estado
-        if(i == 2) worksheet.columns[i].width = 10;//dosis
+        if(i == 2) worksheet.columns[i].width = 15;//dosis
         if(i == 3) worksheet.columns[i].width = 14;//fecha
         if(i == 4) worksheet.columns[i].width = 14;//horatermino
         if(i == 5) worksheet.columns[i].width = 28;//condiciones

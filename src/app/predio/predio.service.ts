@@ -31,13 +31,10 @@ export class PredioService {
         let predios = response as Predio[];
         return predios.map(predio => {
           predio.nombre = predio.nombre.toUpperCase();
+          predio.nombreCampo = predio.nombreCampo.toUpperCase();
           return predio;
         })     
-      }),
-        catchError(e =>{
-          this.isNoAutorizado(e);
-          return throwError(e);
-        })
+      })
     );
   }
 

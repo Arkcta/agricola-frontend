@@ -234,9 +234,9 @@ constructor(private registroService: RegistroFertilizanteService,
         this.table(this.registros, [ {text: 'Fecha', bold: true, fillColor: '#D68910'},
         {text: 'Método aplicación', bold: true, fillColor: '#D68910'},
         {text: 'Estado Fenológico', bold: true, fillColor: '#D68910'},
-        {text: 'Cantidad aplicada (L)', bold:true, fillColor: '#D68910'},
+        {text: 'Cantidad aplicada (Lt/Ha)', bold:true, fillColor: '#D68910'},
         {text: 'Tipo maquinaria', bold:true, fillColor: '#D68910'},
-        {text: 'Run Encargado BPA', bold:true, fillColor: '#D68910'},
+        {text: 'Encargado BPA', bold:true, fillColor: '#D68910'},
         {text: 'Nombre Fertilizante', bold:true, fillColor: '#D68910'},
         {text: 'Nombre cuartel', bold:true, fillColor: '#D68910'}
       ]),
@@ -311,7 +311,7 @@ constructor(private registroService: RegistroFertilizanteService,
       'Fecha',
       'Metodo aplicación',
       'Estado fenológico',
-      'Cantidad aplicada',
+      'Cantidad aplicada (Lt/Ha)',
       'Tipo maquinaria',
       'Encargado BPA',
       'Fertilizante utilizado',
@@ -348,9 +348,9 @@ constructor(private registroService: RegistroFertilizanteService,
       this.estadoFeno = x1.estadoFenologico;
       this.cantodadApli = x1.cantidadAplicada;
       this.tipoMaqui = x1.tipoMaquinaria;
-      this.encargadoBPA = x1.runEncargadoBPA;
-      this.fertilizante = x1.idFertilizante;
-      this.cuartel = x1.idCuartel;
+      this.encargadoBPA = x1.nombreEncargadoBPA;
+      this.fertilizante = x1.nombreFertilizante;
+      this.cuartel = x1.nombreCuartel;
       temp.push(
       this.fecha,
       this.metodoApli,
@@ -383,10 +383,10 @@ constructor(private registroService: RegistroFertilizanteService,
         if(i == 0) worksheet.columns[i].width = 14;
         if(i == 1) worksheet.columns[i].width = 30;
         if(i == 2) worksheet.columns[i].width = 30;
-        if(i == 3) worksheet.columns[i].width = 20;
+        if(i == 3) worksheet.columns[i].width = 30;
         if(i == 4) worksheet.columns[i].width = 18;
-        if(i == 5) worksheet.columns[i].width = 20;
-        if(i == 6) worksheet.columns[i].width = 22;
+        if(i == 5) worksheet.columns[i].width = 30;
+        if(i == 6) worksheet.columns[i].width = 30;
         if(i == 7) worksheet.columns[i].width = 20;
       }
     }

@@ -27,11 +27,18 @@ export class RegistroFitosanitarioService {
 
   getRegistrosFito(): Observable<RegistroFitosanitario[]> {
     return this.http.get(this.urlEndPoint).pipe(
-      map((response) => response as RegistroFitosanitario[]),
-        catchError(e =>{
-          this.isNoAutorizado(e);
-          return throwError(e);
-        })
+      map(response => {
+        let regiFitos = response as RegistroFitosanitario[];
+        return regiFitos.map(regiFito => {
+          regiFito.tipoMaquinaria = regiFito.tipoMaquinaria.toUpperCase();
+          regiFito.estadoFenologico = regiFito.estadoFenologico.toUpperCase();
+          regiFito.condicionesMetereologicas = regiFito.condicionesMetereologicas.toUpperCase();
+          regiFito.nombreEncargadoBPA = regiFito.nombreEncargadoBPA.toUpperCase();
+          regiFito.nombreFitosanitario = regiFito.nombreFitosanitario.toUpperCase();
+          regiFito.nombreCuartel = regiFito.nombreCuartel.toUpperCase();
+          return regiFito;
+        });
+      })
     );
   }
 

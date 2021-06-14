@@ -19,7 +19,15 @@ export class RegistroFertilizanteService {
 
     getRegistrosFertilizantes(): Observable<RegistroFertilizante[]> {
       return this.http.get(this.urlEndPoint).pipe(
-        map((response) => response as RegistroFertilizante[])
+        map(response => {
+         let regiFertis = response as RegistroFertilizante[];
+          return regiFertis.map(regiFerti => {
+            regiFerti.estadoFenologico = regiFerti.estadoFenologico.toUpperCase();
+            regiFerti.nombreFertilizante = regiFerti.nombreFertilizante.toUpperCase();
+            regiFerti.nombreCuartel = regiFerti.nombreCuartel.toUpperCase();
+            return regiFerti;
+          })
+        })
       );
     }
 
