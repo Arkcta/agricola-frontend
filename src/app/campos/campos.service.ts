@@ -16,28 +16,18 @@ export class CamposService {
   private httpHeaders = new HttpHeaders({ 'Content-Type': 'application/json' });
 
   constructor(private http: HttpClient, private router:Router) { }
-  private isNoAutorizado(e):boolean{
-        if(e.status==401 || e.status==403){
-          this.router.navigate(['/login'])
-          return true;
-        }
-        return false;
-      }
+
   getCampos(): Observable<Campos[]> {
     return this.http.get(this.urlEndPoint).pipe(
       map((response) => response as Campos[]),
-        catchError(e =>{
-          this.isNoAutorizado(e);
-          return throwError(e);
-        })
     );
   }
 
   crearCampo(campo: Campos): Observable<any> {
-    return this.http.post<any>(this.urlEndPoint, campo, { headers: this.httpHeaders }).pipe(
+    return this.http.post<any>(this.urlEndPoint, campo).pipe(
         catchError(e =>{
-          console.log(e.error.mensaje);
-          this.isNoAutorizado(e);
+          this.router.navigate["/campos"];
+          console.error(e.error.mensaje);
           swal.fire("Error al crear el campo", e.error.mensaje, 'error')
           return throwError(e);
         })
@@ -49,7 +39,6 @@ export class CamposService {
         catchError(e =>{
           console.error(e.error.mensaje);
           this.router.navigate(['/campos']);
-          this.isNoAutorizado(e);
           swal.fire('Error al editar', e.error.mensaje, 'error');
           return throwError(e);
         })
@@ -57,10 +46,9 @@ export class CamposService {
   }
 
   updateCampo(campo: Campos): Observable<any>{
-    return this.http.put<any>(`${this.urlEndPoint}/${campo.idCampo}`, campo, {headers: this.httpHeaders}).pipe(
+    return this.http.put<any>(`${this.urlEndPoint}/${campo.idCampo}`, campo).pipe(
         catchError(e =>{         
           console.log(e.error.mensaje);
-          this.isNoAutorizado(e);
           swal.fire('Error al editar', e.error.mensaje, 'error');
           return throwError(e);
         })
@@ -68,10 +56,9 @@ export class CamposService {
   }
 
   deleteCampo(id: any): Observable<Campos>{
-    return this.http.delete<Campos>(`${this.urlEndPoint}/${id}`, {headers: this.httpHeaders}).pipe(
+    return this.http.delete<Campos>(`${this.urlEndPoint}/${id}`).pipe(
         catchError(e =>{
           console.log(e.error.mensaje);
-          this.isNoAutorizado(e);
           swal.fire('Error al eliminar el campo', e.error.mensaje, 'error')
           return throwError(e);
         })
