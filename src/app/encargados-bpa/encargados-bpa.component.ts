@@ -4,6 +4,7 @@ import { EncargadoBPAService } from './encargado-bpa.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 import { AuthService } from '../usuarios/auth.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-encargados-bpa',
@@ -170,8 +171,9 @@ export class EncargadosBPAComponent implements OnInit {
   // }
 
   //metodo que valida el ru
-  vaciarInputs() {
+  vaciarInputs(formEncargados: NgForm) {
     this.encargado = new EncargadoBPA();
+    formEncargados.resetForm();
   }
 
   //metodo que valida el rut

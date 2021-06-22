@@ -8,6 +8,7 @@ import { Predio } from '../predio/predio';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 import { Observable } from 'rxjs/internal/Observable';
+import { NgForm } from '@angular/forms';
 
 
 @Component({
@@ -147,12 +148,13 @@ constructor(private cuartelService: CuartelService, private router: Router,
    }
 
    //metodo que vacia el form para crear
-   vaciarInputs() {
+   vaciarInputs(formCuartel: NgForm) {
      this.cuartel = new Cuartel();
      let select1 = <HTMLInputElement>document.getElementById("select");
     select1.value="";
     let select2 = <HTMLInputElement>document.getElementById("select2");
     select2.value="";
+    formCuartel.resetForm();
    }
 
    enviarId(value:string){

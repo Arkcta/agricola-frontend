@@ -3,6 +3,7 @@ import { ProductoFertilizante } from './producto-fertilizante';
 import { ProductoFertilizanteService } from './producto-fertilizante.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-producto-fertilizante',
@@ -103,10 +104,11 @@ export class ProductoFertilizanteComponent implements OnInit {
       })
     }
 
-    vaciarInputs() {
+    vaciarInputs(formFerti: NgForm) {
       this.fertilizante = new ProductoFertilizante();
       let select = <HTMLInputElement>document.getElementById("select");
       select.value="";
+      formFerti.resetForm();
     }
 
     enviarId(value:string){

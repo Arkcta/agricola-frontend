@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { RegistroFertilizante } from './registro-fertilizante';
 import { RegistroFertilizanteService } from './registro-fertilizante.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -19,6 +19,7 @@ import { CuartelService } from '../cuartel/cuartel.service';
 import { ProductoFertilizante } from '../producto-fertilizante/producto-fertilizante';
 import { Cuartel } from '../cuartel/cuartel';
 import { ClassGetter } from '@angular/compiler/src/output/output_ast';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-registro-fertilizante',
@@ -28,6 +29,7 @@ import { ClassGetter } from '@angular/compiler/src/output/output_ast';
 export class RegistroFertilizanteComponent implements OnInit {
 
   pageActual: number = 1;
+  @ Output ( ) pageBoundsCorrection: EventEmitter < 1 > ;
 
   // variable para hacer el filtrado
   filterRegistro='';
@@ -212,8 +214,9 @@ constructor(private registroService: RegistroFertilizanteService,
     });
   }
 
-  vaciarInputs() {
+  vaciarInputs(regiFert: NgForm) {
     this.registro = new RegistroFertilizante();
+    regiFert.resetForm();
   }
 
   dowloadPDF() {

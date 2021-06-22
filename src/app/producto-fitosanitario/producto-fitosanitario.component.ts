@@ -3,6 +3,7 @@ import { ProductoFitosanitario } from './producto-fitosanitario';
 import { ProductoFitosanitarioService } from './producto-fitosanitario.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-producto-fitosanitario',
@@ -112,10 +113,11 @@ export class ProductoFitosanitarioComponent implements OnInit {
   }
 
 //metodo que vacia los inputs del modal agregar fito
-  vaciarInputs() {
+  vaciarInputs(fitosaForm: NgForm) {
     this.fitosanitario = new ProductoFitosanitario();
     let select = <HTMLInputElement>document.getElementById("select");
     select.value="";
+    fitosaForm.resetForm();
   }
 
   enviarId(value:string){

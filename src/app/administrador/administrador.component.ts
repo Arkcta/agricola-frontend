@@ -4,6 +4,7 @@ import { AdministradorService } from './administrador.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import swal from 'sweetalert2';
 import {AuthService} from '../usuarios/auth.service';
+import { NgForm, NgModel } from '@angular/forms';
 
 @Component({
   selector: 'app-administrador',
@@ -100,8 +101,9 @@ export class AdministradorComponent implements OnInit {
       })
     }
 
-    vaciarInputs() {
+    vaciarInputs(adminForm: NgForm) {
       this.administrador = new Administrador();
+      adminForm.resetForm();
     }
 
 

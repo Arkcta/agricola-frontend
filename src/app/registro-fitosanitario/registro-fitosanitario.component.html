@@ -33,7 +33,7 @@
                     <h2><b>Registros Fitosanitarios</b></h2>
                   </div>
                   <div *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') ||authService.hasRole('ROLE_ADMINCAMPO') "class="col-sm-6">
-                    <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA')" href="#addEmployeeModal" (click)="vaciarInputs()" class="btn btn-success buttonAgregar" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Registro Fitosanitario</span></a>
+                    <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA')" href="#addEmployeeModal" (click)="vaciarInputs(regFito)" class="btn btn-success buttonAgregar" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Registro Fitosanitario</span></a>
                   </div>
                 </div>
               </div>
@@ -50,12 +50,12 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let registros of registrosFitosanitarios | filter:filterRegistro| paginate: {itemsPerPage: 5, currentPage: pageActual}">
-                    <td width="95px"> {{ registros.fecha}}</td>
+                    <td width="110px"> {{ registros.fecha | date: 'dd-MM-yyyy'}}</td>
                     <td width="40px"> {{ registros.tipoMaquinaria}}</td>
-                    <td width="70px"> {{ registros.nombreEncargadoBPA}}</td>
+                    <td width="150px"> {{ registros.nombreEncargadoBPA}}</td>
                     <td width="70px"> {{ registros.nombreFitosanitario}}</td>
                     <td width="60px"> {{ registros.nombreCuartel}}</td>
-                    <td width="105px" *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') ||authService.hasRole('ROLE_ADMINCAMPO')">
+                    <td width="120px" *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') ||authService.hasRole('ROLE_ADMINCAMPO')">
                       <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA')" href="#editEmployeeModal" (click)='cargarRegistroFito(registros)' class="edit" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Editar">&#xE254;</i></a>
                       <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA')" (click)='delete(registros)' href="" class="delete" data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Eliminar">&#xE872;</i></a>
                       <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') ||authService.hasRole('ROLE_ADMINCAMPO')"href="#detailEmployeeModal" (click)='cargarRegistroFito(registros)' data-toggle="modal"><i class="material-icons" data-toggle="tooltip" title="Detalles">&#xe8f4;</i></a>
@@ -414,7 +414,7 @@
                   <div>
                     <div>
                       <label style="margin-left: 10px;">Fecha</label>
-                      <label style="margin-left: 200px;">Tipo maquinaria (lt/ht)</label>
+                      <label style="margin-left: 200px;">Tipo maquinaria</label>
                       <label style="margin-left: 85px;">Estado fenológico</label>
                       <br>
                       <input disabled style="margin-left: 10px;" [(ngModel)]="registroFitosanitario.fecha" >
@@ -422,7 +422,7 @@
                       <input disabled style="margin-left: 60px;" [(ngModel)]="registroFitosanitario.estadoFenologico" >
                     </div>
                     <div>
-                      <label style="margin-left: 10px; margin-top: 10px;">Dosis (lt/ha)</label>
+                      <label style="margin-left: 10px; margin-top: 10px;">Dosis (Lt/Ha)</label>
                       <label style="margin-left: 160px;">Hora término</label>
                       <label style="margin-left: 150px;"> Condiciones meteorológicas</label>
                       <br>

@@ -17,7 +17,7 @@
                     <h2><b>Productos Fitosanitarios</b></h2>
                   </div>
                   <div class="col-sm-6">
-                    <a href="#addEmployeeModal" (click)="vaciarInputs()" class="btn btn-success buttonAgregar" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Fitosanitario</span></a>
+                    <a href="#addEmployeeModal" (click)="vaciarInputs(fitoForm)" class="btn btn-success buttonAgregar" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Fitosanitario</span></a>
                   </div>
                 </div>
               </div>
@@ -246,7 +246,7 @@
                     <label for="tipo">Tipo</label>
                     <select #mySelect2 (change)='enviarId2(mySelect2.value)' ([ngModel])="fitosanitario.tipo" name="tipoEdi" class="form-control" id="selectEdi" required>
                       <option value="">Seleccione</option>
-                      <option *ngFor="let tipoF of tipos" [selected]="tipoF.nombre == tipo" value="{{tipoF.nombre}}">{{tipoF.nombre}}</option>
+                      <option *ngFor="let tipoF of tipos" [selected]="tipoF.nombre == fitosanitario.tipo" value="{{tipoF.nombre}}">{{tipoF.nombre}}</option>
                     </select>
                     <div class="alert alert-danger" *ngIf="mySelect2.invalid && (mySelect2.dirty || mySelect2.touched)">
                       <div *ngIf="mySelect2.errors.required">

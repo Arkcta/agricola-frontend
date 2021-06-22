@@ -17,7 +17,7 @@
                     <h2><b>Campos</b></h2>
                   </div>
                   <div class="col-sm-6">
-                    <a href="#addEmployeeModal" (click)="vaciarInputs()" class="btn btn-success buttonAgregar" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Campo</span></a>
+                    <a href="#addEmployeeModal" (click)="vaciarInputs(campoForm)" class="btn btn-success buttonAgregar" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Campo</span></a>
                   </div>
                 </div>
               </div>
@@ -127,7 +127,7 @@
 
                   <div class="form-group">
                     <label for="idCampo">Dueño de campo</label>
-                    <select #mySelect3 (change)='enviarId3(mySelect3.value)' class="form-control" id="select3" required>
+                    <select #mySelect3 (change)='enviarId3(mySelect3.value)' class="form-control" name="duenoCampo" id="select3" required>
                       <option value="">Seleccione</option>
                       <option *ngFor="let array of arrayDueno" value="{{array.run}}">{{array.nombre}}</option>
                     </select>

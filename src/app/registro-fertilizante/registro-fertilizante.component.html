@@ -29,7 +29,7 @@
                     <h2><b>Registros Fertilizantes</b></h2>
                   </div>
                   <div *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') ||authService.hasRole('ROLE_ADMINCAMPO') " class="col-sm-6">
-                    <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA')"href="#addEmployeeModal" (click)="vaciarInputs()" class="btn btn-success buttonAgregar" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Registro Fertilizante</span></a>
+                    <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA')"href="#addEmployeeModal" (click)="vaciarInputs(registroForm)" class="btn btn-success buttonAgregar" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Registro Fertilizante</span></a>
                   </div>
                 </div>
               </div>
@@ -38,7 +38,7 @@
                   <tr>
                     <th>Fecha</th>
                     <th>Estado fenológico</th>
-                    <th>Cantidad Aplicada</th>
+                    <th>Cantidad Aplicada (Lt/Ha)</th>
                     <th>Fertilizante</th>
                     <th>Cuartel</th>
                     <th *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') || authService.hasRole('ROLE_ADMINCAMPO')">Acciones</th>
@@ -46,7 +46,7 @@
                 </thead>
                 <tbody>
                   <tr *ngFor="let registro of registros | filter:filterRegistro | paginate: {itemsPerPage: 5, currentPage: pageActual}">
-                    <td width="100px"> {{ registro.fecha}}</td>
+                    <td width="100px"> {{ registro.fecha | date: 'dd-MM-yyyy'}}</td>
                     <td width="100px"> {{ registro.estadoFenologico}}</td>
                     <td width="50px"> {{ registro.cantidadAplicada}}</td>
                     <td width="70px"> {{ registro.nombreFertilizante}}</td>
@@ -65,7 +65,10 @@
                 <button style="margin-left: 10px"*ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')" (click)="dowloadExcel()" class="colorExcel" title="Exportar a Excel"><img class="excel" src="assets/imagen-header/excel.png"></button>
               </div>
               <div style="margin-left: 567px; width: 300px; background-color: #D68910; margin-top: -50px;">
-                <pagination-controls  (pageChange)="pageActual = $event"></pagination-controls>
+                <pagination-controls  (pageChange)="pageActual = $event" 
+                  previousLabel ="Anterior" 
+                  nextLabel= "Siguiente"
+                ></pagination-controls>
               </div>
             </div>
           </div>
@@ -258,7 +261,7 @@
                   <div class="form-group">
                     <label for="estadoFenologico">Estado fenológico</label>
 
-                    <input type="text" class="form-control" [(ngModel)]="registro.estadoFenologico" id="estadofenologico" name="estadofenologico"
+                    <input type="text" class="form-control" [(ngModel)]="registro.estadoFenologico" id="estadofenologico2" name="estadofenologico"
                     #estadofenologico="ngModel" placeholder="Ingrese estado fenológico"
                     required minlength="5"
                     maxlength="40" onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
@@ -303,7 +306,7 @@
 
                   <div class="form-group">
                     <label for="tipoMaquinaria">Tipo maquinaria</label>
-                    <input type="text" class="form-control" [(ngModel)]="registro.tipoMaquinaria" id="tipoMaquinaria" name="tipoMaquinaria"
+                    <input type="text" class="form-control" [(ngModel)]="registro.tipoMaquinaria" id="tipoMaquinaria2" name="tipoMaquinaria"
                     #tipomaquinaria="ngModel" placeholder="Ingrese tipo de maquinaria"
                     required minlength="5"
                     maxlength="25" onkeypress='return ((event.charCode >= 97 && event.charCode <= 122)
@@ -392,8 +395,8 @@
                       <input disabled style="margin-left: 60px;" [(ngModel)]="registro.estadoFenologico" >
                     </div>
                     <div>
-                      <label style="margin-left: 10px; margin-top: 10px;">Cantidad aplicada</label>
-                      <label style="margin-left: 115px;">Tipo maquinaria</label>
+                      <label style="margin-left: 10px; margin-top: 10px;">Cantidad aplicada (Lt/Ha)</label>
+                      <label style="margin-left: 60px;">Tipo maquinaria</label>
                       <label style="margin-left: 125px;">Encargado BPA</label>
                       <br>
                       <input disabled style="margin-left: 10px;" [(ngModel)]="registro.cantidadAplicada" >

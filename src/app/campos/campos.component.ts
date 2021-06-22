@@ -10,6 +10,7 @@ import { Observable } from 'rxjs/internal/Observable';
 import { Administrador } from '../administrador/administrador';
 import { DuenoCampo } from '../dueno-campo/dueno';
 import { DuenoService } from '../dueno-campo/dueno.service';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-campos',
@@ -149,12 +150,13 @@ export class CamposComponent implements OnInit {
     })
   }
 
-  vaciarInputs() {
+  vaciarInputs(formCampo: NgForm) {
     this.campo = new Campos();
     let select = <HTMLInputElement>document.getElementById("select");
     select.value="";
     let select2 = <HTMLInputElement>document.getElementById("select3");
     select2.value="";
+    formCampo.resetForm();
     
   }
 

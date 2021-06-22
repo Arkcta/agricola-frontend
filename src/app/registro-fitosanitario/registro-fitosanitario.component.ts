@@ -17,6 +17,7 @@ import { ProductoFitosanitario } from '../producto-fitosanitario/producto-fitosa
 import { CuartelService } from '../cuartel/cuartel.service';
 import { Cuartel } from '../cuartel/cuartel';
 import { Observable } from 'rxjs/internal/Observable';
+import { NgForm } from '@angular/forms';
 
 @Component({
   selector: 'app-registro-fitosanitario',
@@ -207,7 +208,7 @@ export class RegistroFitosanitarioComponent implements OnInit {
     });
   }
 
-  vaciarInputs() {
+  vaciarInputs(regiFitoForm: NgForm) {
     this.registroFitosanitario = new RegistroFitosanitario();
 
     let select = <HTMLInputElement>document.getElementById("select");
@@ -216,6 +217,7 @@ export class RegistroFitosanitarioComponent implements OnInit {
     select.value="";
     select2.value="";
     select3.value="";
+    regiFitoForm.resetForm();
   }
 
   dowloadPDF() {
