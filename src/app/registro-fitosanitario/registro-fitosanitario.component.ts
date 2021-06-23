@@ -40,6 +40,9 @@ export class RegistroFitosanitarioComponent implements OnInit {
 
     // variable para hacer el filtrado
     filterRegistro='';
+
+     //variable para filtrar por tipo
+  filterRegistroTipo='';
   
 
   flag: boolean = true;

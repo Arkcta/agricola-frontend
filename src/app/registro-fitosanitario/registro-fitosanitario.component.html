@@ -8,6 +8,8 @@
 
     <div class="row">
       <div class="col-lg-12">
+        <div><input type="text" class="forms-control" placeholder="Buscar.." [(ngModel)]="filterRegistroTipo"
+          name="filterpost" /></div>
         <div class="container pt-3">
           <div class="table-responsive">
             <div style="color: black; opacity: 89%;text-align: center;border-radius: 45px;margin-bottom: 40px; margin-top: 10px; margin-left: 30px; background: rgb(146, 202, 32, 0.7); width: 90%; height: 60px;">
@@ -49,7 +51,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr *ngFor="let registros of registrosFitosanitarios | filter:filterRegistro| paginate: {itemsPerPage: 5, currentPage: pageActual}">
+                  <tr *ngFor="let registros of registrosFitosanitarios | filterTipofito:filterRegistroTipo| filter:filterRegistro| paginate: {itemsPerPage: 5, currentPage: pageActual}">
                     <td width="110px"> {{ registros.fecha | date: 'dd-MM-yyyy'}}</td>
                     <td width="40px"> {{ registros.tipoMaquinaria}}</td>
                     <td width="150px"> {{ registros.nombreEncargadoBPA}}</td>

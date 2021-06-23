@@ -36,6 +36,8 @@ import { DuenoCampoComponent } from './dueno-campo/dueno-campo.component';
 import { DuenoService } from './dueno-campo/dueno.service';
 // import { NgxMaskModule, IConfig } from 'ngx-mask';
 import { FilterPipe } from './pipes/filter.pipe';
+import { FilterTipofertiPipe } from './pipes/filter-tipoferti.pipe';
+import { FilterTipofitoPipe } from './pipes/filter-tipofito.pipe';
 
 
 const routes: Routes = [
@@ -74,7 +76,9 @@ const routes: Routes = [
     NavbarComponent,
     EstadisticasComponent,
     DuenoCampoComponent,
-    FilterPipe
+    FilterPipe,
+    FilterTipofertiPipe,
+    FilterTipofitoPipe
 
   ],
   imports: [
