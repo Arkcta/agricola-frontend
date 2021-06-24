@@ -103,6 +103,12 @@ constructor(private registroService: RegistroFertilizanteService,
     this.filterRegistro = '';
   }
 
+  limpiarNombre(){
+    let select = <HTMLInputElement>document.getElementById("nombreBuscar");
+    select.value = null;
+    this.filterRegistroTipo = '';
+  }
+
   cargarEncargados(){
     this.encargadosSelect.subscribe(encargados => {
       encargados.forEach(encar =>{
