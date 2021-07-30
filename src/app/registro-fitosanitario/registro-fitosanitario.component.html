@@ -42,10 +42,17 @@
             <div class="table-wrapper mar">
               <div class="table-title">
                 <div class="row ">
-                  <div class="col-sm-6">
+                  <div class="col-sm-6" style="width:65%;flex:30% ;">
                     <h2><b>Registros Fitosanitarios</b></h2>
                   </div>
-                  <div *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') ||authService.hasRole('ROLE_ADMINCAMPO') "class="col-sm-6">
+                <div class="col-sm-6"style="width:60%;flex:20% ;">
+                  <button 
+                  style="margin-left: 50px;" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')||  authService.hasRole('ROLE_ADMINCAMPO')" (click)="dowloadPDF()" class="colorPDF" title="Exportar a PDF"><img class="pdf" src="assets/imagen-header/pdf.png"></button>
+                <button style="margin-left: 10px"
+                *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')"(click)="dowloadExcel()" class="colorExcel" title="Exportar a Excel"><img class="excel" src="assets/imagen-header/excel.png"></button>
+                </div>
+                
+                  <div style="width:60%;flex:20% ;min-width: fit-content;" *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA') ||authService.hasRole('ROLE_ADMINCAMPO') "class="col-sm-6">
                     <a *ngIf="authService.hasRole('ROLE_ADMIN')||  authService.hasRole('ROLE_ENCARGADOBPA')" href="#addEmployeeModal" (click)="vaciarInputs(regFito)" class="btn btn-success buttonAgregar" data-toggle="modal"><i class="material-icons">&#xE147;</i> <span>Agregar Registro Fitosanitario</span></a>
                   </div>
                 </div>
@@ -76,12 +83,10 @@
                   </tr>
                 </tbody>
               </table>
-              <br>
+              <br><br><br>
               <div>
-                <button style="margin-left: 50px;" *ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')||  authService.hasRole('ROLE_ADMINCAMPO')" (click)="dowloadPDF()" class="colorPDF" title="Exportar a PDF"><img class="pdf" src="assets/imagen-header/pdf.png"></button>
-                <button style="margin-left: 10px"*ngIf="authService.hasRole('ROLE_ADMIN') || authService.hasRole('ROLE_ENCARGADOBPA')"(click)="dowloadExcel()" class="colorExcel" title="Exportar a Excel"><img class="excel" src="assets/imagen-header/excel.png"></button>
                 <div style="margin-left: 573px; width: 300px; background-color: #D68910; margin-top: -50px;">
-                  <pagination-controls  (pageChange)="pageActual = $event"></pagination-controls>
+                  <pagination-controls  (pageChange)="pageActual = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
                 </div>
               </div>             
             </div>
