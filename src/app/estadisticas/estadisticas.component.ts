@@ -68,7 +68,7 @@ export class EstadisticasComponent implements OnInit {
   herbicida: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   acaricida: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
   bactericida: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
-  otros: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+  nematicida: number[] = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
   anioFiltrarFitoTipo1: number;
   anioFiltrarFitoTipo2: number;
@@ -1085,6 +1085,7 @@ export class EstadisticasComponent implements OnInit {
       this.herbicida = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       this.acaricida = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
       this.bactericida = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+      this.nematicida = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 
       this.mesFitoTipo = 0;
       this.anioFitoTipo = 0;
@@ -1129,6 +1130,10 @@ export class EstadisticasComponent implements OnInit {
                   this.bactericida[0] += this.dosis;
                   break;
                 }
+                case "Nematicida": {
+                  this.nematicida[0] += this.dosis;
+                  break;
+                }
                 default: {
                   break;
                 }
@@ -1154,6 +1159,10 @@ export class EstadisticasComponent implements OnInit {
                   }
                   case "Bactericida": {
                     this.bactericida[1] += this.dosis;
+                    break;
+                  }
+                  case "Nematicida": {
+                    this.nematicida[1] += this.dosis;
                     break;
                   }
                   default: {
@@ -1183,6 +1192,10 @@ export class EstadisticasComponent implements OnInit {
                       this.bactericida[2] += this.dosis;
                       break;
                     }
+                    case "Nematicida": {
+                      this.nematicida[2] += this.dosis;
+                      break;
+                    }
                     default: {
                       break;
                     }
@@ -1210,6 +1223,10 @@ export class EstadisticasComponent implements OnInit {
                         this.bactericida[3] += this.dosis;
                         break;
                       }
+                      case "Nematicida": {
+                        this.nematicida[3] += this.dosis;
+                        break;
+                      }
                       default: {
                         break;
                       }
@@ -1235,6 +1252,10 @@ export class EstadisticasComponent implements OnInit {
                         }
                         case "Bactericida": {
                           this.bactericida[4] += this.cantidadAplicada;
+                          break;
+                        }
+                        case "Nematicida": {
+                          this.nematicida[4] += this.dosis;
                           break;
                         }
                         default: {
@@ -1271,6 +1292,10 @@ export class EstadisticasComponent implements OnInit {
                   this.bactericida[5] += this.dosis;
                   break;
                 }
+                case "Nematicida": {
+                  this.nematicida[5] += this.dosis;
+                  break;
+                }
                 default: {
                   break;
                 }
@@ -1296,6 +1321,10 @@ export class EstadisticasComponent implements OnInit {
                   }
                   case "Bactericida": {
                     this.bactericida[6] += this.dosis;
+                    break;
+                  }
+                  case "Nematicida": {
+                    this.nematicida[6] += this.dosis;
                     break;
                   }
                   default: {
@@ -1325,6 +1354,10 @@ export class EstadisticasComponent implements OnInit {
                       this.bactericida[7] += this.dosis;
                       break;
                     }
+                    case "Nematicida": {
+                      this.nematicida[7] += this.dosis;
+                      break;
+                    }
                     default: {
                       break;
                     }
@@ -1352,6 +1385,10 @@ export class EstadisticasComponent implements OnInit {
                         this.bactericida[8] += this.dosis;
                         break;
                       }
+                      case "Nematicida": {
+                        this.nematicida[8] += this.dosis;
+                        break;
+                      }
                       default: {
                         break;
                       }
@@ -1377,6 +1414,10 @@ export class EstadisticasComponent implements OnInit {
                         }
                         case "Bactericida": {
                           this.bactericida[9] += this.dosis;
+                          break;
+                        }
+                        case "Nematicida": {
+                          this.nematicida[9] += this.dosis;
                           break;
                         }
                         default: {
@@ -1580,7 +1621,41 @@ export class EstadisticasComponent implements OnInit {
             'rgba(0, 227, 227, 1)'
           ],
           borderWidth: 1.5
-        }]
+        },{
+          label: 'Nematicida',
+          data: this.nematicida,
+          backgroundColor: [
+            'rgba(22, 61, 183, 0.7)',
+            'rgba(22, 61, 183, 0.7)',
+            'rgba(22, 61, 183, 0.7)',
+            'rgba(22, 61, 183, 0.7)',
+            'rgba(22, 61, 183, 0.7)',
+            'rgba(22, 61, 183, 0.7)',
+
+            'rgba(22, 61, 183, 0.7)',
+            'rgba(22, 61, 183, 0.7)',
+            'rgba(22, 61, 183, 0.7)',
+            'rgba(22, 61, 183, 0.7)',
+            'rgba(22, 61, 183, 0.7)',
+            'rgba(22, 61, 183, 0.7)'
+          ],
+          borderColor: [
+            'rgba(22, 61, 183, 1)',
+            'rgba(22, 61, 183, 1)',
+            'rgba(22, 61, 183, 1)',
+            'rgba(22, 61, 183, 1)',
+            'rgba(22, 61, 183, 1)',
+            'rgba(22, 61, 183, 1)',
+
+            'rgba(22, 61, 183, 1)',
+            'rgba(22, 61, 183, 1)',
+            'rgba(22, 61, 183, 1)',
+            'rgba(22, 61, 183, 1)',
+            'rgba(22, 61, 183, 1)',
+            'rgba(22, 61, 183, 1)'
+          ],
+          borderWidth: 1.5}
+        ]
       },
       options: {
         responsive: true,

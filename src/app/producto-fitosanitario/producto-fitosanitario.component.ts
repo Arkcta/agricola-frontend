@@ -18,7 +18,7 @@ export class ProductoFitosanitarioComponent implements OnInit {
   flag2: boolean = false;
   pageActual: number = 1;
   tipo: string;
-  tipos = [{nombre: 'Fungicida'},{nombre: 'Insecticida'},{nombre: 'Herbicida'},{nombre: 'Acaricida'},{nombre: 'Bactericida'}];
+  tipos = [{nombre: 'Fungicida'},{nombre: 'Insecticida'},{nombre: 'Herbicida'},{nombre: 'Acaricida'},{nombre: 'Bactericida'},{nombre: 'Nematicida'}];
 
   constructor(private fitosanitarioService: ProductoFitosanitarioService, private router: Router, private activatedRoute: ActivatedRoute) { }
 

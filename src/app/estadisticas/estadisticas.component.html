@@ -12,6 +12,7 @@
       </div>
       <div class="card-body">
         <h5 class="card-title">Seleccione el gráfico que desea ver</h5>
+        <label style="text-align: left;">Presione sobre las casillas de colores para ocultar o mostrar información en los gráficos</label>
         <div class="" style="margin-left: auto; margin-right: auto;">
           <a class="btn btn-primary font1" (click)="mostrar1()" style="margin-left: 55px; color:white;">Registros Fertilizantes</a>
           <a class="btn btn-primary font1" (click)="mostrar2()" style="margin-left: 5px; color:white;">Regitros Fitosanitarios</a>
@@ -23,9 +24,7 @@
     </div>
 
 
-    <!-- <div *ngIf="flagSpinner" class="spinner-border spin" role="status">
-      <span class="sr-only">Loading...</span>
-    </div> -->
+    
     <div *ngIf="chartOne" class="divChart" id="chart1">
       <div class="jeje">
         <h6 style="text-align: center;">Registros de productos Fertilizantes</h6>
@@ -41,7 +40,9 @@
           <button type="button" class="btn btn-outline-dark ferti1" type="button" style="margin-left: 15px;" name="button" id="ferti1" [disabled]="flagSpinner" (click)="filtrarFertilizante()">Filtrar</button>
         </div>
       </div>
+      <label style="writing-mode: vertical-rl; text-orientation: sideways-left; margin-top: -900px; margin-left: -40px; margin-bottom: 290px; letter-spacing: 0.25em; -webkit-transform: rotate(-180deg);">Cantidad de registros</label>
     </div>
+
 
     <div class="divChart2" id="chart2" style="display:none;">
       <h6 style="text-align: center;">Registros de productos Fitosanitario</h6>
@@ -56,7 +57,9 @@
           <button type="button" class="btn btn-outline-dark fito1" name="button" id="fito2" (click)="filtrarFitosanitario()">Filtrar</button>
         </div>
       </div>
+      <label style="writing-mode: vertical-rl; text-orientation: sideways-left; margin-top: -900px; margin-left: -40px; margin-bottom: 290px; letter-spacing: 0.25em; -webkit-transform: rotate(-180deg);">Cantidad de registros</label>
     </div>
+    
 
 
 
@@ -73,6 +76,7 @@
           <button type="button" class="btn btn-outline-dark fertiTipo1" name="button" id="ferti3" (click)="filtrarFertilizanteTipo()">Filtrar</button>
         </div>
       </div>
+      <label style="writing-mode: vertical-rl; text-orientation: sideways-left; margin-top: -900px; margin-left: -40px; margin-bottom: 310px; letter-spacing: 0.25em; -webkit-transform: rotate(-180deg);">Dosis (Lt/Ha)</label>
     </div>
 
 
@@ -89,6 +93,7 @@
           <button type="button" class="btn btn-outline-dark bot4" name="button" id="fito4" (click)="filtrarFitoTipo()">Filtrar</button>
         </div>
       </div>
+      <label style="writing-mode: vertical-rl; text-orientation: sideways-left; margin-top: -900px; margin-left: -40px; margin-bottom: 310px; letter-spacing: 0.25em; -webkit-transform: rotate(-180deg);">Dosis (Lt/Ha)</label>
     </div>
 
     <div class="divChart5" id="chart5" style="display:none;">
@@ -111,6 +116,7 @@
           </div>
         </div>
       </div>
+      <label style="writing-mode: vertical-rl; text-orientation: sideways-left; margin-top: -900px; margin-left: -40px; margin-bottom: 450px; letter-spacing: 0.25em; -webkit-transform: rotate(-180deg);">Cantidad de registros</label>
     </div>
   </div>
 </div>
