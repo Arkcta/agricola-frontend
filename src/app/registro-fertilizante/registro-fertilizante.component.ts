@@ -225,6 +225,12 @@ constructor(private registroService: RegistroFertilizanteService,
 
   vaciarInputs(regiFert: NgForm) {
     this.registro = new RegistroFertilizante();
+    let select = <HTMLInputElement>document.getElementById("select");
+    let select2 = <HTMLInputElement>document.getElementById("select2");
+    let select3 = <HTMLInputElement>document.getElementById("select3");
+    select.value="";
+    select2.value="";
+    select3.value="";
     regiFert.resetForm();
   }
 
