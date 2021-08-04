@@ -24,6 +24,7 @@ export class CuartelComponent implements OnInit {
   flag2:boolean =true;
   flag3:boolean =false;
   flag4:boolean =false;
+  contCuarteles: number = 0;
   
   runEncargado: String;
   idPredio: number;
@@ -67,8 +68,10 @@ constructor(private cuartelService: CuartelService, private router: Router,
 
   listaCuartelesService() {
      this.cuartelService.getCuarteles().subscribe(
-       (cuarteles) => this.cuarteles = cuarteles
-       );
+       (cuarteles) => {
+         this.cuarteles = cuarteles;
+         this.contCuarteles = cuarteles.length;
+       });
    }
 
    delete(cuartel: Cuartel): void {

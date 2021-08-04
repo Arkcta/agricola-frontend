@@ -85,7 +85,7 @@
               </table>
               <br><br><br>
               <div>
-                <div style="margin-left: 573px; width: 300px; background-color: #D68910; margin-top: -50px;">
+                <div style="margin-left: 573px; width: 300px; background-color: #D68910; margin-top: -50px;" *ngIf="contRegiFito >= 6">
                   <pagination-controls  (pageChange)="pageActual = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
                 </div>
               </div>             

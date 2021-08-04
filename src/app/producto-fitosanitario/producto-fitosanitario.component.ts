@@ -19,6 +19,8 @@ export class ProductoFitosanitarioComponent implements OnInit {
   pageActual: number = 1;
   tipo: string;
   tipos = [{nombre: 'Fungicida'},{nombre: 'Insecticida'},{nombre: 'Herbicida'},{nombre: 'Acaricida'},{nombre: 'Bactericida'},{nombre: 'Nematicida'}];
+  contFitos: number = 0;
+
 
   constructor(private fitosanitarioService: ProductoFitosanitarioService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
@@ -29,8 +31,10 @@ export class ProductoFitosanitarioComponent implements OnInit {
   //este metodo lo que hace es traer la lista de fitosanitarios
   listaFitosanitariosService() {
     this.fitosanitarioService.getFitosanitarios().subscribe(
-      (fitos) => this.fitosanitarios = fitos  //se agrega {this.encargadosBPA = encargados} al this cuando hay mas de una linea de codigo tambien al encargados cuando son mas de 1 parametro
-    );
+      (fitos) => {
+        this.fitosanitarios = fitos  //se agrega {this.encargadosBPA = encargados} al this cuando hay mas de una linea de codigo tambien al encargados cuando son mas de 1 parametro
+        this.contFitos = fitos.length;
+      });
   }
 
   //metodo para eliminar un fito con los respectivos sweetAlert

@@ -2,6 +2,13 @@
   font-size: 0.8em;
 }
 
+.ocultar {
+  display: none;
+}
+
+.mostrar {
+  display: block;
+}
 
 .mar {
   width: 95%;

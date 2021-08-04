@@ -50,7 +50,7 @@
                   </table>
                 </div>
               </div>
-              <div style="margin-left: 567px; width: 300px; background-color: #D68910; margin-top: 15px;">
+              <div style="margin-left: 567px; width: 300px; background-color: #D68910; margin-top: 15px;" *ngIf="contCuarteles >= 6">
                 <pagination-controls  (pageChange)="pageActual = $event" previousLabel="Anterior" nextLabel="Siguiente"></pagination-controls>
               </div>
             </div>

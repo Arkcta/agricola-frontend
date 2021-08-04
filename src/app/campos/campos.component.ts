@@ -52,12 +52,6 @@ export class CamposComponent implements OnInit {
     this.cargarDuenos();
   }
 
-  sumaCampos(){
-    this.campos.forEach(c=>{
-      this.contCampos++;
-    })
-  }
-
   cargarDuenos(){
     this.duenoSelect.subscribe(duenos => {
       duenos.forEach(dueno =>{
@@ -77,8 +71,11 @@ export class CamposComponent implements OnInit {
 
   listaCamposService() {
     this.campoService.getCampos().subscribe(
-      (campos) =>this.campos = campos   //se agrega {this.encargadosBPA = encargados, otra cosa} al this cuando hay mas de una linea de codigo tambien al encargados cuando son mas de 1 parametro
-      );
+      (campos) => {
+        this.campos = campos
+        this.contCampos = campos.length;
+      });
+    
   }
 
   delete(campo: Campos): void {
@@ -111,6 +108,7 @@ export class CamposComponent implements OnInit {
           `El campo ${campo.nombre} ha sido eliminado.`,
           'success'
         )
+        // this.listaCamposService();
       } else if (
         result.dismiss === swal.DismissReason.cancel
       ) {

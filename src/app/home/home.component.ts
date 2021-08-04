@@ -3,6 +3,8 @@ import { CuartelService } from '../cuartel/cuartel.service';
 import { Cuartel } from '../cuartel/cuartel';
 import { PredioService } from '../predio/predio.service';
 import { Predio } from '../predio/predio';
+import { CamposService } from '../campos/campos.service';
+import { Campos } from '../campos/campos';
 import { Observable } from 'rxjs/internal/Observable';
 
 @Component({
@@ -15,10 +17,18 @@ export class HomeComponent implements OnInit {
   cuartelSelect: Observable<Cuartel[]> = this.cuartelService.getCuarteles();
   arraysCuarteles: Array<Cuartel> = [];
 
-  constructor(private cuartelService: CuartelService, private predioService: PredioService) { }
+  predioSelect: Observable<Predio[]> = this.predioService.getPredios();
+  arraysPredios: Array<Predio> = [];
+
+  camposSelect: Observable<Campos[]> = this.campoService.getCampos();
+  arraysCampos: Array<Campos> = [];
+
+  constructor(private cuartelService: CuartelService, private predioService: PredioService, private campoService: CamposService) { }
 
   ngOnInit(): void {
-    console.log(this.arraysCuarteles);
+    this.cargarCuarteles();
+    this.cargarPredios();
+    this.cargarCampos();
   }
 
 
@@ -26,6 +36,22 @@ export class HomeComponent implements OnInit {
     this.cuartelSelect.subscribe(cuarteles => {
       cuarteles.forEach(cuartel =>{
         this.arraysCuarteles.push(cuartel);
+      })
+    });
+  }
+
+  cargarPredios(){
+    this.predioSelect.subscribe(predios => {
+      predios.forEach(predio =>{
+        this.arraysPredios.push(predio);
+      })
+    });
+  }
+
+  cargarCampos(){
+    this.camposSelect.subscribe(campos => {
+      campos.forEach(campo =>{
+        this.arraysCampos.push(campo);
       })
     });
   }

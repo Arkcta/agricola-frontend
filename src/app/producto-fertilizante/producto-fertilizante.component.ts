@@ -20,6 +20,7 @@ export class ProductoFertilizanteComponent implements OnInit {
     tipo: string;
     flag: boolean = true;
     flag2: boolean = false;
+    contFertis: number = 0;
 
     constructor(private fertilizanteService: ProductoFertilizanteService, private router: Router, private activatedRoute: ActivatedRoute) { }
 
@@ -29,8 +30,10 @@ export class ProductoFertilizanteComponent implements OnInit {
 
     listaFertilizantesService() {
       this.fertilizanteService.getFertilizantes().subscribe(
-        (fertilizantes) => this.fertilizantes = fertilizantes
-      );
+        (fertilizantes) => {
+          this.fertilizantes = fertilizantes;
+          this.contFertis = fertilizantes.length;
+        });
     }
 
     delete(fertilizante: ProductoFertilizante): void {

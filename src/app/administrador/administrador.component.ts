@@ -16,6 +16,8 @@ export class AdministradorComponent implements OnInit {
     administrador: Administrador = new Administrador();
     administradores: Administrador[];
     pageActual: number = 1;
+    flag: boolean = false;
+    contAdmins: number = 0;
 
     constructor(private administradorService: AdministradorService, private router: Router,
        private activatedRoute: ActivatedRoute, private authService: AuthService) { }
@@ -26,8 +28,10 @@ export class AdministradorComponent implements OnInit {
 
     listaAdministradoresService() {
       this.administradorService.getAdministradores().subscribe(
-        (administradores) => this.administradores = administradores
-      );
+        (administradores) => {
+          this.administradores = administradores;
+          this.contAdmins = administradores.length;
+        });
     }
 
     delete(administrador: Administrador): void {
@@ -94,6 +98,7 @@ export class AdministradorComponent implements OnInit {
     }
 
     cargarAdministrador(run: string): void {
+      this.flag = true;
       this.activatedRoute.params.subscribe(params => {
         if (run) {
           this.administradorService.getAdministrador(run).subscribe((administrador) => this.administrador = administrador);
@@ -103,8 +108,49 @@ export class AdministradorComponent implements OnInit {
 
     vaciarInputs(adminForm: NgForm) {
       this.administrador = new Administrador();
+      let pass2 = <HTMLInputElement>document.getElementById('pass2');
+      pass2.value = "";
+      var p1 = document.getElementById("error");
+      var p2 = document.getElementById("ok");
+      p1.style.display = "none";
+      p2.style.display = "none";
       adminForm.resetForm();
     }
+
+    verificarPasswords() {
+ 
+      // Ontenemos los valores de los campos de contraseñas 
+      let pass1 = <HTMLInputElement>document.getElementById('pass1');
+      let pass2 = <HTMLInputElement>document.getElementById('pass2');
+   
+      // Verificamos si las constraseñas no coinciden 
+      if (pass1.value != pass2.value) {
+   
+          // Si las constraseñas no coinciden mostramos un mensaje 
+          var p1 = document.getElementById("error");
+          var p2 = document.getElementById("ok");
+          p1.style.display = "block";
+          p2.style.display = "none";
+
+          //desactivamos el boton de agregar
+          this.flag = false;
+      } else {
+   
+          // Si las contraseñas coinciden ocultamos el mensaje de error
+          var p1 = document.getElementById("error");
+          var p2 = document.getElementById("ok");
+          p1.style.display = "none";
+          p2.style.display = "block";
+
+   
+          // Mostramos un mensaje mencionando que las Contraseñas coinciden 
+          // document.getElementById("ok").classList.remove("ocultar");
+   
+          // Habilitamos el botón de agregar 
+          this.flag = true;
+      }
+   
+  }
 
 
 }

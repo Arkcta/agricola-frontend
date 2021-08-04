@@ -76,6 +76,9 @@ export class RegistroFertilizanteComponent implements OnInit {
   mesNowString: string;
   dayNowString: string;
   fechaNow: string;
+  fechaNowReves: string;
+
+  contRegiFerti: number = 0;
 
 constructor(private registroService: RegistroFertilizanteService,
   private router: Router, 
@@ -91,6 +94,7 @@ constructor(private registroService: RegistroFertilizanteService,
     this.mesNowString = formatDate(this.now, 'MM', 'en-US', '-0400');
     this.dayNowString = formatDate(this.now, 'dd', 'en-US', '-0400');
     this.fechaNow = (this.dayNowString)+"/"+this.mesNowString+"/"+this.anioNowString;
+    this.fechaNowReves = (this.anioNowString)+"/"+this.mesNowString+"/"+ this.dayNowString;
 
     this.cargarEncargados();
     this.cargarFertis();
@@ -136,7 +140,10 @@ constructor(private registroService: RegistroFertilizanteService,
   listaRegistrosService() {
     this.registroService
       .getRegistrosFertilizantes()
-      .subscribe((registros) => (this.registros = registros));
+      .subscribe((registros) => {
+        this.registros = registros;
+        this.contRegiFerti = registros.length;
+      });
   }
 
   delete(registro: RegistroFertilizante): void {

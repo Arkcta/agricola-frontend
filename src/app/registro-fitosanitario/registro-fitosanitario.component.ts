@@ -71,6 +71,7 @@ export class RegistroFitosanitarioComponent implements OnInit {
   dayNowString: string;
   fechaNow: string;
 
+  contRegiFito: number = 0;
 
   constructor(
     private regisFitoService: RegistroFitosanitarioService,
@@ -121,7 +122,8 @@ export class RegistroFitosanitarioComponent implements OnInit {
     this.regisFitoService.getRegistrosFito().subscribe(
       (regiFito) => {
         this.registrosFitosanitarios = regiFito;
-      } //se agrega {this.encargadosBPA = encargados, otra cosa} al this cuando hay mas de una linea de codigo tambien al encargados cuando son mas de 1 parametro
+        this.contRegiFito = regiFito.length;
+      } 
     );
   }
 

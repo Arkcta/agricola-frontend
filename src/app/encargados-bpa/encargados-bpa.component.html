@@ -50,7 +50,7 @@
                   </table>
                 </div>
               </div>
-              <div style="margin-left: 567px; width: 300px; background-color: #D68910; margin-top: 15px;">
+              <div style="margin-left: 567px; width: 300px; background-color: #D68910; margin-top: 15px;" *ngIf="contEncargados >= 6">
                 <pagination-controls  previousLabel="Anterior" nextLabel="Siguiente" (pageChange)="pageActual = $event"></pagination-controls>
               </div>
             </div>
@@ -149,7 +149,7 @@
 
                   <div class="form-group">
                     <label for="pass">Contraseña</label>
-                    <input type="password" class="form-control" [(ngModel)]="encargado.pass" name="pass"
+                    <input type="password" class="form-control" [(ngModel)]="encargado.pass" name="pass" id="pass1"
                     pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{6,8}$" required #pass="ngModel" minlength="6" maxlength="8" placeholder="Ingrese su contraseña">
                     <div class="alert alert-danger" *ngIf="pass.invalid && (pass.dirty || pass.touched)">
                       <div *ngIf="pass.errors.required">
@@ -164,10 +164,25 @@
                     </div>
                   </div>
 
+                  <div class="form-group">
+                    <label for="pass2">Vuelva a ingresar la contraseña</label>
+                    <input type="password" class="form-control" id="pass2" name="pass2" (change)=" verificarPasswords()"
+                    pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{6,8}$" required minlength="6" maxlength="8" placeholder="Ingrese su contraseña">
+                  </div>
+
+                  <div id="msg"></div> 
+                  <!-- Mensajes de Verificación -->
+                  <div id="error" class="alert alert-danger ocultar" role="alert">
+                      Las contraseñas no coinciden, vuelve a intentar...
+                  </div>
+                  <div id="ok" class="alert alert-success ocultar" role="alert">
+                      Las contraseñas coinciden
+                  </div>
+
                 </div>
                 <div class="modal-footer">
                   <input type="button" class="btn btn-default left" data-dismiss="modal" style="background: #BF3D3D; color: white" value="Cancel">
-                  <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success" [disabled]="!encargadoForm.form.valid" value="Agregar">
+                  <input type="button" (click)='crear()' data-dismiss="modal" class="btn btn-success" [disabled]="!encargadoForm.form.valid || !flag" value="Agregar">
                 </div>
               </form>
             </div>
@@ -267,10 +282,25 @@
                     </div>
                   </div>
 
+                  <div class="form-group">
+                    <label for="pass2">Vuelva a ingresar la contraseña</label>
+                    <input type="password" class="form-control" [(ngModel)]="encargado.pass" id="pass2" name="pass2" (change)=" verificarPasswords()"
+                    pattern="^(?=\w*\d)(?=\w*[A-Z])(?=\w*[a-z])\S{6,8}$" required minlength="6" maxlength="8" placeholder="Ingrese su contraseña">
+                  </div>
+
+                  <div id="msg"></div> 
+                  <!-- Mensajes de Verificación -->
+                  <div id="error" class="alert alert-danger ocultar" role="alert">
+                      Las contraseñas no coinciden, vuelve a intentar...
+                  </div>
+                  <div id="ok" class="alert alert-success ocultar" role="alert">
+                      Las contraseñas coinciden
+                  </div>
+
                 </div>
                 <div class="modal-footer">
                   <input type="button" class="btn btn-default left" data-dismiss="modal" style="background: #BF3D3D; color: white" value="Cancel">
-                  <input type="button" (click)='update()' class="btn btn-info" data-dismiss="modal" [disabled]="!encargadoEdiForm.form.valid" value="Guardar">
+                  <input type="button" (click)='update()' class="btn btn-info" data-dismiss="modal" [disabled]="!encargadoEdiForm.form.valid || !flag" value="Guardar">
                 </div>
               </form>
             </div>

@@ -17,16 +17,8 @@ export class EncargadosBPAComponent implements OnInit {
   encargado: EncargadoBPA = new EncargadoBPA();
   encargadosBPA: EncargadoBPA[];
   pageActual: number = 1;
-
-  // variable para bloquear boton de agregar o editar aun no implementado
-  // agregarEn = false;
-
-  //variables para validar rut que aun no se implementa
-  // runFormateado: string;
-  // valor: string;
-  // valorNumber: number;
-  // nFinal: number;
-
+  flag: boolean = false;
+  contEncargados: number = 0;
 
 
   constructor(private encargadoBPAService: EncargadoBPAService,
@@ -38,8 +30,10 @@ export class EncargadosBPAComponent implements OnInit {
 
   listaEncargadosService() {
     this.encargadoBPAService.getEncargados().subscribe(
-      (encargados) => this.encargadosBPA = encargados  //se agrega {this.encargadosBPA = encargados, otra cosa} al this cuando hay mas de una linea de codigo tambien al encargados cuando son mas de 1 parametro
-    );
+      (encargados) => {
+        this.encargadosBPA = encargados;  //se agrega {this.encargadosBPA = encargados, otra cosa} al this cuando hay mas de una linea de codigo tambien al encargados cuando son mas de 1 parametro
+        this.contEncargados = encargados.length;
+      });
   }
 
   // listaEncargadosServiceParaCampo(): EncargadoBPA[]{
@@ -115,6 +109,7 @@ export class EncargadosBPAComponent implements OnInit {
   }
 
   cargarEncargado(run: string): void {
+    this.flag = true;
     this.activatedRoute.params.subscribe(params => {
       //let id = params['run'];
       if (run) {
@@ -123,155 +118,48 @@ export class EncargadosBPAComponent implements OnInit {
     })
   }
 
-
-  //este metodo formatea el rut y tambien lo valida con el check pero aun no esta operativo
-  // formatearRut(rut: string) {
-  //   console.log("ENTREEE AL ONLICKKKK")
-
-  //   let div1;
-  //   let div2;
-  //   let div3;
-  //   let div4;
-
-  //   if (rut == "") {
-  //     this.agregarEn = false;
-  //   } else {
-  //     if (rut.length >= 8) {
-  //       if (rut.length == 9) {
-  //         div1 = rut.slice(0, 2);
-  //         div2 = rut.slice(2, 5);
-  //         div3 = rut.slice(5, 8);
-  //         div4 = rut.slice(8, 9);
-  //         this.runFormateado = (div1 + "." + div2 + "." + div3 + "-" + div4);
-  //       }
-  //       if (rut.length == 8) {
-  //         div1 = rut.slice(0, 1);
-  //         div2 = rut.slice(1, 4);
-  //         div3 = rut.slice(4, 7);
-  //         div4 = rut.slice(7, 8);
-  //         this.runFormateado = (div1 + "." + div2 + "." + div3 + "-" + div4);
-  //       }
-
-
-  //       if (!this.checkRut(this.runFormateado)) {
-  //         this.agregarEn = true;
-  //       } else {
-  //         this.agregarEn = false;
-  //       };
-  //     } else {
-  //       if (!this.checkRut(rut)) {
-  //         this.agregarEn = true;
-  //       } else {
-  //         this.agregarEn = false;
-  //       };
-  //     }
-  //   }
-  //   console.log(this.agregarEn);
-
-  // }
-
-  //metodo que valida el ru
   vaciarInputs(formEncargados: NgForm) {
     this.encargado = new EncargadoBPA();
+    let pass2 = <HTMLInputElement>document.getElementById('pass2');
+    pass2.value = "";
+    var p1 = document.getElementById("error");
+    var p2 = document.getElementById("ok");
+    p1.style.display = "none";
+    p2.style.display = "none";
     formEncargados.resetForm();
   }
 
-  //metodo que valida el rut
-  // checkRut(rut: string): boolean {
+  verificarPasswords() {
+ 
+    // Ontenemos los valores de los campos de contraseñas 
+    let pass1 = <HTMLInputElement>document.getElementById('pass1');
+    let pass2 = <HTMLInputElement>document.getElementById('pass2');
+ 
+    // Verificamos si las constraseñas no coinciden 
+    if (pass1.value != pass2.value) {
+ 
+        // Si las constraseñas no coinciden mostramos un mensaje 
+        var p1 = document.getElementById("error");
+        var p2 = document.getElementById("ok");
+        p1.style.display = "block";
+        p2.style.display = "none";
 
-  //   if (rut.includes('.')) {
-  //     // Despejar Puntos
-  //     this.valor = rut.replace('.', '');
-  //     // Despejar Guión
-  //     this.valor = this.valor.replace('-', '');
+        //desactivamos el boton de agregar
+        this.flag = false;
+    } else {
+ 
+        // Si las contraseñas coinciden ocultamos el mensaje de error
+        var p1 = document.getElementById("error");
+        var p2 = document.getElementById("ok");
+        p1.style.display = "none";
+        p2.style.display = "block";
 
-  //     // Aislar Cuerpo y Dígito Verificador
-  //     let cuerpo = this.valor.slice(0, -1);
-  //     let dv = this.valor.slice(-1).toUpperCase();
-
-  //     // Formatear RUN
-  //     rut = cuerpo + '-' + dv
-
-  //     // Si no cumple con el mínimo ej. (n.nnn.nnn)
-  //     if (cuerpo.length < 7) { return false; }
-
-  //     // Calcular Dígito Verificador
-  //     let suma = 0;
-  //     let multiplo = 2;
-
-  //     this.valorNumber = parseInt(this.valor)
-
-  //     // Para cada dígito del Cuerpo
-  //     for (let i = 1; i <= cuerpo.length; i++) {
-  //       this.valorNumber = parseInt(this.valor.charAt(cuerpo.length - i))
-  //       // Obtener su Producto con el Múltiplo Correspondiente
-  //       let index = multiplo * this.valorNumber;
-
-  //       // Sumar al Contador General
-  //       suma = suma + index;
-
-  //       // Consolidar Múltiplo dentro del rango [2,7]
-  //       if (multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
-
-  //     }
-
-  //     // Calcular Dígito Verificador en base al Módulo 11
-  //     let dvEsperado = 11 - (suma % 11);
-
-  //     // Casos Especiales (0 y K)
-  //     if (dv == 'K') { this.nFinal = 10 }
-  //     if (dv == '0') { this.nFinal = 11 }
-  //     // Validar que el Cuerpo coincide con su Dígito Verificador
-  //     if (dvEsperado != this.nFinal) { return false }
-
-  //     // Si todo sale bien, eliminar errores (decretar que es válido)
-  //     return true;
-  //   } else {
-
-  //     // Aislar Cuerpo y Dígito Verificador
-  //     let cuerpo = rut.slice(0, -1);
-  //     let dv = rut.slice(-1).toUpperCase();
-
-  //     // Formatear RUN
-  //     rut = cuerpo + '-' + dv
-
-  //     // Si no cumple con el mínimo ej. (n.nnn.nnn)
-  //     if (cuerpo.length < 7) { return false; }
-
-  //     // Calcular Dígito Verificador
-  //     let suma = 0;
-  //     let multiplo = 2;
-
-  //     this.valorNumber = parseInt(rut)
-
-  //     // Para cada dígito del Cuerpo
-  //     for (let i = 1; i <= cuerpo.length; i++) {
-  //       this.valorNumber = parseInt(rut.charAt(cuerpo.length - i))
-  //       // Obtener su Producto con el Múltiplo Correspondiente
-  //       let index = multiplo * this.valorNumber;
-
-  //       // Sumar al Contador General
-  //       suma = suma + index;
-
-  //       // Consolidar Múltiplo dentro del rango [2,7]
-  //       if (multiplo < 7) { multiplo = multiplo + 1; } else { multiplo = 2; }
-
-  //     }
-
-  //     // Calcular Dígito Verificador en base al Módulo 11
-  //     let dvEsperado = 11 - (suma % 11);
-
-  //     // Casos Especiales (0 y K)
-  //     if (dv == 'K') { this.nFinal = 10 }
-  //     if (dv == '0') { this.nFinal = 11 }
-  //     // Validar que el Cuerpo coincide con su Dígito Verificador
-  //     if (dvEsperado != this.nFinal) { return false }
-
-  //     // Si todo sale bien, eliminar errores (decretar que es válido)
-  //     return true;
-
-  //   }
-  // }
-
-  
+ 
+        // Mostramos un mensaje mencionando que las Contraseñas coinciden 
+        // document.getElementById("ok").classList.remove("ocultar");
+ 
+        // Habilitamos el botón de agregar 
+        this.flag = true;
+    }  
+  }
 }

@@ -105,7 +105,7 @@
               </table>
               <br><br><br>
               
-              <div style="margin-left: 567px; width: 300px; background-color: #D68910; margin-top: -50px;">
+              <div style="margin-left: 567px; width: 300px; background-color: #D68910; margin-top: -50px;" *ngIf="contRegiFerti >= 6">
                 <pagination-controls (pageChange)="pageActual = $event" previousLabel="Anterior" nextLabel="Siguiente">
                 </pagination-controls>
               </div>
@@ -172,7 +172,7 @@
 
                   <div class="form-group">
                     <label for="fecha">Fecha</label>
-                    <input type="date" required class="form-control" [(ngModel)]="registro.fecha" name="fecha">
+                    <input type="date" required class="form-control" [(ngModel)]="registro.fecha" name="fecha" max="{{fechaNowReves}}">
                   </div>
 
                   <div class="form-group">

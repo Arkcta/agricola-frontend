@@ -21,6 +21,7 @@ export class PredioComponent implements OnInit {
   id: number;
   flag:boolean = true; //true significa disabled
   flag2:boolean = false;
+  contPredios: number = 0;
 
   constructor(
     private predioService: PredioService,
@@ -49,6 +50,7 @@ export class PredioComponent implements OnInit {
     this.predioService.getPredios().subscribe(
       (predios) => {
         this.predios = predios;
+        this.contPredios = predios.length;
       });
   }
 
